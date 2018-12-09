@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public String doInBackground(Void... params) {
-            String urlStr = "";
+            String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf&odpt:departureAirport=odpt.Airport:KIJ";
             String result = "";
 
             HttpURLConnection con = null;
@@ -88,12 +88,13 @@ public class MainActivity extends AppCompatActivity {
                 JSONArray jArray = new JSONArray(result);
                 for(int i = 0; i < jArray.length(); i++) {
                     JSONObject rootJson = jArray.getJSONObject(i);
+                    //データの取得例外処理
                     if(rootJson.has("odpt:scheduledDepartureTime")) {
                         timeList.add(i, rootJson.getString("odpt:scheduledDepartureTime"));
                     } else if(rootJson.has("JSONObject.NULL")){
                         timeList.add(i,rootJson.getString("odpt:scheduledTime"));
                     } else {
-                        timeList.add(i,"null");
+                        timeList.add(i,"を取得できませんでした。");
                     }
                     if(rootJson.has("odpt:aircraftType")) {
                         typeList.add(i,rootJson.getString("odpt:aircraftType"));
