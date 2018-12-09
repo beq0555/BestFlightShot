@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public String doInBackground(Void... params) {
-            String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf&odpt:departureAirport=odpt.Airport:KIJ";
+            String urlStr = "";
             String result = "";
 
             HttpURLConnection con = null;
@@ -142,12 +142,12 @@ public class MainActivity extends AppCompatActivity {
             }
             //リストビューに機種名・離陸時間・機種画像を表示。
             List<ListItem> list = new ArrayList<>();
-            for (int i = 0; i < sortedTimeList.size(); i++) {
+            for (int i = 0; i < sortedTypeList.size(); i++) {
                 ListItem item = new ListItem();
 
                 item.setCraftType("   機種         " + sortedTypeList.get(i));
                 item.setDepartureTime("離陸時間  " + sortedTimeList.get(i));
-                switch (typeList.get(i)) {
+                switch (sortedTypeList.get(i)) {
                     case "738":
                         item.setImageId(R.drawable.b_738);
                         break;
