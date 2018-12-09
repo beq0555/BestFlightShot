@@ -1,4 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-    <string name="app_name">Newフライトショット</string>
+    <string name="app_name">BestFlightShot!</string>
     <string name="tv_list">最新フライト一覧</string>
+    <string name="tv_airport_name_haneda">羽田</string>
+    <string name="tv_airport_name_narita">成田</string>
 </resources>
