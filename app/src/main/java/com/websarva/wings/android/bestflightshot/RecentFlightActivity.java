@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class RecentFlightActivity extends AppCompatActivity {
 
     private ListView lv;
 
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 ex.printStackTrace();
             }
 
-            DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
+            DatabaseHelper helper = new DatabaseHelper(RecentFlightActivity.this);
             SQLiteDatabase db = helper.getWritableDatabase();
 
             try {
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 list.add(item);
             }
             //ImageArrayAdapterに上のリストをセット。
-            ImageArrayAdapter adapter = new ImageArrayAdapter(MainActivity.this,R.layout.list_view_image_item,list);
+            ImageArrayAdapter adapter = new ImageArrayAdapter(RecentFlightActivity.this,R.layout.list_view_image_item,list);
             lv = (ListView) findViewById(R.id.listView);
             lv.setAdapter(adapter);
 
