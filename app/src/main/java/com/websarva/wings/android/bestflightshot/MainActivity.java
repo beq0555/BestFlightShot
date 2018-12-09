@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONArray jArray = new JSONArray(result);
                 for(int i = 0; i < jArray.length(); i++) {
                     JSONObject rootJson = jArray.getJSONObject(i);
-                    //データの取得例外処理
+                    //データの取得例外処理（timeListとtypeList）
                     if(rootJson.has("odpt:scheduledDepartureTime")) {
                         timeList.add(i, rootJson.getString("odpt:scheduledDepartureTime"));
                     } else if(rootJson.has("JSONObject.NULL")){
