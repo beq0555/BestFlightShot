@@ -19,7 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< Updated upstream
         <activity android:name=".AirportActivity"></activity>
+=======
+        <activity android:name=".SelectListActivity"></activity>
+>>>>>>> Stashed changes
     </application>
 
 </manifest>

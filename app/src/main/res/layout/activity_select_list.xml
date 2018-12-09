@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/paper">
+
+    <Button
+        android:id="@+id/btRecentFlight"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:onClick="onRecentFlightButton"
+        android:text="@string/bt_recent_flight"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/frame_style"
+        android:drawableLeft="@drawable/ico_plane"/>
+
+    <Button
+        android:id="@+id/btConditionFlight"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:onClick="onConditonSelectButton"
+        android:text="@string/bt_condition_select"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/frame_style"
+        android:drawableRight="@drawable/ico_search"/>
+
+    <Button
+        android:id="@+id/btSpecialFlight"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:onClick="onSpecialFlightButton"
+        android:text="@string/bt_special_flight"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/frame_style"
+        android:drawableLeft="@drawable/ico_rare"/>
+</LinearLayout>
