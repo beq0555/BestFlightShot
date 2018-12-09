@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public String doInBackground(Void... params) {
-            String urlStr = "";
+            String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf&odpt:departureAirport=odpt.Airport:KIJ";
             String result = "";
 
             HttpURLConnection con = null;
@@ -88,8 +88,18 @@ public class MainActivity extends AppCompatActivity {
                 JSONArray jArray = new JSONArray(result);
                 for(int i = 0; i < jArray.length(); i++) {
                     JSONObject rootJson = jArray.getJSONObject(i);
-                    timeList.add(i,rootJson.getString("odpt:scheduledDepartureTime"));
-                    typeList.add(i,rootJson.getString("odpt:aircraftType"));
+                    if(rootJson.has("odpt:scheduledDepartureTime")) {
+                        timeList.add(i, rootJson.getString("odpt:scheduledDepartureTime"));
+                    } else if(rootJson.has("JSONObject.NULL")){
+                        timeList.add(i,rootJson.getString("odpt:scheduledTime"));
+                    } else {
+                        timeList.add(i,"null");
+                    }
+                    if(rootJson.has("odpt:aircraftType")) {
+                        typeList.add(i,rootJson.getString("odpt:aircraftType"));
+                    } else {
+                        typeList.add(i,"機種情報を取得できませんでした。");
+                    }
                 }
             }catch (JSONException ex) {
                 ex.printStackTrace();
@@ -106,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String sqlInsert = "INSERT INTO flightdata (id, type, time) VALUES (?,?,?)";
 
-                for(int i = 0; i < timeList.size(); i++) {
+                for(int i = 0; i < typeList.size(); i++) {
                     stmt = db.compileStatement(sqlInsert);
                     stmt.bindLong(1,i);
                     stmt.bindString(2,typeList.get(i));
@@ -115,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     stmt.executeInsert();
                 }
                 //現在時刻から直近10件のフライト情報を取り出す。それをsortedTypeListとsortedTimeListに格納。
-                String sql = "SELECT * FROM flightdata WHERE time(time) >= time('now','localtime') ORDER BY time(time) LIMIT 10";
+                String sql = "SELECT * FROM flightdata WHERE time(time) >= time('now','localtime') ORDER BY time(time) LIMIT 15";
                 Cursor cursor = db.rawQuery(sql,null);
                 while (cursor.moveToNext()) {
 
