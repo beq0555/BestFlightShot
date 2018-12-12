@@ -1,6 +1,6 @@
 package com.websarva.wings.android.bestflightshot;
 
-public class ListItem {
+public class FlightListItem {
 
     private int imageId;
     private String craftType;

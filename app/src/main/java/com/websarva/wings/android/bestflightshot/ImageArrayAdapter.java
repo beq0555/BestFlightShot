@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class ImageArrayAdapter extends ArrayAdapter<ListItem> {
+public class ImageArrayAdapter extends ArrayAdapter<FlightListItem> {
 
     private int resourceId;
-    private List<ListItem> items;
+    private List<FlightListItem> items;
     private LayoutInflater inflater;
 
-    public ImageArrayAdapter(Context context, int resourceId, List<ListItem> items) {
+    public ImageArrayAdapter(Context context, int resourceId, List<FlightListItem> items) {
         super(context, resourceId, items);
 
         this.resourceId = resourceId;
@@ -34,7 +34,7 @@ public class ImageArrayAdapter extends ArrayAdapter<ListItem> {
             view = this.inflater.inflate(this.resourceId, null);
         }
 
-        ListItem item = this.items.get(position);
+        FlightListItem item = this.items.get(position);
 
         //機種名をセット
         TextView aircraftName = (TextView)view.findViewById(R.id.tvAircraft);

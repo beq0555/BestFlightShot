@@ -30,6 +30,7 @@ public class RecentFlightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_flight);
+        setTitle("撮影する航空機を選択してください");
 
         //非同期処理を開始
         FlightInfoReceiver receiver = new FlightInfoReceiver();
@@ -143,9 +144,9 @@ public class RecentFlightActivity extends AppCompatActivity {
                 db.close();
             }
             //リストビューに機種名・離陸時間・機種画像を表示。
-            List<ListItem> list = new ArrayList<>();
+            List<FlightListItem> list = new ArrayList<>();
             for (int i = 0; i < sortedTypeList.size(); i++) {
-                ListItem item = new ListItem();
+                FlightListItem item = new FlightListItem();
 
                 item.setCraftType("   機種         " + sortedTypeList.get(i));
                 item.setDepartureTime("離陸時間  " + sortedTimeList.get(i));

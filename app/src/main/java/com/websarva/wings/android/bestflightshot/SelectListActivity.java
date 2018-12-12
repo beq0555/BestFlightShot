@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectListActivity extends AppCompatActivity {
-
+//インテントで受け取った空港名を格納する変数
 private String airport = "";
 
 
@@ -35,6 +35,8 @@ private String airport = "";
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_list);
+
+        setTitle("撮影方法を選択してください");
 
         MenuInfoReceiver receiver = new MenuInfoReceiver();
         receiver.execute();
