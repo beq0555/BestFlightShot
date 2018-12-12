@@ -27,7 +27,7 @@ import java.util.List;
 
 public class SelectListActivity extends AppCompatActivity {
 
-
+private String airport = "";
 
 
     @Override
@@ -45,7 +45,7 @@ public class SelectListActivity extends AppCompatActivity {
         @Override
         public String doInBackground(Void... params) {
             Intent intent = getIntent();
-            String airport = intent.getStringExtra("airport");
+            airport = intent.getStringExtra("airport");
 
             String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf&odpt:departureAirport=odpt.Airport:" + airport;
             String result = "";
@@ -173,12 +173,12 @@ public class SelectListActivity extends AppCompatActivity {
         return sb.toString();
     }
     //ここに3つのボタンを押した時、次の画面にインテントを渡すメソッドを３つ実装する。
-   // public void onRecentFlightButton(View view) {
+   public void onRecentFlightButton(View view) {
 
-     //   Intent intent=new Intent(SelectListActivity.this,RecentFlightActivity.class);
-    //    intent.putExtra("airport",airport);
-     //   startActivity(intent);
-  //  }
+       Intent intent=new Intent(SelectListActivity.this,RecentFlightActivity.class);
+       intent.putExtra("airport",airport);
+       startActivity(intent);
+   }
 
     //public void onConditonSelectButton(View view) {
 
