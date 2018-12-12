@@ -104,9 +104,10 @@ public class RecentFlightActivity extends AppCompatActivity {
                 }
             }catch (JSONException ex) {
                 ex.printStackTrace();
+
             }
 
-            DatabaseHelper helper = new DatabaseHelper(RecentFlightActivity.this);
+            FlightDatabaseHelper helper = new FlightDatabaseHelper(RecentFlightActivity.this);
             SQLiteDatabase db = helper.getWritableDatabase();
 
             try {

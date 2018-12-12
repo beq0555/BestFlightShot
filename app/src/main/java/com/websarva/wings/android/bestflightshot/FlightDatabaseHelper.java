@@ -3,13 +3,13 @@ package com.websarva.wings.android.bestflightshot;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-public class DatabaseHelper extends SQLiteOpenHelper {
+//RecentFlightアクティビティ専用のDBHelper。
+public class FlightDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "flightdata.db";
     private static final int DATABASE_VERSION = 1;
 
-    public DatabaseHelper(Context context) {
+    public FlightDatabaseHelper(Context context) {
         super(context, DATABASE_NAME,null,DATABASE_VERSION);
     }
 
