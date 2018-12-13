@@ -6,4 +6,5 @@
     <string name="bt_recent_flight">今すぐ撮影</string>
     <string name="bt_condition_select">条件で探す</string>
     <string name="bt_special_flight">スペシャル</string>
+    <string name="tv_opening_tap">画面をタップしてください</string>
 </resources>

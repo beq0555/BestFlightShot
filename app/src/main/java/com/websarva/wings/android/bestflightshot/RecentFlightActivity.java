@@ -1,5 +1,6 @@
 package com.websarva.wings.android.bestflightshot;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecentFlightActivity extends AppCompatActivity {
+    private String airport = "";
 
     private ListView lv;
 
@@ -43,7 +45,9 @@ public class RecentFlightActivity extends AppCompatActivity {
 
         @Override
         public String doInBackground(Void... params) {
-            String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf&odpt:departureAirport=odpt.Airport:HND";
+            Intent intent = getIntent();
+            airport = intent.getStringExtra("airport");
+            String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf&odpt:departureAirport=odpt.Airport:"+airport;
             String result = "";
 
             HttpURLConnection con = null;
@@ -100,7 +104,7 @@ public class RecentFlightActivity extends AppCompatActivity {
                     if(rootJson.has("odpt:aircraftType")) {
                         typeList.add(i,rootJson.getString("odpt:aircraftType"));
                     } else {
-                        typeList.add(i,"機種情報を取得できませんでした。");
+                        typeList.add(i,"シークレット");
                     }
                 }
             }catch (JSONException ex) {
@@ -177,13 +181,13 @@ public class RecentFlightActivity extends AppCompatActivity {
                         break;
                     default:
                         item.setImageId(R.drawable.noimage);
-                        item.setCraftType("機種情報を取得できませんでした");
+                        item.setCraftType(sortedTypeList.get(i));
                         break;
                 }
                 list.add(item);
             }
             //ImageArrayAdapterに上のリストをセット。
-            ImageArrayAdapter adapter = new ImageArrayAdapter(RecentFlightActivity.this,R.layout.list_view_image_item,list);
+            RecentFlightImageArrayAdapter adapter = new RecentFlightImageArrayAdapter(RecentFlightActivity.this,R.layout.list_view_recent_flight_item,list);
             lv = (ListView) findViewById(R.id.listView);
             lv.setAdapter(adapter);
 

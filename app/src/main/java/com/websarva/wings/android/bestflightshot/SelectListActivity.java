@@ -109,7 +109,8 @@ private String airport = "";
                         typeList.add(i,"null");
                     }
                     if(rootJson.has("odpt:flightInformationText")) {
-                        infoList.add(i,rootJson.getString("odpt:flightInformationText"));
+                        JSONObject infoJson = rootJson.getJSONObject("odpt:flightInformationText");
+                        infoList.add(i,infoJson.getString("ja"));
                     }else {
                         infoList.add(i,"特記事項無し");
                     }
@@ -138,7 +139,7 @@ private String airport = "";
                     stmt.executeInsert();
                 }
                 //現在時刻から直近10件のフライト情報を取り出す。それをsortedTypeListとsortedTimeListとsortedInfoListに格納。
-                String sql = "SELECT * FROM infodata WHERE time(time) >= time('now','localtime') AND info like '%塗装%' ORDER BY time(time) LIMIT 20";
+                String sql = "SELECT * FROM infodata WHERE time(time) >= time('now','localtime') AND info like '%事項%' ORDER BY time(time) LIMIT 10";
                 Cursor cursor = db.rawQuery(sql, null);
                 while (cursor.moveToNext()) {
 
@@ -189,10 +190,10 @@ private String airport = "";
     //    startActivity(intent);
     //}
 
-   // public void onSpecialFlightButton(View view) {
+   public void onSpecialFlightButton(View view) {
 
-   //     Intent intent = new Intent(SelectListActivity.this, SpecialFlightActivity.class);
-   //     intent.putExtra("airport",airport);
-   //     startActivity(intent);
-    //}
+        Intent intent = new Intent(SelectListActivity.this, SpecialFlightActivity.class);
+        intent.putExtra("airport",airport);
+        startActivity(intent);
+    }
 }

@@ -12,17 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AirportActivity">
+        <activity android:name=".OpeningActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".RecentFlightActivity"></activity>
-
-        <activity android:name=".SelectListActivity"></activity>
+        <activity android:name=".RecentFlightActivity" />
+        <activity android:name=".SelectListActivity" />
+        <activity android:name=".SpecialFlightActivity" />
+        <activity android:name=".AirportActivity"></activity>
     </application>
 
 </manifest>

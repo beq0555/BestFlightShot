@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class ImageArrayAdapter extends ArrayAdapter<FlightListItem> {
+public class SpecialFlightImageArrayAdapter extends ArrayAdapter<SpecialListItem> {
 
     private int resourceId;
-    private List<FlightListItem> items;
+    private List<SpecialListItem> items;
     private LayoutInflater inflater;
 
-    public ImageArrayAdapter(Context context, int resourceId, List<FlightListItem> items) {
+    public SpecialFlightImageArrayAdapter(Context context, int resourceId, List<SpecialListItem> items) {
         super(context, resourceId, items);
 
         this.resourceId = resourceId;
@@ -34,7 +34,7 @@ public class ImageArrayAdapter extends ArrayAdapter<FlightListItem> {
             view = this.inflater.inflate(this.resourceId, null);
         }
 
-        FlightListItem item = this.items.get(position);
+        SpecialListItem item = this.items.get(position);
 
         //機種名をセット
         TextView aircraftName = (TextView)view.findViewById(R.id.tvAircraft);
@@ -43,6 +43,10 @@ public class ImageArrayAdapter extends ArrayAdapter<FlightListItem> {
         //出発時刻をセット
         TextView departureTime = (TextView)view.findViewById(R.id.tvDeparture);
         departureTime.setText(item.getDepartureTime());
+
+        //特別情報をセット
+        TextView specialInfo = (TextView)view.findViewById(R.id.tvSpecialInfo);
+        specialInfo.setText(item.getSpecialInfo());
 
         //機種画像をセット
         ImageView aircraftImage = (ImageView)view.findViewById(R.id.aircraftImage);
