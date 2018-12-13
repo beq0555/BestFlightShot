@@ -7,4 +7,7 @@
     <string name="bt_condition_select">条件で探す</string>
     <string name="bt_special_flight">スペシャル</string>
     <string name="tv_opening_tap">画面をタップしてください</string>
+    <string name="select_time_zone">時間帯を選択してください</string>
+    <string name="timezone_linear">〜</string>
+    <string name="select_aircraft">機種を選択してください</string>
 </resources>
