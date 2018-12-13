@@ -31,7 +31,7 @@ public class SpecialFlightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_special_flight);
-        setTitle("撮影する航空機を選択してください");
+        setTitle("Tap Special Flight");
 
         SpecialInfoReceiver receiver = new SpecialInfoReceiver();
         receiver.execute();
@@ -155,7 +155,7 @@ public class SpecialFlightActivity extends AppCompatActivity {
                 for (int i = 0; i < sortedTypeList.size(); i++) {
                     SpecialListItem item = new SpecialListItem();
                     item.setCraftType("<機種>" + sortedTypeList.get(i));
-                    item.setDepartureTime("離陸時間  " + sortedTimeList.get(i));
+                    item.setDepartureTime("<離陸時間>  " + sortedTimeList.get(i));
                     item.setSpecialInfo(sortedInfoList.get(i));
                     switch (sortedTypeList.get(i)) {
                         case "738":

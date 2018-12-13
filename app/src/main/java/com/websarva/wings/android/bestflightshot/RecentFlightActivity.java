@@ -32,7 +32,7 @@ public class RecentFlightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_flight);
-        setTitle("撮影する航空機を選択してください");
+        setTitle("Tap Flight");
 
         //非同期処理を開始
         FlightInfoReceiver receiver = new FlightInfoReceiver();
@@ -152,12 +152,14 @@ public class RecentFlightActivity extends AppCompatActivity {
             for (int i = 0; i < sortedTypeList.size(); i++) {
                 FlightListItem item = new FlightListItem();
 
-                item.setCraftType("   機種         " + sortedTypeList.get(i));
-                item.setDepartureTime("離陸時間  " + sortedTimeList.get(i));
+                item.setCraftType("<機種>" + sortedTypeList.get(i));
+                item.setDepartureTime("<離陸時間>" + sortedTimeList.get(i));
                 switch (sortedTypeList.get(i)) {
                     case "738":
                         item.setImageId(R.drawable.b_738);
                         break;
+                    case "739":
+                        item.setImageId(R.drawable.b_739);
                     case "E90":
                         item.setImageId(R.drawable.e90);
                         break;
@@ -179,9 +181,24 @@ public class RecentFlightActivity extends AppCompatActivity {
                     case "735":
                         item.setImageId(R.drawable.b_735);
                         break;
+                    case "777":
+                        item.setImageId(R.drawable.b_777);
+                        break;
+                    case "320":
+                        item.setImageId(R.drawable.a_321);
+                        break;
+                    case "321":
+                        item.setImageId(R.drawable.a_321);
+                    case "332":
+                        item.setImageId(R.drawable.a_321);
+                    case "787":
+                        item.setImageId(R.drawable.b_787);
+                        break;
+                    case "767":
+                        item.setImageId(R.drawable.b_767);
                     default:
-                        item.setImageId(R.drawable.noimage);
-                        item.setCraftType(sortedTypeList.get(i));
+                        item.setImageId(R.drawable.b_777);
+                        item.setCraftType("<機種>" + sortedTypeList.get(i));
                         break;
                 }
                 list.add(item);

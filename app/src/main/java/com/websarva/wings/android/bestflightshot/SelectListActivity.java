@@ -36,7 +36,7 @@ private String airport = "";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_list);
 
-        setTitle("撮影方法を選択してください");
+        setTitle("Tap Way");
 
         MenuInfoReceiver receiver = new MenuInfoReceiver();
         receiver.execute();
@@ -155,9 +155,8 @@ private String airport = "";
                 if (sortedInfoList == null || sortedInfoList.size() == 0) {
                     Button btSpecial = findViewById(R.id.btSpecialFlight);
                     btSpecial.setEnabled(false);
-                    btSpecial.setAlpha(.5f);
-                    btSpecial.setBackgroundColor(Color.parseColor("#808080"));
-                    //btSpecial.setColorFilter(0xaa808080);
+                    btSpecial.setAlpha(.3f);
+                    btSpecial.setBackgroundResource(R.drawable.frame_style);
                 }
                 }finally {
                 db.close();
@@ -183,12 +182,12 @@ private String airport = "";
        startActivity(intent);
    }
 
-    //public void onConditonSelectButton(View view) {
+    public void onConditionSelectButton(View view) {
 
-    //    Intent intent = new Intent(SelectListActivity.this,ConditionSelectActivity.class);
-     //   intent.putExtra("airport",airport);
-    //    startActivity(intent);
-    //}
+       Intent intent = new Intent(SelectListActivity.this,ConditionSelectActivity.class);
+       intent.putExtra("airport",airport);
+       startActivity(intent);
+    }
 
    public void onSpecialFlightButton(View view) {
 

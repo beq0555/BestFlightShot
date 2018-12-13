@@ -12,7 +12,7 @@ public class AirportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_airport);
         Intent intent = getIntent();
-        setTitle("撮影する空港を選択してください");
+        setTitle("Tap Airport");
     }
 
     public void onHanedaClick(View view){

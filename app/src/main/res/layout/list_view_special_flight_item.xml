@@ -54,7 +54,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
         android:text="TextView"
-        android:textColor="#1e90ff"
+        android:textColor="#00008b"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
