@@ -2,11 +2,13 @@ package com.websarva.wings.android.bestflightshot;
 
 import java.util.List;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -24,35 +26,47 @@ public class SpecialFlightImageArrayAdapter extends ArrayAdapter<SpecialListItem
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    private static class ViewHolder {
+
+        TextView aircraftName;
+        TextView departureTime;
+        TextView specialInfo;
+        ImageView aircraftImage;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         View view;
-        if(convertView != null) {
-            view = convertView;
-        } else {
-            view = this.inflater.inflate(this.resourceId, null);
+        ViewHolder holder;
+
+        if(convertView == null) {
+            convertView = inflater.inflate(resourceId,parent,false);
+
+            holder = new ViewHolder();
+            holder.aircraftName = convertView.findViewById(R.id.tvAircraft);
+            holder.departureTime = convertView.findViewById(R.id.tvDeparture);
+            holder.specialInfo = convertView.findViewById(R.id.tvSpecialInfo);
+            holder.aircraftImage = convertView.findViewById(R.id.aircraftImage);
+            convertView.setTag(holder);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, 500);
+
+            convertView.setLayoutParams(params);
+
+        }
+
+        else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
         SpecialListItem item = this.items.get(position);
+        holder.aircraftName.setText(item.getCraftType());
+        holder.departureTime.setText(item.getDepartureTime());
+        holder.specialInfo.setText(item.getSpecialInfo());
+        holder.aircraftImage.setImageResource(item.getImageId());
 
-        //機種名をセット
-        TextView aircraftName = (TextView)view.findViewById(R.id.tvAircraft);
-        aircraftName.setText(item.getCraftType());
-
-        //出発時刻をセット
-        TextView departureTime = (TextView)view.findViewById(R.id.tvDeparture);
-        departureTime.setText(item.getDepartureTime());
-
-        //特別情報をセット
-        TextView specialInfo = (TextView)view.findViewById(R.id.tvSpecialInfo);
-        specialInfo.setText(item.getSpecialInfo());
-
-        //機種画像をセット
-        ImageView aircraftImage = (ImageView)view.findViewById(R.id.aircraftImage);
-        aircraftImage.setImageResource(item.getImageId());
-
-        return view;
+        return convertView;
 
     }
 
