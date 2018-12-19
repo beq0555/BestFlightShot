@@ -7,6 +7,7 @@
     android:background="@drawable/greyback"
     tools:context=".SelectListActivity">
 
+
     <Button
         android:id="@+id/btRecentFlight"
         android:layout_width="wrap_content"
@@ -49,6 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
+
     <Button
         android:id="@+id/btSpecialFlight"
         android:layout_width="wrap_content"
@@ -65,6 +67,8 @@
         android:textColor="#000000"
         android:textSize="25sp"
         android:padding="15dp"
+        android:enabled="false"
+        android:alpha="0.3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,5 +80,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
+
+    <ProgressBar
+        android:id="@+id/selectProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
+
 
 </android.support.constraint.ConstraintLayout>

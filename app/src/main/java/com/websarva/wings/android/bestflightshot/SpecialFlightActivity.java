@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteStatement;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,8 +42,14 @@ public class SpecialFlightActivity extends AppCompatActivity {
 
     private class SpecialInfoReceiver extends AsyncTask<Void, String, String> {
 
+        private ProgressBar progressBar;
+
         @Override
         public String doInBackground(Void... params) {
+
+            progressBar = (ProgressBar)findViewById(R.id.specialProgressBar);
+            this.progressBar.setVisibility(View.VISIBLE);
+
             Intent intent = getIntent();
             airport = intent.getStringExtra("airport");
             String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf&odpt:departureAirport=odpt.Airport:" + airport;
@@ -76,6 +84,10 @@ public class SpecialFlightActivity extends AppCompatActivity {
         }
 
         public void onPostExecute(String result) {
+
+            if(this.progressBar != null) {
+                this.progressBar.setVisibility(View.GONE);
+            }
 
             List<String> typeList = new ArrayList<>();
             List<String> timeList = new ArrayList<>();
@@ -136,7 +148,7 @@ public class SpecialFlightActivity extends AppCompatActivity {
                     stmt.executeInsert();
                 }
                 //現在時刻から直近10件のフライト情報を取り出す。それをsortedTypeListとsortedTimeListとsortedInfoListに格納。
-                String sql = "SELECT * FROM infodata WHERE time(time) >= time('now','localtime') AND info like '%塗装%' ORDER BY time(time) LIMIT 5";
+                String sql = "SELECT * FROM infodata WHERE time(time) >= time('now','localtime') AND info LIKE '%で運航%' OR info LIKE '%よる運航%' ORDER BY time(time) LIMIT 7";
                 Cursor cursor = db.rawQuery(sql, null);
                 while (cursor.moveToNext()) {
 
@@ -161,6 +173,8 @@ public class SpecialFlightActivity extends AppCompatActivity {
                         case "738":
                             item.setImageId(R.drawable.b_738);
                             break;
+                        case "739":
+                            item.setImageId(R.drawable.b_739);
                         case "E90":
                             item.setImageId(R.drawable.e90);
                             break;
@@ -181,6 +195,27 @@ public class SpecialFlightActivity extends AppCompatActivity {
                             break;
                         case "735":
                             item.setImageId(R.drawable.b_735);
+                            break;
+                        case "777":
+                            item.setImageId(R.drawable.b_777);
+                            break;
+                        case "773":
+                            item.setImageId(R.drawable.b_777);
+                        case "320":
+                            item.setImageId(R.drawable.a_321);
+                            break;
+                        case "321":
+                            item.setImageId(R.drawable.a_321);
+                        case "332":
+                            item.setImageId(R.drawable.a_321);
+                        case "787":
+                            item.setImageId(R.drawable.b_787);
+                            break;
+                        case "767":
+                            item.setImageId(R.drawable.b_767);
+                            break;
+                        case "73H":
+                            item.setImageId(R.drawable.h73);
                             break;
                         default:
                             item.setImageId(R.drawable.noimage);

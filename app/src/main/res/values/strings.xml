@@ -5,7 +5,7 @@
     <string name="tv_airport_name_narita">成田</string>
     <string name="bt_recent_flight">今すぐ撮影</string>
     <string name="bt_condition_select">条件で探す</string>
-    <string name="bt_special_flight">スペシャル</string>
+    <string name="bt_special_flight">特別機体　</string>
     <string name="tv_opening_tap">画面をタップしてください</string>
     <string name="select_time_zone">時間帯を選択してください</string>
     <string name="timezone_linear">〜</string>

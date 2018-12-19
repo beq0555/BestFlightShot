@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,8 +45,14 @@ private String airport = "";
 
     private class MenuInfoReceiver extends AsyncTask<Void,String,String> {
 
+        private ProgressBar progressBar;
+
         @Override
         public String doInBackground(Void... params) {
+
+            progressBar = (ProgressBar)findViewById(R.id.selectProgressBar);
+            this.progressBar.setVisibility(View.VISIBLE);
+
             Intent intent = getIntent();
             airport = intent.getStringExtra("airport");
 
@@ -80,6 +87,10 @@ private String airport = "";
             return result;
         }
         public void onPostExecute(String result) {
+
+            if(this.progressBar != null) {
+                this.progressBar.setVisibility(View.GONE);
+            }
 
             List<String> typeList = new ArrayList<>();
             List<String> timeList = new ArrayList<>();
@@ -139,7 +150,7 @@ private String airport = "";
                     stmt.executeInsert();
                 }
                 //現在時刻から直近10件のフライト情報を取り出す。それをsortedTypeListとsortedTimeListとsortedInfoListに格納。
-                String sql = "SELECT * FROM infodata WHERE time(time) >= time('now','localtime') AND info like '%塗装%' ORDER BY time(time) LIMIT 5";
+                String sql = "SELECT * FROM infodata WHERE time(time) >= time('now','localtime') AND info LIKE '%で運航%' OR info LIKE '%よる運航%' ORDER BY time(time) LIMIT 7";
                 Cursor cursor = db.rawQuery(sql, null);
                 while (cursor.moveToNext()) {
 
@@ -152,10 +163,10 @@ private String airport = "";
                     sortedInfoList.add(cursor.getString(idxInfo));
                 }
                 //sortedInfoListがnullか要素が0の時、スペシャルボタンを利用不可にする。
-                if (sortedInfoList == null || sortedInfoList.size() == 0) {
+                if (sortedInfoList != null && sortedInfoList.size() != 0) {
                     Button btSpecial = findViewById(R.id.btSpecialFlight);
-                    btSpecial.setEnabled(false);
-                    btSpecial.setAlpha(.3f);
+                    btSpecial.setEnabled(true);
+                    btSpecial.setAlpha(1.0f);
                     btSpecial.setBackgroundResource(R.drawable.frame_style);
                 }
                 }finally {
@@ -196,3 +207,4 @@ private String airport = "";
         startActivity(intent);
     }
 }
+
