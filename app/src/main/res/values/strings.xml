@@ -8,6 +8,7 @@
     <string name="bt_special_flight">特別機体　</string>
     <string name="tv_opening_tap">画面をタップしてください</string>
     <string name="select_time_zone">時間帯を選択してください</string>
-    <string name="timezone_linear">〜</string>
+    <string name="timezone_option">〜</string>
     <string name="select_aircraft">機種を選択してください</string>
+    <string name="condition_select_check">この条件で検索！</string>
 </resources>
