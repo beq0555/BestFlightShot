@@ -35,7 +35,7 @@ public class ConditionFlightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condition_flight);
-        setTitle("Tap Flight");
+        setTitle("撮影する航空機を選択してください");
     }
     private class ConditionFlightReceiver extends AsyncTask<Void,String,String> {
 

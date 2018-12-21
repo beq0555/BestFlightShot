@@ -39,12 +39,14 @@ public class ConditionFlightImageArrayAdapter extends ArrayAdapter<ConditionList
         TextView aircraftName = (TextView)view.findViewById(R.id.tvAircraft);
         aircraftName.setText(item.getCraftType());
 
+        //航空会社をセット
+        TextView airline = (TextView)view.findViewById(R.id.tvAirline);
+        airline.setText(item.getAirline());
+
         //出発時刻をセット
         TextView departureTime = (TextView)view.findViewById(R.id.tvDeparture);
         departureTime.setText(item.getDepartureTime());
 
-        TextView airline = (TextView)view.findViewById(R.id.tvAirline);
-        airline.setText(item.getAirline());
 
         //機種画像をセット
         ImageView aircraftImage = (ImageView)view.findViewById(R.id.aircraftImage);

@@ -3,13 +3,12 @@ package com.websarva.wings.android.bestflightshot;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-//RecentFlightアクティビティ専用のDBHelper。
-public class FlightDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "flightdata.db";
+public class RecentDatabaseHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "recentdata.db";
     private static final int DATABASE_VERSION = 1;
 
-    public FlightDatabaseHelper(Context context) {
+    public RecentDatabaseHelper(Context context) {
         super(context, DATABASE_NAME,null,DATABASE_VERSION);
     }
 
@@ -17,9 +16,10 @@ public class FlightDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE flightdata (");
+        sb.append("CREATE TABLE recentdata (");
         sb.append("id INTEGER PRIMARY KEY ,");
         sb.append("type TEXT,");
+        sb.append("airline TEXT,");
         sb.append("time TEXT");
         sb.append(")");
         String sql = sb.toString();

@@ -33,7 +33,7 @@ public class SpecialFlightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_special_flight);
-        setTitle("Tap Special Flight");
+        setTitle("撮影する特別機体を選択してください");
 
         SpecialInfoReceiver receiver = new SpecialInfoReceiver();
         receiver.execute();
@@ -90,13 +90,19 @@ public class SpecialFlightActivity extends AppCompatActivity {
             }
 
             List<String> typeList = new ArrayList<>();
+            List<String> airlineList = new ArrayList<>();
             List<String> timeList = new ArrayList<>();
             //odpt:flightInformationTextの内容を格納する配列
             List<String> infoList = new ArrayList<>();
 
             List<String> sortedTypeList = new ArrayList<>();
+            List<String> sortedAirlineList = new ArrayList<>();
             List<String> sortedTimeList = new ArrayList<>();
             List<String> sortedInfoList = new ArrayList<>();
+
+            //airlineはodpt.Operator:ANAという風に取得されるため、ANAという文字列に整形するために用いる変数
+            String fullAirline;
+            String airline;
 
             try {
                 //Jsonデータを文字列配列にパース
@@ -104,7 +110,7 @@ public class SpecialFlightActivity extends AppCompatActivity {
                 for (int i = 0; i < jArray.length(); i++) {
                     JSONObject rootJson = jArray.getJSONObject(i);
 
-                    //データの取得例外処理（timeListとtypeList）
+                    //データの取得例外処理
                     if (rootJson.has("odpt:scheduledDepartureTime")) {
                         timeList.add(i, rootJson.getString("odpt:scheduledDepartureTime"));
                     } else if (rootJson.has("JSONObject.NULL")) {
@@ -117,6 +123,13 @@ public class SpecialFlightActivity extends AppCompatActivity {
                     } else {
                         typeList.add(i, "null");
                     }
+                    if(rootJson.has("odpt:airline")) {
+                        fullAirline = rootJson.getString("odpt:airline");
+                        airline = fullAirline.replaceAll("odpt.Operator:","");
+                        airlineList.add(i,airline);
+                    } else {
+                        airlineList.add(i,"を取得できませんでした");
+                    }
                     if (rootJson.has("odpt:flightInformationText")) {
                         JSONObject infoJson = rootJson.getJSONObject("odpt:flightInformationText");
                         infoList.add(i, infoJson.getString("ja"));
@@ -127,36 +140,39 @@ public class SpecialFlightActivity extends AppCompatActivity {
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
-            InfoDatabaseHelper helper = new InfoDatabaseHelper(SpecialFlightActivity.this);
+            SpecialDatabaseHelper helper = new SpecialDatabaseHelper(SpecialFlightActivity.this);
             SQLiteDatabase db = helper.getWritableDatabase();
 
             try {
                 //一旦データベースを削除して、新たにtypeListとtimeListの要素をDBにインサート。
-                String sqlDelete = "DELETE FROM infodata";
+                String sqlDelete = "DELETE FROM specialdata";
                 SQLiteStatement stmt = db.compileStatement(sqlDelete);
                 stmt.executeUpdateDelete();
 
-                String sqlInsert = "INSERT INTO infodata (id, type, time,info) VALUES (?,?,?,?)";
+                String sqlInsert = "INSERT INTO specialdata (id,type,airline,time,info) VALUES (?,?,?,?,?)";
 
                 for (int i = 0; i < typeList.size(); i++) {
                     stmt = db.compileStatement(sqlInsert);
                     stmt.bindLong(1, i);
                     stmt.bindString(2, typeList.get(i));
-                    stmt.bindString(3, timeList.get(i));
-                    stmt.bindString(4, infoList.get(i));
+                    stmt.bindString(3,airlineList.get(i));
+                    stmt.bindString(4, timeList.get(i));
+                    stmt.bindString(5, infoList.get(i));
 
                     stmt.executeInsert();
                 }
                 //現在時刻から直近10件のフライト情報を取り出す。それをsortedTypeListとsortedTimeListとsortedInfoListに格納。
-                String sql = "SELECT * FROM infodata WHERE time(time) >= time('now','localtime') AND info LIKE '%で運航%' OR info LIKE '%よる運航%' ORDER BY time(time) LIMIT 7";
+                String sql = "SELECT * FROM specialdata WHERE time(time) >= time('now','localtime') AND info LIKE '%で運航%' OR info LIKE '%よる運航%' ORDER BY time(time) LIMIT 7";
                 Cursor cursor = db.rawQuery(sql, null);
                 while (cursor.moveToNext()) {
 
                     int idxType = cursor.getColumnIndex("type");
+                    int idxAirlin = cursor.getColumnIndex("airline");
                     int idxTime = cursor.getColumnIndex("time");
                     int idxInfo = cursor.getColumnIndex("info");
 
                     sortedTypeList.add(cursor.getString(idxType));
+                    sortedAirlineList.add(cursor.getString(idxAirlin));
                     sortedTimeList.add(cursor.getString(idxTime));
                     sortedInfoList.add(cursor.getString(idxInfo));
                 }
@@ -167,6 +183,7 @@ public class SpecialFlightActivity extends AppCompatActivity {
                 for (int i = 0; i < sortedTypeList.size(); i++) {
                     SpecialListItem item = new SpecialListItem();
                     item.setCraftType("<機種>" + sortedTypeList.get(i));
+                    item.setAirline("<航空会社>"+ sortedAirlineList.get(i));
                     item.setDepartureTime("<離陸時間>  " + sortedTimeList.get(i));
                     item.setSpecialInfo(sortedInfoList.get(i));
                     switch (sortedTypeList.get(i)) {

@@ -4,12 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-//SelectListActivity専用のDBHelper。infoカラムにflightInfoTextの記述内容を格納する
-public class InfoDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "infodata.db";
+public class SpecialDatabaseHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "specialdata.db";
     private static final int DATABASE_VERSION = 1;
 
-    public InfoDatabaseHelper(Context context) {
+    public SpecialDatabaseHelper(Context context) {
         super(context, DATABASE_NAME,null,DATABASE_VERSION);
     }
 
@@ -17,9 +16,10 @@ public class InfoDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("CREATE TABLE infodata (");
+        sb.append("CREATE TABLE specialdata (");
         sb.append("id INTEGER PRIMARY KEY ,");
         sb.append("type TEXT,");
+        sb.append("airline TEXT,");
         sb.append("time TEXT,");
         sb.append("info TEXT");
         sb.append(")");

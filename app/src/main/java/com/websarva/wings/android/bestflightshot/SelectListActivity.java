@@ -37,7 +37,7 @@ private String airport = "";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_list);
 
-        setTitle("Tap Way");
+        setTitle("航空機の検索方法を選択してください");
 
         MenuInfoReceiver receiver = new MenuInfoReceiver();
         receiver.execute();
@@ -129,16 +129,16 @@ private String airport = "";
             }catch (JSONException ex) {
                 ex.printStackTrace();
             }
-            InfoDatabaseHelper helper = new InfoDatabaseHelper(SelectListActivity.this);
+            SpecialDatabaseHelper helper = new SpecialDatabaseHelper(SelectListActivity.this);
             SQLiteDatabase db = helper.getWritableDatabase();
 
             try {
                 //一旦データベースを削除して、新たにtypeListとtimeListの要素をDBにインサート。
-                String sqlDelete = "DELETE FROM infodata";
+                String sqlDelete = "DELETE FROM specialdata";
                 SQLiteStatement stmt = db.compileStatement(sqlDelete);
                 stmt.executeUpdateDelete();
 
-                String sqlInsert = "INSERT INTO infodata (id, type, time, info) VALUES (?,?,?,?)";
+                String sqlInsert = "INSERT INTO specialdata (id, type, time, info) VALUES (?,?,?,?)";
 
                 for (int i = 0; i < typeList.size(); i++) {
                     stmt = db.compileStatement(sqlInsert);
@@ -150,7 +150,7 @@ private String airport = "";
                     stmt.executeInsert();
                 }
                 //現在時刻から直近10件のフライト情報を取り出す。それをsortedTypeListとsortedTimeListとsortedInfoListに格納。
-                String sql = "SELECT * FROM infodata WHERE time(time) >= time('now','localtime') AND info LIKE '%で運航%' OR info LIKE '%よる運航%' ORDER BY time(time) LIMIT 7";
+                String sql = "SELECT * FROM specialdata WHERE time(time) >= time('now','localtime') AND info LIKE '%で運航%' OR info LIKE '%よる運航%' ORDER BY time(time) LIMIT 7";
                 Cursor cursor = db.rawQuery(sql, null);
                 while (cursor.moveToNext()) {
 
@@ -162,6 +162,17 @@ private String airport = "";
                     sortedTimeList.add(cursor.getString(idxTime));
                     sortedInfoList.add(cursor.getString(idxInfo));
                 }
+                //非同期処理が終了した後に、全てのボタンを利用可能にする
+                Button btRecent = findViewById(R.id.btRecentFlight);
+                btRecent.setEnabled(true);
+                btRecent.setAlpha(1.0f);
+                btRecent.setBackgroundResource(R.drawable.frame_style);
+
+                Button btCondition = findViewById(R.id.btConditionFlight);
+                btCondition.setEnabled(true);
+                btCondition.setAlpha(1.0f);
+                btCondition.setBackgroundResource(R.drawable.frame_style
+                );
                 //sortedInfoListがnullか要素が0の時、スペシャルボタンを利用不可にする。
                 if (sortedInfoList != null && sortedInfoList.size() != 0) {
                     Button btSpecial = findViewById(R.id.btSpecialFlight);

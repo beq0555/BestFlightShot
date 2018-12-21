@@ -5,6 +5,7 @@ public class FlightListItem {
     private int imageId;
     private String craftType;
     private  String departureTime;
+    private  String airline;
 
     public int getImageId(){
         return imageId;
@@ -29,4 +30,8 @@ public class FlightListItem {
     public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
+
+    public  String getAirline() {return airline;}
+
+    public void  setAirline(String airline) {this.airline = airline;}
 }

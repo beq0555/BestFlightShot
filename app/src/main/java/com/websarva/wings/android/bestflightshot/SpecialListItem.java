@@ -4,6 +4,7 @@ public class SpecialListItem {
 
     private int imageId;
     private String craftType;
+    private String airline;
     private  String departureTime;
     private String specialInfo;
 
@@ -22,6 +23,10 @@ public class SpecialListItem {
     public void setCraftType(String craftType) {
         this.craftType = craftType;
     }
+
+    public  String getAirline() {return airline;}
+
+    public void  setAirline(String airline) {this.airline = airline;}
 
     public String getDepartureTime() {
         return departureTime;

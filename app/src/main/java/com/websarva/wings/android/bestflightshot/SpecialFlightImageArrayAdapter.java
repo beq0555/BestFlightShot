@@ -29,6 +29,7 @@ public class SpecialFlightImageArrayAdapter extends ArrayAdapter<SpecialListItem
     private static class ViewHolder {
 
         TextView aircraftName;
+        TextView airline;
         TextView departureTime;
         TextView specialInfo;
         ImageView aircraftImage;
@@ -44,6 +45,7 @@ public class SpecialFlightImageArrayAdapter extends ArrayAdapter<SpecialListItem
 
             holder = new ViewHolder();
             holder.aircraftName = convertView.findViewById(R.id.tvAircraft);
+            holder.airline = convertView.findViewById(R.id.tvAirline);
             holder.departureTime = convertView.findViewById(R.id.tvDeparture);
             holder.specialInfo = convertView.findViewById(R.id.tvSpecialInfo);
             holder.aircraftImage = convertView.findViewById(R.id.aircraftImage);
@@ -62,6 +64,7 @@ public class SpecialFlightImageArrayAdapter extends ArrayAdapter<SpecialListItem
 
         SpecialListItem item = this.items.get(position);
         holder.aircraftName.setText(item.getCraftType());
+        holder.airline.setText(item.getAirline());
         holder.departureTime.setText(item.getDepartureTime());
         holder.specialInfo.setText(item.getSpecialInfo());
         holder.aircraftImage.setImageResource(item.getImageId());

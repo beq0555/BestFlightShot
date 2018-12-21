@@ -40,6 +40,10 @@ public class RecentFlightImageArrayAdapter extends ArrayAdapter<FlightListItem> 
         TextView aircraftName = (TextView)view.findViewById(R.id.tvAircraft);
         aircraftName.setText(item.getCraftType());
 
+        //航空会社をセット
+        TextView airline = (TextView)view.findViewById(R.id.tvAirline);
+        airline.setText(item.getAirline());
+
         //出発時刻をセット
         TextView departureTime = (TextView)view.findViewById(R.id.tvDeparture);
         departureTime.setText(item.getDepartureTime());

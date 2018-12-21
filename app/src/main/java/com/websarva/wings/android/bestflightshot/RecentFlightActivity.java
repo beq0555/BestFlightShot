@@ -34,7 +34,7 @@ public class RecentFlightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_flight);
-        setTitle("Tap Flight");
+        setTitle("撮影する航空機を選択してください");
 
         //非同期処理を開始
         FlightInfoReceiver receiver = new FlightInfoReceiver();
@@ -50,6 +50,7 @@ public class RecentFlightActivity extends AppCompatActivity {
         @Override
         public String doInBackground(Void... params) {
 
+            //非同期処理中、プログレスバーを表示する
             progressBar = (ProgressBar)findViewById(R.id.recentProgressBar);
             this.progressBar.setVisibility(View.VISIBLE);
 
@@ -93,11 +94,17 @@ public class RecentFlightActivity extends AppCompatActivity {
 
            //jsonデータを文字列配列にパースした後に、機種データと離陸時間データを格納する配列。
            List<String> typeList = new ArrayList<>();
+           List<String> airlineList = new ArrayList<>();
            List<String> timeList = new ArrayList<>();
 
             //DBに格納後、SQLでクエリを行った機種と時間データを格納する配列。
            List<String> sortedTypeList = new ArrayList<>();
+           List<String> sortedAirlineList = new ArrayList<>();
            List<String> sortedTimeList = new ArrayList<>();
+
+           //airlineはodpt.Operator:ANAという風に取得されるため、ANAという文字列に整形するために用いる変数
+            String fullAirline;
+            String airline;
 
 
             try {
@@ -105,7 +112,7 @@ public class RecentFlightActivity extends AppCompatActivity {
                 JSONArray jArray = new JSONArray(result);
                 for(int i = 0; i < jArray.length(); i++) {
                     JSONObject rootJson = jArray.getJSONObject(i);
-                    //データの取得例外処理（timeListとtypeList）
+                    //データの取得例外処理（timeListとtypeList,airlineList）
                     if(rootJson.has("odpt:scheduledDepartureTime")) {
                         timeList.add(i, rootJson.getString("odpt:scheduledDepartureTime"));
                     } else if(rootJson.has("JSONObject.NULL")){
@@ -116,7 +123,14 @@ public class RecentFlightActivity extends AppCompatActivity {
                     if(rootJson.has("odpt:aircraftType")) {
                         typeList.add(i,rootJson.getString("odpt:aircraftType"));
                     } else {
-                        typeList.add(i,"777");
+                        typeList.add(i,"不明");
+                    }
+                    if(rootJson.has("odpt:airline")) {
+                        fullAirline = rootJson.getString("odpt:airline");
+                        airline = fullAirline.replaceAll("odpt.Operator:","");
+                        airlineList.add(i,airline);
+                    }else {
+                        airlineList.add(i,"を取得できませんでした");
                     }
                 }
             }catch (JSONException ex) {
@@ -124,34 +138,37 @@ public class RecentFlightActivity extends AppCompatActivity {
 
             }
 
-            FlightDatabaseHelper helper = new FlightDatabaseHelper(RecentFlightActivity.this);
+            RecentDatabaseHelper helper = new RecentDatabaseHelper(RecentFlightActivity.this);
             SQLiteDatabase db = helper.getWritableDatabase();
 
             try {
                 //一旦データベースを削除して、新たにtypeListとtimeListの要素をDBにインサート。
-                String sqlDelete = "DELETE FROM flightdata";
+                String sqlDelete = "DELETE FROM recentdata";
                 SQLiteStatement stmt = db.compileStatement(sqlDelete);
                 stmt.executeUpdateDelete();
 
-                String sqlInsert = "INSERT INTO flightdata (id, type, time) VALUES (?,?,?)";
+                String sqlInsert = "INSERT INTO recentdata (id,type,airline,time) VALUES (?,?,?,?)";
 
                 for(int i = 0; i < typeList.size(); i++) {
                     stmt = db.compileStatement(sqlInsert);
                     stmt.bindLong(1,i);
                     stmt.bindString(2,typeList.get(i));
-                    stmt.bindString(3,timeList.get(i));
+                    stmt.bindString(3,airlineList.get(i));
+                    stmt.bindString(4,timeList.get(i));
 
                     stmt.executeInsert();
                 }
                 //現在時刻から直近10件のフライト情報を取り出す。それをsortedTypeListとsortedTimeListに格納。
-                String sql = "SELECT * FROM flightdata WHERE time(time) >= time('now','localtime') ORDER BY time(time) LIMIT 15";
+                String sql = "SELECT * FROM recentdata WHERE time(time) >= time('now','localtime') ORDER BY time(time) LIMIT 15";
                 Cursor cursor = db.rawQuery(sql,null);
                 while (cursor.moveToNext()) {
 
                     int idxType = cursor.getColumnIndex("type");
+                    int idxAirline = cursor.getColumnIndex("airline");
                     int idxTime = cursor.getColumnIndex("time");
 
                     sortedTypeList.add(cursor.getString(idxType));
+                    sortedAirlineList.add(cursor.getString(idxAirline));
                     sortedTimeList.add(cursor.getString(idxTime));
                 }
 
@@ -165,6 +182,7 @@ public class RecentFlightActivity extends AppCompatActivity {
                 FlightListItem item = new FlightListItem();
 
                 item.setCraftType("<機種>" + sortedTypeList.get(i));
+                item.setAirline("<航空会社>" + sortedAirlineList.get(i));
                 item.setDepartureTime("<離陸時間>" + sortedTimeList.get(i));
                 switch (sortedTypeList.get(i)) {
                     case "738":
@@ -209,8 +227,11 @@ public class RecentFlightActivity extends AppCompatActivity {
                     case "767":
                         item.setImageId(R.drawable.b_767);
                         break;
+                    case "73H":
+                        item.setImageId(R.drawable.h73);
+                        break;
                     default:
-                        item.setImageId(R.drawable.b_777);
+                        item.setImageId(R.drawable.noimage);
                         item.setCraftType("<機種>" + sortedTypeList.get(i));
                         break;
                 }
