@@ -8,82 +8,12 @@
     tools:context=".SelectListActivity">
 
 
-    <Button
-        android:id="@+id/btRecentFlight"
-        android:layout_width="wrap_content"
-        android:layout_height="125dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/frame_style"
-        android:onClick="onRecentFlightButton"
-        android:text="@string/bt_recent_flight"
-        android:textColor="#000000"
-        android:drawableLeft="@drawable/ico_plane"
-        android:textSize="25sp"
-        android:padding="15dp"
-        android:enabled="false"
-        android:alpha="0.3"
-        app:layout_constraintBottom_toTopOf="@+id/btConditionFlight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btConditionFlight"
-        android:layout_width="wrap_content"
-        android:layout_height="124dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/frame_style"
-        android:onClick="onConditionSelectButton"
-        android:text="@string/bt_condition_select"
-        android:textColor="#000000"
-        android:drawableRight="@drawable/ico_search"
-        android:textSize="25sp"
-        android:padding="15dp"
-        android:enabled="false"
-        android:alpha="0.3"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
-
-
-    <Button
-        android:id="@+id/btSpecialFlight"
-        android:layout_width="wrap_content"
-        android:layout_height="125dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/frame_style"
-        android:onClick="onSpecialFlightButton"
-        android:drawableLeft="@drawable/ico_rare"
-        android:text="@string/bt_special_flight"
-        android:textColor="#000000"
-        android:textSize="25sp"
-        android:padding="15dp"
-        android:enabled="false"
-        android:alpha="0.3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btConditionFlight" />
-
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.33" />
 
     <ProgressBar
         android:id="@+id/selectProgressBar"
@@ -92,9 +22,93 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="217dp" />
+
+    <ImageButton
+        android:id="@+id/btRecentFlight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/flight_now"
+        android:onClick="onRecentFlightButton"
+        android:enabled="false"
+        android:alpha="0.3"
+        />
+
+    <ImageButton
+        android:id="@+id/btSpecialFlight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:srcCompat="@drawable/special_flight"
+        android:onClick="onSpecialFlightButton"
+        android:enabled="false"
+        android:alpha="0.3"
+        />
+
+    <ImageButton
+        android:id="@+id/btConditionFlight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline10"
+        app:srcCompat="@drawable/search_flight"
+        android:onClick="onConditionSelectButton"
+        android:enabled="false"
+        android:alpha="0.3"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="646dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.66" />
 
 
 </android.support.constraint.ConstraintLayout>

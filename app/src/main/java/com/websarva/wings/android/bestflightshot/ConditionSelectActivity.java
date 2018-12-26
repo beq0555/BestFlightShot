@@ -105,6 +105,7 @@ public class ConditionSelectActivity extends AppCompatActivity {
         airline_adapter=new ArrayAdapter(ConditionSelectActivity.this,android.R.layout.simple_list_item_1,airlineList);
         airline_spinner.setAdapter(airline_adapter);
         airline_spinner.setPrompt("運行会社を選択してください");
+        airline_spinner.setOnItemSelectedListener(new spinnerAirlineListener());
     }
 
     private List<Map<String,String>> createTimeZoneList(){
@@ -174,6 +175,11 @@ public class ConditionSelectActivity extends AppCompatActivity {
         timeZone=new HashMap<>();
         timeZone.put("minTime","18:01");
         timeZone.put("maxTime","18:30");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","23:30");
+        timeZone.put("maxTime","23:59");
         timeZoneList.add(timeZone);
 
         //ArrayList(MaxTime.MinTime)を返す
@@ -259,6 +265,11 @@ public class ConditionSelectActivity extends AppCompatActivity {
         aircraftList.add(aircraft);
 
         aircraft=new HashMap<>();
+        aircraft.put("aircraft_image",R.drawable.b_787);
+        aircraft.put("aircraft","788");
+        aircraftList.add(aircraft);
+
+        aircraft=new HashMap<>();
         aircraft.put("aircraft_image",R.drawable.b_777);
         aircraft.put("aircraft","777");
         aircraftList.add(aircraft);
@@ -292,6 +303,13 @@ public class ConditionSelectActivity extends AppCompatActivity {
         aircraft.put("aircraft_image",R.drawable.b_735);
         aircraft.put("aircraft","735");
         aircraftList.add(aircraft);
+
+        aircraft=new HashMap<>();
+        aircraft.put("aircraft_image",R.drawable.noimage);
+        aircraft.put("aircraft","359");
+        aircraftList.add(aircraft);
+
+
 
         return aircraftList;
 
@@ -341,6 +359,16 @@ public class ConditionSelectActivity extends AppCompatActivity {
         aircraft=new HashMap<>();
         aircraft.put("aircraft_image",R.drawable.a_380);
         aircraft.put("aircraft","380");
+        aircraftList.add(aircraft);
+
+        aircraft = new HashMap<>();
+        aircraft.put("aircraft_image",R.drawable.a_321);
+        aircraft.put("aircraft","320");
+        aircraftList.add(aircraft);
+
+        aircraft=new HashMap<>();
+        aircraft.put("aircraft_image",R.drawable.noimage);
+        aircraft.put("aircraft","359");
         aircraftList.add(aircraft);
 
         return aircraftList;
@@ -395,7 +423,7 @@ public class ConditionSelectActivity extends AppCompatActivity {
                 aircraft_spinner.setAdapter(aircraft_adapter);
             }
 
-            intent.putExtra("manufacturer",manufacturer);
+            //intent.putExtra("manufacturer",manufacturer);
 
         }
 

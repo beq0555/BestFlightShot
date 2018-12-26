@@ -27,7 +27,7 @@ public class ConditionFlightActivity extends AppCompatActivity {
 
     private String minTime;
     private String maxTime;
-    private String aircraftType;
+    private String aircraft;
     private String airline;
     private String airport;
     private ListView lv;
@@ -36,28 +36,34 @@ public class ConditionFlightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condition_flight);
         setTitle("撮影する航空機を選択してください");
+
+        ConditionFlightReceiver receiver = new ConditionFlightReceiver();
+        receiver.execute();
     }
     private class ConditionFlightReceiver extends AsyncTask<Void,String,String> {
 
         @Override
         public String doInBackground(Void... params) {
+
+            String queryAircraft;
+            String queryAirline;
             Intent intent = getIntent();
             airport = intent.getStringExtra("airport");
-
-            aircraftType = intent.getStringExtra("aircraftType");
-            if(aircraftType != null) {
-                aircraftType = "&odpt:aircraftType=" + aircraftType;
-            }else {
-                aircraftType = "";
-            }
-
+            aircraft = intent.getStringExtra("aircraft");
             airline = intent.getStringExtra("airline");
+
             if(airline != null) {
-                airline = "&odpt:airline=" + airline;
+                queryAirline = "&odpt:airline=odpt.Operator:" + airline;
             }else {
-                airline = "";
+                queryAirline = "";
             }
-            String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf&odpt:departureAirport=odpt.Airport:"+airport + aircraftType + airline;
+            if(aircraft != null) {
+                queryAircraft = "&odpt:aircraftType=" + aircraft;
+            } else {
+                queryAircraft = "";
+            }
+
+            String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf&odpt:departureAirport=odpt.Airport:" +airport + queryAirline + queryAircraft;
             String result = "";
 
             HttpURLConnection con = null;
@@ -155,7 +161,7 @@ public class ConditionFlightActivity extends AppCompatActivity {
                     stmt.executeInsert();
                 }
                 //minTimeとmaxTimeの間の離陸情報を取得
-                String sql = "SELECT * FROM conditindata WHERE time(time) >= time(minTime) AND time(time) <= time(maxTime) ORDER BY time(time) LIMIT 10";
+                String sql = "SELECT * FROM conditiondata WHERE time(time) >= time('" + minTime + "') AND time(time) <= time('" + maxTime + "') ORDER BY time(time) LIMIT 10";
                 Cursor cursor = db.rawQuery(sql, null);
                 while (cursor.moveToNext()) {
 

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import org.json.JSONArray;
@@ -163,22 +164,18 @@ private String airport = "";
                     sortedInfoList.add(cursor.getString(idxInfo));
                 }
                 //非同期処理が終了した後に、全てのボタンを利用可能にする
-                Button btRecent = findViewById(R.id.btRecentFlight);
+                ImageButton btRecent = findViewById(R.id.btRecentFlight);
                 btRecent.setEnabled(true);
                 btRecent.setAlpha(1.0f);
-                btRecent.setBackgroundResource(R.drawable.frame_style);
 
-                Button btCondition = findViewById(R.id.btConditionFlight);
+                ImageButton btCondition = findViewById(R.id.btConditionFlight);
                 btCondition.setEnabled(true);
                 btCondition.setAlpha(1.0f);
-                btCondition.setBackgroundResource(R.drawable.frame_style
-                );
                 //sortedInfoListがnullか要素が0の時、スペシャルボタンを利用不可にする。
                 if (sortedInfoList != null && sortedInfoList.size() != 0) {
-                    Button btSpecial = findViewById(R.id.btSpecialFlight);
+                    ImageButton btSpecial = findViewById(R.id.btSpecialFlight);
                     btSpecial.setEnabled(true);
                     btSpecial.setAlpha(1.0f);
-                    btSpecial.setBackgroundResource(R.drawable.frame_style);
                 }
                 }finally {
                 db.close();

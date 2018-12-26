@@ -6,9 +6,7 @@ public class ConditionListItem {
     private  String departureTime;
     private  String airline;
 
-    public int getImageId(){
-        return imageId;
-    }
+    public int getImageId(){ return imageId; }
 
     public void setImageId(int imageId) {
         this.imageId = imageId;
