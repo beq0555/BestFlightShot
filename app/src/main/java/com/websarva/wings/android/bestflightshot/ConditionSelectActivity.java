@@ -1,7 +1,6 @@
 package com.websarva.wings.android.bestflightshot;
 
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +29,11 @@ public class ConditionSelectActivity extends AppCompatActivity {
     private Spinner aircraft_spinner;
     private Spinner airline_spinner;
 
+    private TextView tvAircraft;
+
     private List<Map<String,String>> timezonList;
     private List<Map<String,String>> aircraftManufacturerList;
-    private List<Map<String,Object>> aircraftList;
+    private List<String> aircraftList;
     private List<String> airlineList;
 
     private static final String[] timezone_FROM={"minTime","maxTime"};
@@ -46,7 +47,7 @@ public class ConditionSelectActivity extends AppCompatActivity {
 
     private SimpleAdapter adapter;
     private SimpleAdapter  aircraftManufacturer_adapter;
-    private SimpleAdapter aircraft_adapter;
+    private ArrayAdapter aircraft_adapter;
     private ArrayAdapter airline_adapter;
 
     //Spinnerで選択された値を入れる変数群
@@ -95,7 +96,8 @@ public class ConditionSelectActivity extends AppCompatActivity {
 
         //aircraftのアダプタの設定
         aircraft_spinner=(Spinner) findViewById(R.id.aircraft_spinner);
-        aircraft_adapter=new ImageSpinnerAdapter(ConditionSelectActivity.this,aircraftList,R.layout.aircraft_list,aircraft_FROM,aircraft_TO);
+        tvAircraft=(TextView) findViewById(R.id.tvAircraft);
+        aircraft_adapter=new ArrayAdapter(ConditionSelectActivity.this,android.R.layout.simple_list_item_1,aircraftList);
         aircraft_spinner.setAdapter(aircraft_adapter);
         aircraft_spinner.setPrompt("航空機を選択してください");
         aircraft_spinner.setOnItemSelectedListener(new spinnerAircraftListener());
@@ -251,125 +253,67 @@ public class ConditionSelectActivity extends AppCompatActivity {
         aircraftManufacturerList.add(aircraftManufacturer);
 
         return aircraftManufacturerList;
+
+    }
+
+    private List<String> createAircraft(){
+
+        //既存の航空機メーカーのリストを削除する
+
+        //航空機メーカーによって航空機の選択リストを変える
+        switch (manufacturer){
+            case "ボーイング社":
+                aircraftList=createAircraft_boeing();
+                break;
+            case "エアバス社":
+                aircraftList=createAircraft_airbus();
+                break;
+            //航空機メーカーを選択していない時
+            case "航空機メーカー指定なし":
+                aircraftList=createAircraft_boeing();
+                break;
+            default:
+                aircraftList=createAircraft_boeing();
+                break;
+        }
+
+        return aircraftList;
+
     }
 
     //ボーイング一覧リスト
-    private List<Map<String,Object>> createAircraft_boeing(){
+    private List<String> createAircraft_boeing(){
 
         //航空機リストを作成
-        List<Map<String,Object>> aircraftList=new ArrayList<>();
+        List<String> aircraftList=new ArrayList<>();
         //ArrayListで航空機を作成！
-        Map<String,Object> aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.b_787);
-        aircraft.put("aircraft","787");
-        aircraftList.add(aircraft);
 
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.b_787);
-        aircraft.put("aircraft","788");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.b_777);
-        aircraft.put("aircraft","777");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.b_767);
-        aircraft.put("aircraft","767");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","757");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","747");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.b_739);
-        aircraft.put("aircraft","739");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.b_738);
-        aircraft.put("aircraft","738");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.b_735);
-        aircraft.put("aircraft","735");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","359");
-        aircraftList.add(aircraft);
-
-
+        aircraftList.add("787");
+        aircraftList.add("777");
+        aircraftList.add("767");
+        aircraftList.add("757");
+        aircraftList.add("747");
+        aircraftList.add("739");
+        aircraftList.add("738");
+        aircraftList.add("735");
 
         return aircraftList;
 
     }
 
     //エアバス一覧リスト
-    private List<Map<String,Object>> createAircraft_airbus(){
+    private List<String> createAircraft_airbus(){
 
         //航空機リストを作成
-        List<Map<String,Object>> aircraftList=new ArrayList<>();
+        List<String> aircraftList=new ArrayList<>();
         //ArrayListで航空機を作成！
-        Map<String,Object> aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","300");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","310");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","318");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.a_319);
-        aircraft.put("aircraft","319");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","320");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","330");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","350");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.a_380);
-        aircraft.put("aircraft","380");
-        aircraftList.add(aircraft);
-
-        aircraft = new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.a_321);
-        aircraft.put("aircraft","320");
-        aircraftList.add(aircraft);
-
-        aircraft=new HashMap<>();
-        aircraft.put("aircraft_image",R.drawable.noimage);
-        aircraft.put("aircraft","359");
-        aircraftList.add(aircraft);
+        aircraftList.add("300");
+        aircraftList.add("310");
+        aircraftList.add("319");
+        aircraftList.add("320");
+        aircraftList.add("330");
+        aircraftList.add("350");
+        aircraftList.add("380");
 
         return aircraftList;
 
@@ -414,14 +358,21 @@ public class ConditionSelectActivity extends AppCompatActivity {
             manufacturer=(String) item.get("manufacturer");
             country=(String) item.get("country");
 
-            if(manufacturer.equals("ボーイング社")){
-                aircraftList=createAircraft_boeing();
-                aircraft_spinner.setAdapter(aircraft_adapter);
-                Toast.makeText(ConditionSelectActivity.this,manufacturer+"が選ばれました",Toast.LENGTH_LONG).show();
-            }else if (manufacturer.equals("エアバス社")){
-                aircraftList=createAircraft_airbus();
-                aircraft_spinner.setAdapter(aircraft_adapter);
+
+            //航空機メーカーを選択するとaircraft_spinnerを表示させる
+            if (!(manufacturer.equals("航空機メーカー指定なし"))){
+                aircraft_spinner.setVisibility(View.VISIBLE);
+                tvAircraft.setVisibility(View.VISIBLE);
+            }else if (manufacturer.equals("航空機メーカー指定なし")){
+                aircraft_spinner.setVisibility(View.GONE);
+                tvAircraft.setVisibility(View.GONE);
             }
+
+            //航空機メーカーによって航空機のリスト、アダプタを更新する
+            aircraftList=createAircraft();
+            aircraft_adapter=new ArrayAdapter(ConditionSelectActivity.this,android.R.layout.simple_list_item_1,aircraftList);
+            aircraft_spinner.setAdapter(aircraft_adapter);
+            aircraft_spinner.setOnItemSelectedListener(new spinnerAircraftListener());
 
             //intent.putExtra("manufacturer",manufacturer);
 
@@ -438,21 +389,13 @@ public class ConditionSelectActivity extends AppCompatActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view,int position,long id){
-            Map<String,Object> item=(Map<String, Object>) parent.getItemAtPosition(position);
-            aircraft=(String) item.get("aircraft");
-
-
-            //航空機メーカが選択されていない場合
-            if (manufacturer.equals("航空機メーカー指定なし")){
-                Toast.makeText(ConditionSelectActivity.this,"先に航空機メーカーを選択してください",Toast.LENGTH_LONG).show();
-            }
+            aircraft=(String) parent.getItemAtPosition(position);
 
             intent.putExtra("aircraft",aircraft);
         }
 
         @Override
         public  void  onNothingSelected(AdapterView<?> parent){
-
         }
 
     }

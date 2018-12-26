@@ -71,16 +71,16 @@
         app:layout_constraintTop_toBottomOf="@+id/aircraftManufacturer" />
 
     <TextView
-        android:id="@+id/aircraft"
+        android:id="@+id/tvAircraft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="航空機を選択してください"
         android:textSize="22sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        app:layout_constraintTop_toBottomOf="@+id/aircraftManufacturer_spinner" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
@@ -94,15 +94,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:spinnerMode="dialog"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aircraft" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAircraft" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
@@ -150,11 +150,7 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintTop_toTopOf="@id/guideline2" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="3dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toTopOf="@id/guideline3" />
+
 
     <View
         android:id="@+id/view"
