@@ -66,6 +66,7 @@ public class ConditionSelectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condition_select);
+        setTitle("航空機の条件をしてください");
 
         Intent _intent=getIntent();
         airport=_intent.getStringExtra("airport");

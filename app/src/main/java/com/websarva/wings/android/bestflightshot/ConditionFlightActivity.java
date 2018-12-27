@@ -187,50 +187,117 @@ public class ConditionFlightActivity extends AppCompatActivity {
                 item.setDepartureTime("<離陸時間>" + sortedTimeList.get(i));
                 item.setAirline("<航空会社>" + sortedAirlineList.get(i));
                 switch (sortedTypeList.get(i)) {
+                    //ボーイング系
+                    case "735":
+                        item.setImageId(R.drawable.b_737);
+                        break;
+                    case "737":
+                        item.setImageId(R.drawable.b_737);
+                        break;
                     case "738":
                         item.setImageId(R.drawable.b_738);
                         break;
                     case "739":
-                        item.setImageId(R.drawable.b_739);
-                    case "E90":
-                        item.setImageId(R.drawable.e90);
+                        item.setImageId(R.drawable.b_738);
                         break;
-                    case "E70":
-                        item.setImageId(R.drawable.e70);
+                    case "744":
+                        item.setImageId(R.drawable.b_747);
+                    case "747":
+                        item.setImageId(R.drawable.b_747);
                         break;
-                    case "Z20":
-                        item.setImageId(R.drawable.z20);
+                    case "748":
+                        item.setImageId(R.drawable.b_748);
+                    case "763":
+                        item.setImageId(R.drawable.b_763);
                         break;
-                    case "319":
-                        item.setImageId(R.drawable.a_319);
+                    case "767":
+                        item.setImageId(R.drawable.b_767);
                         break;
-                    case "CR7":
-                        item.setImageId(R.drawable.cr7);
+                    case "772":
+                        item.setImageId(R.drawable.b_772);
                         break;
-                    case "Q84":
-                        item.setImageId(R.drawable.q84);
-                        break;
-                    case "735":
-                        item.setImageId(R.drawable.b_735);
+                    case "773":
+                        item.setImageId(R.drawable.b_773);
                         break;
                     case "777":
                         item.setImageId(R.drawable.b_777);
                         break;
-                    case "320":
-                        item.setImageId(R.drawable.a_321);
-                        break;
-                    case "321":
-                        item.setImageId(R.drawable.a_321);
-                    case "332":
-                        item.setImageId(R.drawable.a_321);
                     case "787":
                         item.setImageId(R.drawable.b_787);
                         break;
-                    case "767":
+                    case "788":
+                        item.setImageId(R.drawable.b_788);
+                        break;
+                    case "789":
+                        item.setImageId(R.drawable.b_789);
+                        break;
+                    case "73H":
+                        item.setImageId(R.drawable.b_737);
+                        break;
+                    case "76E":
                         item.setImageId(R.drawable.b_767);
-                    default:
+                        break;
+                    case "77I":
                         item.setImageId(R.drawable.b_777);
-                        item.setCraftType("<機種>" + sortedTypeList.get(i));
+                        break;
+                    case "77W":
+                        item.setImageId(R.drawable.b_777);
+                        break;
+                    case "78I":
+                        item.setImageId(R.drawable.b_787);
+                        break;
+                    case "78P":
+                        item.setImageId(R.drawable.b_787);
+                        break;
+                    //エアバス系
+                    case "319":
+                        item.setImageId(R.drawable.a_319);
+                        break;
+                    case "320":
+                        item.setImageId(R.drawable.a_320);
+                        break;
+                    case "321":
+                        item.setImageId(R.drawable.a_321);
+                        break;
+                    case "330":
+                        item.setImageId(R.drawable.a_330);
+                        break;
+                    case "332":
+                        item.setImageId(R.drawable.a_332);
+                        break;
+                    case "333":
+                        item.setImageId(R.drawable.a_333);
+                        break;
+                    case "359":
+                        item.setImageId(R.drawable.a_359);
+                        break;
+                    case "380":
+                        item.setImageId(R.drawable.a_380);
+                        break;
+                    //その他
+                    case "CR7":
+                        item.setImageId(R.drawable.cr7);
+                        break;
+                    case "E767":
+                        item.setImageId(R.drawable.e_767);
+                        break;
+                    case "E70":
+                        item.setImageId(R.drawable.e70);
+                        break;
+                    case "E90":
+                        item.setImageId(R.drawable.e90);
+                        break;
+                    case "Q84":
+                        item.setImageId(R.drawable.q84);
+                        break;
+                    case "Z20":
+                        item.setImageId(R.drawable.z20);
+                        break;
+                    case "US1R":
+                        item.setImageId(R.drawable.us1r);
+                        break;
+                    default:
+                        item.setImageId(R.drawable.noimage);
                         break;
                 }
                 list.add(item);
