@@ -16,6 +16,14 @@
             android:id="@+id/listView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent" />
+        <TextView
+            android:text="検索に一致する航空機が存在しません。"
+            android:gravity="center"
+            android:id="@+id/emptyView"
+            android:padding="16dp"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

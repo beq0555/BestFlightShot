@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteStatement;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,8 +44,14 @@ public class ConditionFlightActivity extends AppCompatActivity {
     }
     private class ConditionFlightReceiver extends AsyncTask<Void,String,String> {
 
+        private ProgressBar progressBar;
+
         @Override
         public String doInBackground(Void... params) {
+
+            //非同期処理中、プログレスバーを表示する
+            progressBar = (ProgressBar)findViewById(R.id.conditionProgressBar);
+            this.progressBar.setVisibility(View.VISIBLE);
 
             String queryAircraft;
             String queryAirline;
@@ -94,6 +102,10 @@ public class ConditionFlightActivity extends AppCompatActivity {
             return result;
         }
         public void onPostExecute(String result) {
+
+            if(this.progressBar != null) {
+                this.progressBar.setVisibility(View.GONE);
+            }
 
             Intent intent = getIntent();
             minTime = intent.getStringExtra("minTime");
@@ -305,7 +317,11 @@ public class ConditionFlightActivity extends AppCompatActivity {
             //ImageArrayAdapterに上のリストをセット。
             ConditionFlightImageArrayAdapter adapter = new ConditionFlightImageArrayAdapter(ConditionFlightActivity.this, R.layout.list_view_condition_flight_item, list);
             lv = (ListView) findViewById(R.id.listView);
+            //リストに表示するデータが存在しないときその旨を表示する。
+            lv.setEmptyView(findViewById(R.id.emptyView));
             lv.setAdapter(adapter);
+
+
 
 
         }
