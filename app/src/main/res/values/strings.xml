@@ -11,4 +11,5 @@
     <string name="timezone_option">〜</string>
     <string name="select_aircraft">機種を選択してください</string>
     <string name="condition_select_check">この条件で検索！</string>
+    <string name="title_activity_spot">Map</string>
 </resources>

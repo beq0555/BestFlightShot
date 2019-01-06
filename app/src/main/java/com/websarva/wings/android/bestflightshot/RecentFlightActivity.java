@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -318,8 +319,8 @@ public class RecentFlightActivity extends AppCompatActivity {
             RecentFlightImageArrayAdapter adapter = new RecentFlightImageArrayAdapter(RecentFlightActivity.this,R.layout.list_view_recent_flight_item,list);
             lv = (ListView) findViewById(R.id.listView);
             lv.setAdapter(adapter);
-
-
+            //ListViewにクリックイベント設定する
+            lv.setOnItemClickListener(new ListItemClickListener());
 
         }
     }
@@ -335,4 +336,15 @@ public class RecentFlightActivity extends AppCompatActivity {
         }
         return sb.toString();
     }
+
+    private class ListItemClickListener implements AdapterView.OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent,View view,int position,long id){
+
+            Intent intent=new Intent(RecentFlightActivity.this,SpotActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }
