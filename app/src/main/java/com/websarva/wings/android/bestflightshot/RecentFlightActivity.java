@@ -229,10 +229,22 @@ public class RecentFlightActivity extends AppCompatActivity {
                     case "789":
                         item.setImageId(R.drawable.b_789);
                         break;
+                    case "73D":
+                        item.setImageId(R.drawable.b_737);
+                        break;
                     case "73H":
                         item.setImageId(R.drawable.b_737);
                         break;
+                    case "73P":
+                        item.setImageId(R.drawable.b_737);
+                        break;
+                    case "73L":
+                        item.setImageId(R.drawable.b_737);
+                        break;
                     case "76E":
+                        item.setImageId(R.drawable.b_767);
+                        break;
+                    case "76P":
                         item.setImageId(R.drawable.b_767);
                         break;
                     case "77I":
