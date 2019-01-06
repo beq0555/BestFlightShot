@@ -150,13 +150,15 @@ public class RecentFlightActivity extends AppCompatActivity {
                 String sqlInsert = "INSERT INTO recentdata (id,type,airline,time) VALUES (?,?,?,?)";
 
                 for(int i = 0; i < typeList.size(); i++) {
-                    stmt = db.compileStatement(sqlInsert);
-                    stmt.bindLong(1,i);
-                    stmt.bindString(2,typeList.get(i));
-                    stmt.bindString(3,airlineList.get(i));
-                    stmt.bindString(4,timeList.get(i));
+                    if(!(typeList.get(i).equals("不明"))) {
+                        stmt = db.compileStatement(sqlInsert);
+                        stmt.bindLong(1, i);
+                        stmt.bindString(2, typeList.get(i));
+                        stmt.bindString(3, airlineList.get(i));
+                        stmt.bindString(4, timeList.get(i));
 
-                    stmt.executeInsert();
+                        stmt.executeInsert();
+                    }
                 }
                 //現在時刻から直近10件のフライト情報を取り出す。それをsortedTypeListとsortedTimeListに格納。
                 String sql = "SELECT * FROM recentdata WHERE time(time) >= time('now','localtime') ORDER BY time(time) LIMIT 15";
