@@ -54,6 +54,18 @@ private String airport = "";
             progressBar = (ProgressBar)findViewById(R.id.selectProgressBar);
             this.progressBar.setVisibility(View.VISIBLE);
 
+            //非同期中今すぐ撮るボタンを押せなくする。
+            ImageButton btRecent = findViewById(R.id.btRecentFlight);
+            btRecent.setEnabled(false);
+
+            //非同期中スペシャルボタンを押せなくする。
+            ImageButton btSpecial = findViewById(R.id.btSpecialFlight);
+            btSpecial.setEnabled(false);
+
+            //非同期中条件指定ボタンを押せなくする。
+            ImageButton btCondition = findViewById(R.id.btConditionFlight);
+            btCondition.setEnabled(false);
+
             Intent intent = getIntent();
             airport = intent.getStringExtra("airport");
 
