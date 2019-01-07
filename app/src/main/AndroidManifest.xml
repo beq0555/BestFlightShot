@@ -48,6 +48,10 @@
 
         <activity
             android:name=".SpotActivity"></activity>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
     </application>
 
 </manifest>
