@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -317,7 +318,18 @@ public class SpecialFlightActivity extends AppCompatActivity {
             SpecialFlightImageArrayAdapter adapter = new SpecialFlightImageArrayAdapter(SpecialFlightActivity.this,R.layout.list_view_special_flight_item,list);
             lv = (ListView) findViewById(R.id.specialListView);
             lv.setAdapter(adapter);
+            lv.setOnItemClickListener(new ListItemClickListener());
 
+        }
+    }
+
+    private class ListItemClickListener implements AdapterView.OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent,View view,int position,long id){
+
+            Intent intent=new Intent(SpecialFlightActivity.this,SpotActivity.class);
+            startActivity(intent);
         }
     }
 
