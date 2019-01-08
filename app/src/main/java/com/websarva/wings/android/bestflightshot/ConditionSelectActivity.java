@@ -66,10 +66,16 @@ public class ConditionSelectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condition_select);
-        setTitle("航空機の条件をしてください");
+
+        setTitle(airport+">航空機の条件をしてください");
 
         Intent _intent=getIntent();
         airport=_intent.getStringExtra("airport");
+        if(airport.equals("NRT")) {
+            setTitle("成田>航空機の条件をしてください");
+        }else {
+            setTitle("羽田>航空機の条件を選択してください");
+        }
         intent=new Intent(ConditionSelectActivity.this,ConditionFlightActivity.class);
         intent.putExtra("airport",airport);
 
@@ -116,74 +122,130 @@ public class ConditionSelectActivity extends AppCompatActivity {
         List<Map<String,String>> timeZoneList=new ArrayList<>();
         //HashMapでMaxTime〜MinTimeを作成
         Map<String,String> timeZone=new HashMap<>();
-        timeZone.put("minTime","時間帯指定なし");
-        timeZone.put("maxTime","");
+        timeZone.put("minTime","00:00");
+        timeZone.put("maxTime","24:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","00:00");
+        timeZone.put("maxTime","01:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","01:00");
+        timeZone.put("maxTime","02:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","02:00");
+        timeZone.put("maxTime","03:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","03:00");
+        timeZone.put("maxTime","04:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","04:00");
+        timeZone.put("maxTime","05:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","05:00");
+        timeZone.put("maxTime","06:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","06:00");
+        timeZone.put("maxTime","07:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","07:00");
+        timeZone.put("maxTime","08:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","08:00");
+        timeZone.put("maxTime","09:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","09:00");
+        timeZone.put("maxTime","10:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","10:00");
+        timeZone.put("maxTime","11:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","11:00");
+        timeZone.put("maxTime","12:00");
         timeZoneList.add(timeZone);
 
         timeZone=new HashMap<>();
         timeZone.put("minTime","12:00");
-        timeZone.put("maxTime","12:30");
-        timeZoneList.add(timeZone);
-
-        timeZone=new HashMap<>();
-        timeZone.put("minTime","12:31");
         timeZone.put("maxTime","13:00");
         timeZoneList.add(timeZone);
 
         timeZone=new HashMap<>();
-        timeZone.put("minTime","13:01");
-        timeZone.put("maxTime","13:30");
-        timeZoneList.add(timeZone);
-
-        timeZone=new HashMap<>();
-        timeZone.put("minTime","13:31");
+        timeZone.put("minTime","13:00");
         timeZone.put("maxTime","14:00");
         timeZoneList.add(timeZone);
 
         timeZone=new HashMap<>();
-        timeZone.put("minTime","14:01");
-        timeZone.put("maxTime","14:30");
-        timeZoneList.add(timeZone);
-
-        timeZone=new HashMap<>();
-        timeZone.put("minTime","14:31");
+        timeZone.put("minTime","14:00");
         timeZone.put("maxTime","15:00");
         timeZoneList.add(timeZone);
 
         timeZone=new HashMap<>();
-        timeZone.put("minTime","15:01");
-        timeZone.put("maxTime","15:30");
+        timeZone.put("minTime","15:00");
+        timeZone.put("maxTime","16:00");
         timeZoneList.add(timeZone);
 
         timeZone=new HashMap<>();
         timeZone.put("minTime","16:00");
-        timeZone.put("maxTime","16:30");
-        timeZoneList.add(timeZone);
-
-        timeZone=new HashMap<>();
-        timeZone.put("minTime","16:31");
         timeZone.put("maxTime","17:00");
         timeZoneList.add(timeZone);
 
         timeZone=new HashMap<>();
         timeZone.put("minTime","17:00");
-        timeZone.put("maxTime","17:30");
-        timeZoneList.add(timeZone);
-
-        timeZone=new HashMap<>();
-        timeZone.put("minTime","17:31");
         timeZone.put("maxTime","18:00");
         timeZoneList.add(timeZone);
 
         timeZone=new HashMap<>();
-        timeZone.put("minTime","18:01");
-        timeZone.put("maxTime","18:30");
+        timeZone.put("minTime","18:00");
+        timeZone.put("maxTime","19:00");
         timeZoneList.add(timeZone);
 
         timeZone=new HashMap<>();
-        timeZone.put("minTime","23:30");
-        timeZone.put("maxTime","23:59");
+        timeZone.put("minTime","19:00");
+        timeZone.put("maxTime","20:00");
         timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","20:00");
+        timeZone.put("maxTime","21:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","21:00");
+        timeZone.put("maxTime","22:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","22:00");
+        timeZone.put("maxTime","23:00");
+        timeZoneList.add(timeZone);
+
+        timeZone=new HashMap<>();
+        timeZone.put("minTime","23:00");
+        timeZone.put("maxTime","24:00");
+        timeZoneList.add(timeZone);
+
 
         //ArrayList(MaxTime.MinTime)を返す
         return timeZoneList;
@@ -203,55 +265,55 @@ public class ConditionSelectActivity extends AppCompatActivity {
         aircraftManufacturer.put("country","アメリカ");
         aircraftManufacturerList.add(aircraftManufacturer);
 
-        aircraftManufacturer=new HashMap<>();
-        aircraftManufacturer.put("manufacturer","ロッキード・マーティン社");
-        aircraftManufacturer.put("country","アメリカ");
-        aircraftManufacturerList.add(aircraftManufacturer);
+        //aircraftManufacturer=new HashMap<>();
+        //aircraftManufacturer.put("manufacturer","ロッキード・マーティン社");
+        //aircraftManufacturer.put("country","アメリカ");
+        //aircraftManufacturerList.add(aircraftManufacturer);
 
-        aircraftManufacturer=new HashMap<>();
-        aircraftManufacturer.put("manufacturer","セスナ社");
-        aircraftManufacturer.put("country","アメリカ");
-        aircraftManufacturerList.add(aircraftManufacturer);
+        //aircraftManufacturer=new HashMap<>();
+        //aircraftManufacturer.put("manufacturer","セスナ社");
+        //aircraftManufacturer.put("country","アメリカ");
+        //aircraftManufacturerList.add(aircraftManufacturer);
 
         aircraftManufacturer=new HashMap<>();
         aircraftManufacturer.put("manufacturer","ボンバルディア社");
         aircraftManufacturer.put("country","カナダ");
         aircraftManufacturerList.add(aircraftManufacturer);
 
-        aircraftManufacturer=new HashMap<>();
-        aircraftManufacturer.put("manufacturer","ダグラス社");
-        aircraftManufacturer.put("country","カナダ");
-        aircraftManufacturerList.add(aircraftManufacturer);
+        //aircraftManufacturer=new HashMap<>();
+        //aircraftManufacturer.put("manufacturer","ダグラス社");
+        //aircraftManufacturer.put("country","カナダ");
+        //aircraftManufacturerList.add(aircraftManufacturer);
 
         aircraftManufacturer=new HashMap<>();
-        aircraftManufacturer.put("manufacturer","エンブラレル社");
+        aircraftManufacturer.put("manufacturer","エンブラエル社");
         aircraftManufacturer.put("country","ブラジル");
         aircraftManufacturerList.add(aircraftManufacturer);
 
-        aircraftManufacturer=new HashMap<>();
-        aircraftManufacturer.put("manufacturer","ツポレフ社");
-        aircraftManufacturer.put("country","ロシア");
-        aircraftManufacturerList.add(aircraftManufacturer);
+        //aircraftManufacturer=new HashMap<>();
+        //aircraftManufacturer.put("manufacturer","ツポレフ社");
+        //aircraftManufacturer.put("country","ロシア");
+        //aircraftManufacturerList.add(aircraftManufacturer);
 
-        aircraftManufacturer=new HashMap<>();
-        aircraftManufacturer.put("manufacturer","イリューシン社");
-        aircraftManufacturer.put("country","ロシア");
-        aircraftManufacturerList.add(aircraftManufacturer);
+        //aircraftManufacturer=new HashMap<>();
+        //aircraftManufacturer.put("manufacturer","イリューシン社");
+        //aircraftManufacturer.put("country","ロシア");
+        //aircraftManufacturerList.add(aircraftManufacturer);
 
-        aircraftManufacturer=new HashMap<>();
-        aircraftManufacturer.put("manufacturer","アントノフ社");
-        aircraftManufacturer.put("country","ウクライナ");
-        aircraftManufacturerList.add(aircraftManufacturer);
+        //aircraftManufacturer=new HashMap<>();
+        //aircraftManufacturer.put("manufacturer","アントノフ社");
+        //aircraftManufacturer.put("country","ウクライナ");
+        //aircraftManufacturerList.add(aircraftManufacturer);
 
         aircraftManufacturer=new HashMap<>();
         aircraftManufacturer.put("manufacturer","エアバス社");
         aircraftManufacturer.put("country","欧州共同");
         aircraftManufacturerList.add(aircraftManufacturer);
 
-        aircraftManufacturer=new HashMap<>();
-        aircraftManufacturer.put("manufacturer","ブリティッシュ社");
-        aircraftManufacturer.put("country","イギリス");
-        aircraftManufacturerList.add(aircraftManufacturer);
+        //aircraftManufacturer=new HashMap<>();
+        //aircraftManufacturer.put("manufacturer","ブリティッシュ社");
+        //aircraftManufacturer.put("country","イギリス");
+        //aircraftManufacturerList.add(aircraftManufacturer);
 
         return aircraftManufacturerList;
 
@@ -268,6 +330,12 @@ public class ConditionSelectActivity extends AppCompatActivity {
                 break;
             case "エアバス社":
                 aircraftList=createAircraft_airbus();
+                break;
+            case "エンブラエル社":
+                aircraftList=createAircraft_embraer();
+                break;
+            case "ボンバルディア社":
+                aircraftList=createAircraft_bombardier();
                 break;
             //航空機メーカーを選択していない時
             case "航空機メーカー指定なし":
@@ -289,14 +357,12 @@ public class ConditionSelectActivity extends AppCompatActivity {
         List<String> aircraftList=new ArrayList<>();
         //ArrayListで航空機を作成！
 
-        aircraftList.add("787");
-        aircraftList.add("777");
-        aircraftList.add("767");
-        aircraftList.add("757");
-        aircraftList.add("747");
-        aircraftList.add("739");
-        aircraftList.add("738");
-        aircraftList.add("735");
+        aircraftList.add("B737シリーズ");
+        aircraftList.add("B747シリーズ");
+        aircraftList.add("B767シリーズ");
+        aircraftList.add("B777シリーズ");
+        aircraftList.add("B787シリーズ");
+
 
         return aircraftList;
 
@@ -320,9 +386,28 @@ public class ConditionSelectActivity extends AppCompatActivity {
 
     }
 
+    private List<String> createAircraft_embraer(){
+
+        List<String> aircraftList=new ArrayList<>();
+        aircraftList.add("E70");
+        aircraftList.add("E90");
+
+        return aircraftList;
+    }
+
+    private List<String> createAircraft_bombardier() {
+
+        List<String> aircraftList=new ArrayList<>();
+        aircraftList.add("CR7");
+        aircraftList.add("Q84");
+
+        return aircraftList;
+    }
+
     private List<String> createAirlineList(){
 
         List<String> airlineList=new ArrayList<>();
+        airlineList.add("運航会社指定なし");
         airlineList.add("JAL");
         airlineList.add("ANA");
 

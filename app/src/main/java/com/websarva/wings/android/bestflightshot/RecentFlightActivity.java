@@ -35,7 +35,14 @@ public class RecentFlightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_flight);
-        setTitle("撮影する航空機を選択してください");
+        Intent intent = getIntent();
+        airport = intent.getStringExtra("airport");
+        if(airport.equals("NRT")) {
+            airport = "成田";
+        } else {
+            airport = "羽田";
+        }
+        setTitle(airport+">撮影する航空機を選択してください");
 
         //非同期処理を開始
         FlightInfoReceiver receiver = new FlightInfoReceiver();
@@ -262,6 +269,9 @@ public class RecentFlightActivity extends AppCompatActivity {
                     case "78P":
                         item.setImageId(R.drawable.b_787);
                         break;
+                    case "E767":
+                        item.setImageId(R.drawable.e_767);
+                        break;
                     //エアバス系
                     case "319":
                         item.setImageId(R.drawable.a_319);
@@ -296,9 +306,6 @@ public class RecentFlightActivity extends AppCompatActivity {
                     //その他
                     case "CR7":
                         item.setImageId(R.drawable.cr7);
-                        break;
-                    case "E767":
-                        item.setImageId(R.drawable.e_767);
                         break;
                     case "E70":
                         item.setImageId(R.drawable.e70);

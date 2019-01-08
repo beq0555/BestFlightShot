@@ -34,7 +34,14 @@ public class SpecialFlightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_special_flight);
-        setTitle("撮影する特別機体を選択してください");
+        Intent intent = getIntent();
+        airport = intent.getStringExtra("airport");
+        if(airport.equals("NRT")) {
+            airport = "成田";
+        } else {
+            airport = "羽田";
+        }
+        setTitle(airport+">撮影する機体を選択してください");
 
         SpecialInfoReceiver receiver = new SpecialInfoReceiver();
         receiver.execute();

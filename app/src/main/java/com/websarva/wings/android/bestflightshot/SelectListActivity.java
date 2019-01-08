@@ -38,7 +38,14 @@ private String airport = "";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_list);
 
-        setTitle("航空機の検索方法を選択してください");
+        Intent intent = getIntent();
+        airport = intent.getStringExtra("airport");
+        if(airport.equals("NRT")) {
+            airport = "成田";
+        } else {
+            airport = "羽田";
+        }
+        setTitle(airport + ">検索方法を選択してください");
 
         MenuInfoReceiver receiver = new MenuInfoReceiver();
         receiver.execute();

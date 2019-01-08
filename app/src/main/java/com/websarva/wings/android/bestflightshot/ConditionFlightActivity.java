@@ -33,11 +33,19 @@ public class ConditionFlightActivity extends AppCompatActivity {
     private String airline;
     private String airport;
     private ListView lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_condition_flight);
-        setTitle("撮影する航空機を選択してください");
+        Intent intent = getIntent();
+        airport = intent.getStringExtra("airport");
+        if(airport.equals("NRT")) {
+            airport = "成田";
+        } else {
+            airport = "羽田";
+        }
+        setTitle(airport + ">撮影する機体を選択してください");
 
         ConditionFlightReceiver receiver = new ConditionFlightReceiver();
         receiver.execute();
@@ -60,14 +68,33 @@ public class ConditionFlightActivity extends AppCompatActivity {
             aircraft = intent.getStringExtra("aircraft");
             airline = intent.getStringExtra("airline");
 
-            if(airline != null) {
+            if(!(airline.equals("運航会社指定なし"))) {
                 queryAirline = "&odpt:airline=odpt.Operator:" + airline;
             }else {
                 queryAirline = "";
             }
+
             if(aircraft != null) {
-                queryAircraft = "&odpt:aircraftType=" + aircraft;
-            } else {
+                switch (aircraft) {
+                    case "B737シリーズ":
+                        queryAircraft = "&odpt:aircraftType=735,737,738,739,73D,73H,73P,73L";
+                        break;
+                    case "B747シリーズ":
+                        queryAircraft = "&odpt:aircraftType=744,747,748";
+                        break;
+                    case "B767シリーズ":
+                        queryAircraft = "&odpt:aircraftType=763,767,76E,76P";
+                        break;
+                    case "B777シリーズ":
+                        queryAircraft = "&odpt:aircraftType=772,773,777,77I,77W";
+                        break;
+                    case "B787シリーズ":
+                        queryAircraft = "&odpt:aircraftType=787,788,789,78I,78P";
+                        break;
+                    default:
+                        queryAircraft = "&odpt:aircraftType=" + aircraft;
+                }
+            }else {
                 queryAircraft = "";
             }
 
@@ -102,6 +129,9 @@ public class ConditionFlightActivity extends AppCompatActivity {
             return result;
         }
         public void onPostExecute(String result) {
+
+            String fullAirline;
+            String cutAirline;
 
             if(this.progressBar != null) {
                 this.progressBar.setVisibility(View.GONE);
@@ -139,10 +169,12 @@ public class ConditionFlightActivity extends AppCompatActivity {
                     if (rootJson.has("odpt:aircraftType")) {
                         typeList.add(i, rootJson.getString("odpt:aircraftType"));
                     } else {
-                        typeList.add(i, "シークレット");
+                        typeList.add(i, "不明");
                     }
                     if(rootJson.has("odpt:airline")) {
-                        airlineList.add(i,airline);
+                        fullAirline = rootJson.getString("odpt:airline");
+                        cutAirline = fullAirline.replaceAll("odpt.Operator:","");
+                        airlineList.add(i,cutAirline);
                     } else {
                         airlineList.add(i,"航空会社情報を取得できませんでした。");
                     }
@@ -163,14 +195,17 @@ public class ConditionFlightActivity extends AppCompatActivity {
 
                 String sqlInsert = "INSERT INTO conditiondata (id, type, time, airline) VALUES (?,?,?,?)";
 
-                for (int i = 0; i < typeList.size(); i++) {
-                    stmt = db.compileStatement(sqlInsert);
-                    stmt.bindLong(1, i);
-                    stmt.bindString(2, typeList.get(i));
-                    stmt.bindString(3, timeList.get(i));
-                    stmt.bindString(4,airlineList.get(i));
 
-                    stmt.executeInsert();
+                for (int i = 0; i < typeList.size(); i++) {
+                    if (!(typeList.get(i).equals("不明"))) {
+                        stmt = db.compileStatement(sqlInsert);
+                        stmt.bindLong(1, i);
+                        stmt.bindString(2, typeList.get(i));
+                        stmt.bindString(3, timeList.get(i));
+                        stmt.bindString(4, airlineList.get(i));
+
+                        stmt.executeInsert();
+                    }
                 }
                 //minTimeとmaxTimeの間の離陸情報を取得
                 String sql = "SELECT * FROM conditiondata WHERE time(time) >= time('" + minTime + "') AND time(time) <= time('" + maxTime + "') ORDER BY time(time) LIMIT 10";
@@ -243,10 +278,22 @@ public class ConditionFlightActivity extends AppCompatActivity {
                     case "789":
                         item.setImageId(R.drawable.b_789);
                         break;
+                    case "73D":
+                        item.setImageId(R.drawable.b_737);
+                        break;
                     case "73H":
                         item.setImageId(R.drawable.b_737);
                         break;
+                    case "73P":
+                        item.setImageId(R.drawable.b_737);
+                        break;
+                    case "73L":
+                        item.setImageId(R.drawable.b_737);
+                        break;
                     case "76E":
+                        item.setImageId(R.drawable.b_767);
+                        break;
+                    case "76P":
                         item.setImageId(R.drawable.b_767);
                         break;
                     case "77I":
@@ -285,6 +332,12 @@ public class ConditionFlightActivity extends AppCompatActivity {
                         break;
                     case "380":
                         item.setImageId(R.drawable.a_380);
+                        break;
+                    case "388":
+                        item.setImageId(R.drawable.a_388);
+                        break;
+                    case "CS3":
+                        item.setImageId(R.drawable.cs3);
                         break;
                     //その他
                     case "CR7":
