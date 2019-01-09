@@ -80,7 +80,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         //成田のA滑走路
         LatLng NaritaAirport_A=new LatLng(35.765330,140.374804);
         //成田のB滑走路
-        LatLng NaritaAirport_B=new LatLng(35.796263,140.384447);
+        LatLng NaritaAirport_B=new LatLng(35.787778,140.390726);
 
 
         //羽田のA滑走路の位置情報
@@ -125,13 +125,20 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             uiSettings.setZoomGesturesEnabled(true);
         }
 
-        //飛行機画像を羽田D滑走路にオーバーレイ表示
-        GroundOverlayOptions options=new GroundOverlayOptions()
+        //飛行機画像を成田A滑走路にオーバーレイ表示
+        GroundOverlayOptions options1=new GroundOverlayOptions()
                 .image(plane_descriptor)
                 //画像の位置と大きさを決める
-                .position(NaritaAirport_A,500f,400f);
-        GroundOverlay overlay=mMap.addGroundOverlay(options);
-        overlay.setTransparency(0.2f);
+                .position(NaritaAirport_A,500f,600f)
+                .bearing(330);
+        GroundOverlay haneda_overlay_A=mMap.addGroundOverlay(options1);
+
+        //飛行機画像を成田B滑走路にオーバーレイ表示
+        GroundOverlayOptions options2=new GroundOverlayOptions()
+                .image(plane_descriptor)
+                .position(NaritaAirport_B,500f,600f)
+                .bearing(155);
+        GroundOverlay haneda_overlay_B=mMap.addGroundOverlay(options2);
 
 
     }
