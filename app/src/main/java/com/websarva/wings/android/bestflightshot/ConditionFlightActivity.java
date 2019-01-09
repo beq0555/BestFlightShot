@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -373,6 +374,8 @@ public class ConditionFlightActivity extends AppCompatActivity {
             //リストに表示するデータが存在しないときその旨を表示する。
             lv.setEmptyView(findViewById(R.id.emptyView));
             lv.setAdapter(adapter);
+            //ListViewにクリックイベント設定する
+            lv.setOnItemClickListener(new ListItemClickListener());
 
 
 
@@ -389,5 +392,27 @@ public class ConditionFlightActivity extends AppCompatActivity {
             sb.append(b,0,line);
         }
         return sb.toString();
+    }
+
+    private class ListItemClickListener implements AdapterView.OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent,View view,int position,long id){
+            ConditionListItem item = (ConditionListItem) parent.getItemAtPosition(position);
+            String aircraftName = item.getCraftType();
+            String departureTime = item.getDepartureTime();
+
+            //インテントで空港名を取得
+            Intent intentBefore = getIntent();
+            String airport = intentBefore.getStringExtra("airport");
+
+            Intent intentNext = new Intent(ConditionFlightActivity.this,SpotActivity.class);
+            intentNext.putExtra("aircraftName",aircraftName);
+            intentNext.putExtra("departureTime",departureTime);
+            intentNext.putExtra("airport",airport);
+
+            startActivity(intentNext);
+
+        }
     }
 }

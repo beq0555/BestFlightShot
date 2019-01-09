@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -335,9 +336,23 @@ public class SpecialFlightActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> parent,View view,int position,long id){
+            SpecialListItem item = (SpecialListItem) parent.getItemAtPosition(position);
+            String aircraftName = item.getCraftType();
+            String departureTime = item.getDepartureTime();
 
-            Intent intent=new Intent(SpecialFlightActivity.this,SpotActivity.class);
-            startActivity(intent);
+            //インテントで空港名を取得
+            Intent intentBefore = getIntent();
+            String airport = intentBefore.getStringExtra("airport");
+
+            Intent intentNext = new Intent(SpecialFlightActivity.this,SpotActivity.class);
+            intentNext.putExtra("aircraftName",aircraftName);
+            intentNext.putExtra("departureTime",departureTime);
+            intentNext.putExtra("airport",airport);
+
+            startActivity(intentNext);
+
+            //Log.i("test1","選択された機種は"+aircraftName);
+
         }
     }
 
