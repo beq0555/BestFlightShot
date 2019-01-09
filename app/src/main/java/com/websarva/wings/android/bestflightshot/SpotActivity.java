@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +32,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -51,6 +63,11 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     //保存された画像のURI
     private Uri _imageUri;
+
+    //３６０度方位での空港の現在の風向を格納する。
+    String strWindDeg;
+    //16度方位での空港の現在の風向を格納する。
+    String sixteenWindDeg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +126,10 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        //風向き情報取得の非同期処理開始
+        WindInfoReceiver receiver = new WindInfoReceiver();
+        receiver.execute();
 
         //成田空港の位置情報
         LatLng NaritaAirport=new LatLng(35.771987,140.39285);
@@ -267,4 +288,99 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    //風向き情報を取得する非同期クラス
+    private class WindInfoReceiver extends AsyncTask<Void,String,String> {
+
+        @Override
+        public String doInBackground(Void... params) {
+            //APIキー
+            final String API_KEY = "appid=5ee5c307a24bd39c9942999bf17cdfd4";
+            final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
+            final String NARITA_ID = "&id=2111684";
+            final String HANEDA_ID = "&id=6415253";
+            //成田か羽田のIDを代入するための変数
+            String airportKey;
+
+            intent = getIntent();
+            airport = intent.getStringExtra("airport");
+            switch (airport) {
+                case "NRT":
+                    airportKey = NARITA_ID;
+                    break;
+                case "HND":
+                    airportKey = HANEDA_ID;
+                    break;
+                default:
+                    airportKey = null;
+            }
+
+
+            String urlStr = BASE_URL + API_KEY + airportKey;
+            String result = "";
+
+            HttpURLConnection con = null;
+            InputStream is = null;
+            try {
+                URL url = new URL(urlStr);
+                con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                con.connect();
+                is = con.getInputStream();
+                result = is2String(is);
+            }catch (MalformedURLException ex) {
+                ex.printStackTrace();
+            }catch (IOException ex) {
+                ex.printStackTrace();
+            }finally {
+                if(con != null) {
+                    con.disconnect();
+                }
+                if(is != null) {
+                    try {
+                        is.close();
+                    }catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+            return result;
+
+        }
+        public void onPostExecute(String result) {
+
+            try {
+                JSONObject rootJSON = new JSONObject(result);
+                JSONObject windJSON = rootJSON.getJSONObject("wind");
+                strWindDeg = windJSON.getString("deg");
+
+                sixteenWindDeg = to16Orientation(strWindDeg);
+                Log.i("test1","現在の風向きは"+sixteenWindDeg);
+
+            }catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+
+
+
+        }
+    }
+    private String is2String(InputStream is) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        StringBuffer sb = new StringBuffer();
+        char[] b = new char[1024];
+        int line;
+        while(0 <= (line = reader.read(b))) {
+            sb.append(b,0,line);
+        }
+        return sb.toString();
+    }
+    //３６０度方位の風向データを１６度方位の風向データに整形するメソッド。
+    private String to16Orientation(String strWindDeg) {
+        int intWindDeg = Integer.parseInt(strWindDeg);
+        String[] dname = {"北","北北東","北東", "東北東", "東", "東南東", "南東", "南南東", "南", "南南西", "南西", "西南西", "西", "西北西", "北西", "北北西", "北"};
+        int dindex =  (int)( (intWindDeg + 11.25) / 22.5 );
+        return dname[dindex];
+    }
 }
+
+
