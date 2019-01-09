@@ -45,6 +45,7 @@
             android:layout_marginEnd="8dp"
             android:background="#4169e1"
             android:src="@drawable/cameraicon"
+            android:onClick="onCameraClick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline15"
