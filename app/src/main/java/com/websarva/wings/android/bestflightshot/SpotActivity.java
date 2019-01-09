@@ -1,13 +1,18 @@
 package com.websarva.wings.android.bestflightshot;
 
 import android.Manifest;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +31,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class SpotActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -41,6 +48,9 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     private String aircraftName;
     private String departureTime;
     private String airport;
+
+    //保存された画像のURI
+    private Uri _imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +161,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             GroundOverlayOptions options2=new GroundOverlayOptions()
                     .image(plane_descriptor)
                     .position(NaritaAirport_B,500f,600f)
-                    .bearing(155);
+                    .bearing(150);
             GroundOverlay narita_overlay_B=mMap.addGroundOverlay(options2);
 
         } else if (airport.equals("HND")){
@@ -178,21 +188,21 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             GroundOverlayOptions options2=new GroundOverlayOptions()
                     .image(plane_descriptor)
                     .position(HanedaAirport_B,500f,600f)
-                    .bearing(155);
+                    .bearing(40);
             GroundOverlay haneda_overlay_B=mMap.addGroundOverlay(options2);
 
-            //飛行機画像を羽田B滑走路にオーバーレイ表示
+            //飛行機画像を羽田C滑走路にオーバーレイ表示
             GroundOverlayOptions options3=new GroundOverlayOptions()
                     .image(plane_descriptor)
                     .position(HanedaAirport_C,500f,600f)
-                    .bearing(155);
+                    .bearing(150);
             GroundOverlay haneda_overlay_C=mMap.addGroundOverlay(options3);
 
-            //飛行機画像を羽田B滑走路にオーバーレイ表示
+            //飛行機画像を羽田D滑走路にオーバーレイ表示
             GroundOverlayOptions options4=new GroundOverlayOptions()
                     .image(plane_descriptor)
                     .position(HanedaAirport_D,500f,600f)
-                    .bearing(155);
+                    .bearing(45);
             GroundOverlay haneda_overlay_D=mMap.addGroundOverlay(options4);
 
         }
@@ -226,6 +236,34 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     //権限の許可を求めるメソッド
     private void requestPermission(){
         ActivityCompat.requestPermissions(this,PERMISSIONS,PERMISSIONS_REQUEST);
+    }
+
+    //カメラ機能
+    public void onCameraClick(View view){
+        //WRITE_EXTERNAL_STORAGEの許可が下りていないなら
+        if (ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+            //WRITE_EXTERNAL_STORAGEの許可を求めるダイアログを表示する
+            //その際のリクエストコードを2000とする
+            String[] storage_permissions={Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(this,storage_permissions,2000);
+            return;
+        }
+
+        //日時データを「yyyyMMddHHmmss」の形式に整形するフォーマットを生成。
+        //撮影写真に名前をつける
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmmss");
+        Date now=new Date(System.currentTimeMillis());
+        String nowStr=dateFormat.format(now);
+        String fileName=aircraftName+nowStr+".jpg";
+        ContentValues values=new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE,fileName);
+        values.put(MediaStore.Images.Media.MIME_TYPE,"image/jpeg");
+        ContentResolver resolver=getContentResolver();
+        _imageUri=resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+
+        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,_imageUri);
+        startActivity(intent);
     }
 
 
