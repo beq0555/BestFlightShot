@@ -1,6 +1,7 @@
 package com.websarva.wings.android.bestflightshot;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -35,6 +36,11 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
+    private Intent intent;
+    private String aircraftName;
+    private String departureTime;
+    private String airport;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,13 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         //Googleマップの準備ができた時のイベントを受け取るリスナを登録する
         mapFragment.getMapAsync(this);
+
+        //各ListActivity画面からのIntentの受けとり
+        intent=getIntent();
+        aircraftName=intent.getStringExtra("aircraftName");
+        departureTime=intent.getStringExtra("departureTime");
+        airport=intent.getStringExtra("airport");
+
     }
 
 
@@ -72,6 +85,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
      * installed Google Play services and returned to the app.
      *Googleマップの準備が出来た時に呼び出されるメソッド
      */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -83,6 +97,8 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng NaritaAirport_B=new LatLng(35.787778,140.390726);
 
 
+        //羽田空港の位置情報
+        LatLng HanedaAirport=new LatLng(35.550157,139.779891);
         //羽田のA滑走路の位置情報
         LatLng HanedaAirport_A=new LatLng(35.547002,139.778187);
         //羽田のB滑走路の位置情報
@@ -99,14 +115,78 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         BitmapDescriptor plane_descriptor=BitmapDescriptorFactory.fromResource(R.drawable.plane);
 
 
+        //成田空港選択の場合
+        if (airport.equals("NRT")){
 
-        // 成田空港付近をマップに表示させる
-        CameraPosition.Builder builder=new CameraPosition.Builder().target(NaritaAirport).zoom(12.9f).bearing(0).tilt(25.0f);
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+            // 成田空港付近をマップに表示させる
+            CameraPosition.Builder builder=new CameraPosition.Builder().target(NaritaAirport).zoom(12.9f).bearing(0).tilt(25.0f);
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
 
-        //成田空港にマーカーを表示させる
-        MarkerOptions maker_haneda=new MarkerOptions().position(NaritaAirport).title("成田国際空港");
-        mMap.addMarker(maker_haneda);
+            //成田空港にマーカーを表示させる
+            MarkerOptions maker_narita=new MarkerOptions().position(NaritaAirport).title("成田国際空港");
+            mMap.addMarker(maker_narita);
+
+
+            //ここから風向きで画像の表示場所を切り替えてください
+            //飛行機画像を成田A滑走路にオーバーレイ表示
+            GroundOverlayOptions options1=new GroundOverlayOptions()
+                    .image(plane_descriptor)
+                    //画像の位置と大きさを決める
+                    .position(NaritaAirport_A,500f,600f)
+                    .bearing(330);
+            GroundOverlay narita_overlay_A=mMap.addGroundOverlay(options1);
+
+            //飛行機画像を成田B滑走路にオーバーレイ表示
+            GroundOverlayOptions options2=new GroundOverlayOptions()
+                    .image(plane_descriptor)
+                    .position(NaritaAirport_B,500f,600f)
+                    .bearing(155);
+            GroundOverlay narita_overlay_B=mMap.addGroundOverlay(options2);
+
+        } else if (airport.equals("HND")){
+
+            // 羽田空港付近をマップに表示させる
+            CameraPosition.Builder builder=new CameraPosition.Builder().target(HanedaAirport).zoom(12.9f).bearing(0).tilt(25.0f);
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+
+            //羽田空港にマーカーを表示させる
+            MarkerOptions maker_haneda=new MarkerOptions().position(NaritaAirport).title("羽田国際空港");
+            mMap.addMarker(maker_haneda);
+
+
+            //ここから風向きで画像の表示場所を切り替えてください
+            //飛行機画像を羽田A滑走路にオーバーレイ表示
+            GroundOverlayOptions options1=new GroundOverlayOptions()
+                    .image(plane_descriptor)
+                    //画像の位置と大きさを決める
+                    .position(HanedaAirport_A,500f,600f)
+                    .bearing(330);
+            GroundOverlay haneda_overlay_A=mMap.addGroundOverlay(options1);
+
+            //飛行機画像を羽田B滑走路にオーバーレイ表示
+            GroundOverlayOptions options2=new GroundOverlayOptions()
+                    .image(plane_descriptor)
+                    .position(HanedaAirport_B,500f,600f)
+                    .bearing(155);
+            GroundOverlay haneda_overlay_B=mMap.addGroundOverlay(options2);
+
+            //飛行機画像を羽田B滑走路にオーバーレイ表示
+            GroundOverlayOptions options3=new GroundOverlayOptions()
+                    .image(plane_descriptor)
+                    .position(HanedaAirport_C,500f,600f)
+                    .bearing(155);
+            GroundOverlay haneda_overlay_C=mMap.addGroundOverlay(options3);
+
+            //飛行機画像を羽田B滑走路にオーバーレイ表示
+            GroundOverlayOptions options4=new GroundOverlayOptions()
+                    .image(plane_descriptor)
+                    .position(HanedaAirport_D,500f,600f)
+                    .bearing(155);
+            GroundOverlay haneda_overlay_D=mMap.addGroundOverlay(options4);
+
+        }
+
+
 
         //現在地を表示させる
         if (checkPermission()){
@@ -124,21 +204,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         if (!uiSettings.isZoomGesturesEnabled()){
             uiSettings.setZoomGesturesEnabled(true);
         }
-
-        //飛行機画像を成田A滑走路にオーバーレイ表示
-        GroundOverlayOptions options1=new GroundOverlayOptions()
-                .image(plane_descriptor)
-                //画像の位置と大きさを決める
-                .position(NaritaAirport_A,500f,600f)
-                .bearing(330);
-        GroundOverlay haneda_overlay_A=mMap.addGroundOverlay(options1);
-
-        //飛行機画像を成田B滑走路にオーバーレイ表示
-        GroundOverlayOptions options2=new GroundOverlayOptions()
-                .image(plane_descriptor)
-                .position(NaritaAirport_B,500f,600f)
-                .bearing(155);
-        GroundOverlay haneda_overlay_B=mMap.addGroundOverlay(options2);
 
 
     }

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecentFlightActivity extends AppCompatActivity {
+
     private String airport = "";
 
     private ListView lv;
@@ -195,6 +196,7 @@ public class RecentFlightActivity extends AppCompatActivity {
                 item.setCraftType("<機種>" + sortedTypeList.get(i));
                 item.setAirline("<航空会社>" + sortedAirlineList.get(i));
                 item.setDepartureTime("<離陸時間>" + sortedTimeList.get(i));
+
                 switch (sortedTypeList.get(i)) {
                     //ボーイング系
                     case "735":
@@ -329,6 +331,7 @@ public class RecentFlightActivity extends AppCompatActivity {
                 }
                 list.add(item);
             }
+
             //ImageArrayAdapterに上のリストをセット。
             RecentFlightImageArrayAdapter adapter = new RecentFlightImageArrayAdapter(RecentFlightActivity.this,R.layout.list_view_recent_flight_item,list);
             lv = (ListView) findViewById(R.id.listView);
