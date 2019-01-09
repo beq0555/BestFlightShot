@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -56,6 +57,16 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         aircraftName=intent.getStringExtra("aircraftName");
         departureTime=intent.getStringExtra("departureTime");
         airport=intent.getStringExtra("airport");
+
+        //インテントで取得した機種名から<>部分を削除
+        aircraftName = aircraftName.replace("<機種>","");
+        departureTime = departureTime.replace("<離陸時間>","");
+        //画面下部のテロップに撮影機体情報を表示
+        TextView tvAircraftTelop = findViewById(R.id.tvAircraftTelop);
+        tvAircraftTelop.setText("撮影する航空機: " + aircraftName);
+
+        TextView tvDepartureTelop = findViewById(R.id.tvDepartureTelop);
+        tvDepartureTelop.setText("予定離陸時間: " + departureTime);
 
     }
 

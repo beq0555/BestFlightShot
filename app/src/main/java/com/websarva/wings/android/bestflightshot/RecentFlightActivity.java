@@ -44,7 +44,7 @@ public class RecentFlightActivity extends AppCompatActivity {
         } else {
             airport = "羽田";
         }
-        setTitle(airport+">撮影する航空機を選択してください");
+        setTitle(airport+">撮影する機体を選択してください");
 
         //非同期処理を開始
         FlightInfoReceiver receiver = new FlightInfoReceiver();
