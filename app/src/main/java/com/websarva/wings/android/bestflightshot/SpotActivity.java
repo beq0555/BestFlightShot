@@ -376,7 +376,8 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     }
     //３６０度方位の風向データを１６度方位の風向データに整形するメソッド。
     private String to16Orientation(String strWindDeg) {
-        int intWindDeg = Integer.parseInt(strWindDeg);
+        double doubleWindDeg = Double.parseDouble(strWindDeg);
+        int intWindDeg=(int) doubleWindDeg;
         String[] dname = {"北","北北東","北東", "東北東", "東", "東南東", "南東", "南南東", "南", "南南西", "南西", "西南西", "西", "西北西", "北西", "北北西", "北"};
         int dindex =  (int)( (intWindDeg + 11.25) / 22.5 );
         return dname[dindex];
