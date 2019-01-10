@@ -99,7 +99,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         tvDepartureTelop.setText("予定離陸時間: " + departureTime);
 
     }
-
+    //マップ処理をメソッド化して、非同期処理後のonPostExecute()内で呼ばれるようにして、風向きデータをマップ操作で利用できるようにする。
     public void createMap() {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -150,6 +150,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng NaritaAirport_B_North=new LatLng(35.8024897,140.3803162);
         //成田のB滑走路南向き
         LatLng NaritaAirport_B_South=new LatLng(35.787778,140.390726);
+
 
         //羽田空港の位置情報
         LatLng HanedaAirport=new LatLng(35.550157,139.779891);
@@ -210,36 +211,44 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             CameraPosition.Builder builder=new CameraPosition.Builder().target(NaritaAirport).zoom(12.9f).bearing(0).tilt(25.0f);
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
 
+            //成田空港にマーカーを表示させる
+            MarkerOptions maker_narita=new MarkerOptions().position(NaritaAirport).title("成田国際空港");
+            mMap.addMarker(maker_narita);
+
+
 
             //ここから風向きで画像の表示場所を切り替えてください
             //飛行機画像を成田A滑走路北向きにオーバーレイ表示
-            GroundOverlayOptions options1=new GroundOverlayOptions()
-                    .image(plane_descriptor)
-                    //画像の位置と大きさを決める
-                    .position(NaritaAirport_A_North,500f,600f)
-                    .bearing(330);
-            GroundOverlay narita_overlay_A_North=mMap.addGroundOverlay(options1);
+            if(sixteenWindDeg.equals("東北東")||sixteenWindDeg.equals("北東")||sixteenWindDeg.equals("北北東")||sixteenWindDeg.equals("北")||sixteenWindDeg.equals("北北西")||sixteenWindDeg.equals("北西")||sixteenWindDeg.equals("西北西")||sixteenWindDeg.equals("西")) {
+                GroundOverlayOptions options1 = new GroundOverlayOptions()
+                        .image(plane_descriptor)
+                        //画像の位置と大きさを決める
+                        .position(NaritaAirport_A_North, 500f, 600f)
+                        .bearing(330);
+                GroundOverlay narita_overlay_A_North = mMap.addGroundOverlay(options1);
+            }else {
 
-            //飛行機画像を成田A滑走路南向きにオーバーレイ表示
-            GroundOverlayOptions options2=new GroundOverlayOptions()
-                    .image(plane_descriptor)
-                    .position(NaritaAirport_A_South,500f,600f)
-                    .bearing(155);
-            GroundOverlay narita_overlay_A_South=mMap.addGroundOverlay(options2);
+                //飛行機画像を成田A滑走路南向きにオーバーレイ表示
+                GroundOverlayOptions options2 = new GroundOverlayOptions()
+                        .image(plane_descriptor)
+                        .position(NaritaAirport_A_South, 500f, 600f)
+                        .bearing(155);
+                GroundOverlay narita_overlay_A_South = mMap.addGroundOverlay(options2);
+
+            }
+            //飛行機画像を成田B滑走路北向きにオーバーレイ表示
+            //GroundOverlayOptions options3=new GroundOverlayOptions()
+            //        .image(plane_descriptor)
+            //        .position(NaritaAirport_B_North,500f,600f)
+            //        .bearing(330);
+            //GroundOverlay narita_overlay_B_North=mMap.addGroundOverlay(options3);
 
             //飛行機画像を成田B滑走路北向きにオーバーレイ表示
-            GroundOverlayOptions options3=new GroundOverlayOptions()
-                    .image(plane_descriptor)
-                    .position(NaritaAirport_B_North,500f,600f)
-                    .bearing(330);
-            GroundOverlay narita_overlay_B_North=mMap.addGroundOverlay(options3);
-
-            //飛行機画像を成田B滑走路北向きにオーバーレイ表示
-            GroundOverlayOptions options4=new GroundOverlayOptions()
-                    .image(plane_descriptor)
-                    .position(NaritaAirport_B_South,500f,600f)
-                    .bearing(155);
-            GroundOverlay narita_overlay_B_South=mMap.addGroundOverlay(options4);
+            //GroundOverlayOptions options4=new GroundOverlayOptions()
+            //        .image(plane_descriptor)
+            //        .position(NaritaAirport_B_South,500f,600f)
+            //        .bearing(155);
+            //GroundOverlay narita_overlay_B_South=mMap.addGroundOverlay(options4);
 
             //成田空港オススメスポット
             if (sixteenWindDeg.equals ("西")||sixteenWindDeg.equals("西北西")||sixteenWindDeg.equals("北西")||sixteenWindDeg.equals("北北西")){
@@ -288,6 +297,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
             //ここから風向きで画像の表示場所を切り替えてください
             //飛行機画像を羽田A滑走路にオーバーレイ表示
+
             GroundOverlayOptions options1=new GroundOverlayOptions()
                     .image(plane_descriptor)
                     //画像の位置と大きさを決める
@@ -464,7 +474,20 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
+   // private class DestinationAirportReceiver extends AsyncTask<Void,String,String>{
+   //     @Override
+   //     public String doInBackground(Void... params) {
 
+   //         String queryAirport;
+   //         String queryAircraft;
+  //          String queryDepartureTime;
+  //          Intent intent = getIntent();
+  //          airport = intent.getStringExtra("airport");
+  //          aircraftName = intent.getStringExtra("aircraft");
+  //          departureTime = intent.getStringExtra("airline");
+   //     }
+
+ //   }
     private String is2String(InputStream is) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
         StringBuffer sb = new StringBuffer();
@@ -475,7 +498,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return sb.toString();
     }
-
     //３６０度方位の風向データを１６度方位の風向データに整形するメソッド。
     private String to16Orientation(String strWindDeg) {
         double doubleWindDeg = Double.parseDouble(strWindDeg);
