@@ -172,7 +172,7 @@ public class SpecialFlightActivity extends AppCompatActivity {
                     stmt.executeInsert();
                 }
                 //現在時刻から直近10件のフライト情報を取り出す。それをsortedTypeListとsortedTimeListとsortedInfoListに格納。
-                String sql = "SELECT * FROM specialdata WHERE time(time) >= time('now','localtime') AND info LIKE '%で運航%' OR info LIKE '%よる運航%' ORDER BY time(time) LIMIT 7";
+                String sql = "SELECT * FROM specialdata WHERE time(time) >= time('now','localtime') AND info LIKE '%で運航%' ORDER BY time(time) LIMIT 7";
                 Cursor cursor = db.rawQuery(sql, null);
                 while (cursor.moveToNext()) {
 
@@ -326,6 +326,8 @@ public class SpecialFlightActivity extends AppCompatActivity {
             }
             SpecialFlightImageArrayAdapter adapter = new SpecialFlightImageArrayAdapter(SpecialFlightActivity.this,R.layout.list_view_special_flight_item,list);
             lv = (ListView) findViewById(R.id.specialListView);
+            //リストに表示するデータが存在しないときその旨を表示する。
+            lv.setEmptyView(findViewById(R.id.emptyView));
             lv.setAdapter(adapter);
             lv.setOnItemClickListener(new ListItemClickListener());
 

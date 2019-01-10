@@ -335,6 +335,8 @@ public class RecentFlightActivity extends AppCompatActivity {
             //ImageArrayAdapterに上のリストをセット。
             RecentFlightImageArrayAdapter adapter = new RecentFlightImageArrayAdapter(RecentFlightActivity.this,R.layout.list_view_recent_flight_item,list);
             lv = (ListView) findViewById(R.id.listView);
+            //リストに表示するデータが存在しないときその旨を表示する。
+            lv.setEmptyView(findViewById(R.id.emptyView));
             lv.setAdapter(adapter);
             //ListViewにクリックイベント設定する
             lv.setOnItemClickListener(new ListItemClickListener());
