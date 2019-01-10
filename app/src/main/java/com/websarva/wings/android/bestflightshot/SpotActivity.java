@@ -151,7 +151,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         //成田のB滑走路南向き
         LatLng NaritaAirport_B_South=new LatLng(35.787778,140.390726);
 
-
         //羽田空港の位置情報
         LatLng HanedaAirport=new LatLng(35.550157,139.779891);
         //羽田のA滑走路の位置情報
@@ -162,6 +161,41 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng HanedaAirport_C=new LatLng(35.554913,139.794248);
         //羽田のD滑走路の位置情報
         LatLng HanedaAirport_D=new LatLng(35.529193,139.810077);
+
+        //成田オススメスポット
+        //成田市さくらの山公園（北西側）
+        LatLng spot_Narita_sakurayama=new LatLng(35.776042,140.363373);
+        //三里塚さくらの丘（南西側）
+        LatLng spot_Narita_sakuraoka=new LatLng(35.742053,140.384459);
+        //ひこうきの丘（南西側）
+        LatLng spot_Narita_hikouki=new LatLng(35.738197,140.391813);
+        //十余三東雲の丘（北東側）
+        LatLng spot_Narita_shinonome=new LatLng(35.892995,140.375792);
+        //芝山水辺の里（南西側）
+        LatLng spot_Narita_shibayama=new LatLng(35.738354,140.396603);
+        //東峰神社（北東側、B滑走路より）
+        LatLng spot_Narita_touhou=new LatLng(35.784886,140.393309);
+        //空の駅　風和里しばやま（南西側）
+        LatLng spot_Narita_sora=new LatLng(35.731142,140.395036);
+        //航空科学博物館（東南側）
+        LatLng spot_Narita_museum=new LatLng(35.740369,140.397799);
+
+        //羽田オススメスポット
+        //浮島公園(南側)
+        LatLng spot_Haneda_ukishima=new LatLng(35.520756,139.787836);
+        //京浜島つばさ公園（北側）
+        LatLng spot_Haneda_tsubasa=new LatLng(35.566419,139.767197);
+        //城南島海浜公園(北側)
+        LatLng spot_Haneda_jyounannshima=new LatLng(35.578304,139.783423);
+        //都立東京港野鳥公園(北側)
+        LatLng spot_Haneda_toritsu=new LatLng(35.583094,139.75833);
+        //羽田空港第1ターミナル　展望デッキ（中央）
+        LatLng spot_Haneda_terminal1=new LatLng(35.549086,139.783974);
+        //羽田空港国際線旅客ターミナル展望台（A,B滑走路に近い）
+        LatLng spot_Haneda_terminal=new LatLng(35.54523,139.768107);
+        //羽田空港第2ターミナル　展望デッキ（C滑走路に近い）
+        LatLng spot_Haneda_terminal2=new LatLng(35.551001,139.788613);
+
 
         mMap = googleMap;
         UiSettings uiSettings=mMap.getUiSettings();
@@ -175,11 +209,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             // 成田空港付近をマップに表示させる
             CameraPosition.Builder builder=new CameraPosition.Builder().target(NaritaAirport).zoom(12.9f).bearing(0).tilt(25.0f);
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
-
-            //成田空港にマーカーを表示させる
-            MarkerOptions maker_narita=new MarkerOptions().position(NaritaAirport).title("成田国際空港");
-            mMap.addMarker(maker_narita);
-
 
 
             //ここから風向きで画像の表示場所を切り替えてください
@@ -211,6 +240,40 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                     .position(NaritaAirport_B_South,500f,600f)
                     .bearing(155);
             GroundOverlay narita_overlay_B_South=mMap.addGroundOverlay(options4);
+
+            //成田空港オススメスポット
+            if (sixteenWindDeg.equals ("西")||sixteenWindDeg.equals("西北西")||sixteenWindDeg.equals("北西")||sixteenWindDeg.equals("北北西")){
+                //北西エリアに位置するオススメスポット
+                MarkerOptions maker_narita_sakurayama=new MarkerOptions().position(spot_Narita_sakurayama).title("成田市さくらの山公園");
+                mMap.addMarker(maker_narita_sakurayama);
+
+            }else if (sixteenWindDeg.equals ("北")||sixteenWindDeg.equals("北北東")||sixteenWindDeg.equals("北東")||sixteenWindDeg.equals("東北東")){
+                //北東エリアに位置するオススメスポット
+                MarkerOptions maker_narita_shinonome=new MarkerOptions().position(spot_Narita_shinonome).title("十余三東雲の丘");
+                mMap.addMarker(maker_narita_shinonome);
+
+                MarkerOptions maker_narita_touhou=new MarkerOptions().position(spot_Narita_shinonome).title("東峰神社");
+                mMap.addMarker(maker_narita_touhou);
+            }else if (sixteenWindDeg.equals ("東")||sixteenWindDeg.equals("東南東")||sixteenWindDeg.equals("南東")||sixteenWindDeg.equals("南南東")){
+                //東南エリアに位置するオススメスポット
+                MarkerOptions maker_narita_museum=new MarkerOptions().position(spot_Narita_museum).title("航空科学博物館");
+                mMap.addMarker(maker_narita_museum);
+
+            }else if (sixteenWindDeg.equals ("南")||sixteenWindDeg.equals("南南西")||sixteenWindDeg.equals("南西")||sixteenWindDeg.equals("西南西")){
+                //南西エリアに位置するオススメスポット
+                MarkerOptions maker_narita_sakuraoka=new MarkerOptions().position(spot_Narita_sakuraoka).title("三里塚さくらの丘");
+                mMap.addMarker(maker_narita_sakuraoka);
+
+                MarkerOptions maker_narita_hikouki=new MarkerOptions().position(spot_Narita_sakuraoka).title("ひこうきの丘");
+                mMap.addMarker(maker_narita_hikouki);
+
+                MarkerOptions maker_narita_shibayama=new MarkerOptions().position(spot_Narita_shibayama).title("芝山水辺の里");
+                mMap.addMarker(maker_narita_shibayama);
+
+                MarkerOptions maker_narita_sora=new MarkerOptions().position(spot_Narita_sora).title("空の駅　風和里しばやま");
+                mMap.addMarker(maker_narita_shibayama);
+
+            }
 
         } else if (airport.equals("HND")){
 
@@ -253,6 +316,12 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                     .bearing(45);
             GroundOverlay haneda_overlay_D=mMap.addGroundOverlay(options4);
 
+
+            //羽田空港おすすめスポット
+            //南側
+            MarkerOptions maker_haneda_ukishima=new MarkerOptions().position(spot_Haneda_ukishima).title("浮島公園");
+            mMap.addMarker(maker_haneda_ukishima);
+
         }
 
 
@@ -288,6 +357,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     //カメラ機能
     public void onCameraClick(View view){
+
         //WRITE_EXTERNAL_STORAGEの許可が下りていないなら
         if (ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
             //WRITE_EXTERNAL_STORAGEの許可を求めるダイアログを表示する
@@ -295,6 +365,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             String[] storage_permissions={Manifest.permission.WRITE_EXTERNAL_STORAGE};
             ActivityCompat.requestPermissions(this,storage_permissions,2000);
             return;
+
         }
 
         //日時データを「yyyyMMddHHmmss」の形式に整形するフォーマットを生成。
@@ -312,6 +383,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,_imageUri);
         startActivity(intent);
+
     }
 
 
@@ -392,6 +464,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
+
     private String is2String(InputStream is) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
         StringBuffer sb = new StringBuffer();
@@ -402,6 +475,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return sb.toString();
     }
+
     //３６０度方位の風向データを１６度方位の風向データに整形するメソッド。
     private String to16Orientation(String strWindDeg) {
         double doubleWindDeg = Double.parseDouble(strWindDeg);
