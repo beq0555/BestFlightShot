@@ -285,6 +285,8 @@ public class RecentFlightActivity extends AppCompatActivity {
                     case "321":
                         item.setImageId(R.drawable.a_321);
                         break;
+                    case "322":
+                        item.setImageId(R.drawable.a_321);
                     case "330":
                         item.setImageId(R.drawable.a_330);
                         break;
@@ -294,6 +296,8 @@ public class RecentFlightActivity extends AppCompatActivity {
                     case "333":
                         item.setImageId(R.drawable.a_333);
                         break;
+                    case "351":
+                        item.setImageId(R.drawable.a_351);
                     case "359":
                         item.setImageId(R.drawable.a_359);
                         break;

@@ -305,7 +305,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             //北風がふいているとき
             if(sixteenWindDeg.equals("東")||sixteenWindDeg.equals("東北東")||sixteenWindDeg.equals("北東")||sixteenWindDeg.equals("北北東")||sixteenWindDeg.equals("北")||sixteenWindDeg.equals("北北西")||sixteenWindDeg.equals("北西")||sixteenWindDeg.equals("西北西")){
                 switch (destinationAirport) {
-                    //シンガポール
+                    //シンガポール空港
                     case "odpt.Airport:SIN":
                         //飛行機画像を羽田D滑走路にオーバーレイ表示
                         GroundOverlayOptions options1=new GroundOverlayOptions()
@@ -314,24 +314,181 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                                 .bearing(45);
                         GroundOverlay haneda_overlay_D_North_SIN=mMap.addGroundOverlay(options1);
                         break;
-                    //クアラルンプール
+                    //クアラルンプール空港
                     case "odpt.Airport:KUL":
-                        //飛行機画像を羽田D滑走路にオーバーレイ表示
                         GroundOverlayOptions options2=new GroundOverlayOptions()
                                 .image(plane_descriptor)
                                 .position(HanedaAirport_D_North,500f,600f)
                                 .bearing(45);
                         GroundOverlay haneda_overlay_D_North_KUL=mMap.addGroundOverlay(options2);
                         break;
+                    //旭川空港
+                    case "odpt.Airport:AKJ":
+                        GroundOverlayOptions options3=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_AKJ=mMap.addGroundOverlay(options3);
+                        break;
+                    //秋田空港
+                    case "odpt.Airport:AXT":
+                        GroundOverlayOptions options4=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_AXT=mMap.addGroundOverlay(options4);
+                        break;
+                    //スワンナプーム国際空港(バンコク)
+                    case "odpt.Airport:BKK":
+                        GroundOverlayOptions options5=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_BKK=mMap.addGroundOverlay(options5);
+                        break;
+                    //広州白雲国際空港
+                    case "odpt.Airport:CAN":
+                        GroundOverlayOptions options6=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_CAN=mMap.addGroundOverlay(options6);
+                        break;
+                    //シャルル・ド・ゴール空港
+                    case "odpt.Airport:CDG":
+                        GroundOverlayOptions options7=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_CDG=mMap.addGroundOverlay(options7);
+                        break;
+                    //新千歳空港
+                    case "odpt.Airport:CTS":
+                        GroundOverlayOptions options8=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_CTS=mMap.addGroundOverlay(options8);
+                        break;
+                    //フランクフルト空港
+                    case "odpt.Airport:FRA":
+                        GroundOverlayOptions options9=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_FRA=mMap.addGroundOverlay(options9);
+                        break;
+                    //福岡空港
+                    case "odpt.Airport:FUK":
+                        GroundOverlayOptions options10=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_FUK=mMap.addGroundOverlay(options10);
+                        break;
+                    //ドバイ国際空港
+                    case "odpt.Airport:DXB":
+                        GroundOverlayOptions options11=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_DXB=mMap.addGroundOverlay(options11);
+                        break;
+                    //タンソンニャット空港(ホーチミン)
+                    case "odpt.Airport:SGN":
+                        GroundOverlayOptions options12=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_SGN=mMap.addGroundOverlay(options12);
+                        break;
+                    //仁川空港(ソウル)
+                    case "odpt.Airport:ICO":
+                        GroundOverlayOptions options13=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_ICO=mMap.addGroundOverlay(options13);
+                        break;
+                    //ロンドン・ヒースロー空港
+                    case "odpt.Airport:LHR":
+                        GroundOverlayOptions options14=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_LHR=mMap.addGroundOverlay(options14);
+                        break;
+                    //北九州空港
+                    case "odpt.Airport:KKJ":
+                        GroundOverlayOptions options15=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_KKJ=mMap.addGroundOverlay(options15);
+                        break;
+                    //鹿児島空港
+                    case "odpt.Airport:KOJ":
+                        GroundOverlayOptions options16=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_KOJ=mMap.addGroundOverlay(options16);
+                        break;
+                    //那覇空港
+                    case "odpt.Airport:OKA":
+                        GroundOverlayOptions options17=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_OKA=mMap.addGroundOverlay(options17);
+                        break;
+                    //伊丹空港
+                    case "odpt.Airport:ITM":
+                        GroundOverlayOptions options18=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_ITM=mMap.addGroundOverlay(options18);
+                        break;
+                    //石垣空港
+                    case "odpt.Airport:ISG":
+                        GroundOverlayOptions options19=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_ISG=mMap.addGroundOverlay(options19);
+                        break;
+                    //宮古空港
+                    case "odpt.Airport:MMY":
+                        GroundOverlayOptions options20=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_MMY=mMap.addGroundOverlay(options20);
+                        break;
+                    //熊本空港
+                    case "odpt.Airport:KMJ":
+                        GroundOverlayOptions options21=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_KMJ=mMap.addGroundOverlay(options21);
+                        break;
+                    //女満別空港
+                    case "odpt.Airport:MMB":
+                        GroundOverlayOptions options22=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_MMB=mMap.addGroundOverlay(options22);
+                        break;
                     default:
-                        //飛行機画像を羽田C滑走路にオーバーレイ表示
                         GroundOverlayOptions optionsX=new GroundOverlayOptions()
                                 .image(plane_descriptor)
                                 .position(HanedaAirport_C_North,500f,600f)
                                 .bearing(330);
                         GroundOverlay haneda_overlay_C_North_Def=mMap.addGroundOverlay(optionsX);
 
-                        //飛行機画像を羽田D滑走路にオーバーレイ表示
                         GroundOverlayOptions optionsY=new GroundOverlayOptions()
                                 .image(plane_descriptor)
                                 .position(HanedaAirport_D_North,500f,600f)
@@ -339,11 +496,11 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                         GroundOverlay haneda_overlay_D_North_Def=mMap.addGroundOverlay(optionsY);
 
                 }
+                //南風がふいているとき
             } else {
                 switch (destinationAirport) {
                     //シンガポール
                     case "odpt.Airport:SIN":
-                        //飛行機画像を羽田D滑走路にオーバーレイ表示
                         GroundOverlayOptions options1=new GroundOverlayOptions()
                                 .image(plane_descriptor)
                                 //画像の位置と大きさを決める
@@ -353,12 +510,182 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                         break;
                     //クアラルンプール
                     case "odpt.Airport:KUL":
-                        //飛行機画像を羽田B滑走路にオーバーレイ表示
                         GroundOverlayOptions options2=new GroundOverlayOptions()
                                 .image(plane_descriptor)
                                 .position(HanedaAirport_C_South,500f,600f)
                                 .bearing(145);
                         GroundOverlay haneda_overlay_C_South_KUL=mMap.addGroundOverlay(options2);
+                        break;
+                    //旭川空港
+                    case "odpt.Airport:AKJ":
+                        GroundOverlayOptions options3=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_AKJ=mMap.addGroundOverlay(options3);
+                        break;
+                    //秋田空港
+                    case "odpt.Airport:AXT":
+                        GroundOverlayOptions options4=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_AXT=mMap.addGroundOverlay(options4);
+                        break;
+                    //スワンナプーム国際空港(バンコク)
+                    case "odpt.Airport:BKK":
+                        GroundOverlayOptions options5=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_BKK=mMap.addGroundOverlay(options5);
+                        break;
+                    //広州白雲国際空港
+                    case "odpt.Airport:CAN":
+                        GroundOverlayOptions options6=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_CAN=mMap.addGroundOverlay(options6);
+                        break;
+                    //シャルル・ド・ゴール空港
+                    case "odpt.Airport:CDG":
+                        GroundOverlayOptions options7=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_CDG=mMap.addGroundOverlay(options7);
+                        break;
+                    //新千歳空港
+                    case "odpt.Airport:CTS":
+                        GroundOverlayOptions options8=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_CTS=mMap.addGroundOverlay(options8);
+                        break;
+                    //フランクフルト空港
+                    case "odpt.Airport:FRA":
+                        GroundOverlayOptions options9=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_FRA=mMap.addGroundOverlay(options9);
+                        break;
+                    //福岡空港
+                    case "odpt.Airport:FUK":
+                        GroundOverlayOptions options10=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_FUK=mMap.addGroundOverlay(options10);
+                        break;
+                    //ドバイ国際空港
+                    case "odpt.Airport:DXB":
+                        GroundOverlayOptions options11=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_DXB=mMap.addGroundOverlay(options11);
+                        break;
+                    //タンソンニャット空港(ホーチミン)
+                    case "odpt.Airport:SGN":
+                        GroundOverlayOptions options12=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_SGN=mMap.addGroundOverlay(options12);
+                        break;
+                    //仁川空港(ソウル)
+                    case "odpt.Airport:ICO":
+                        GroundOverlayOptions options13=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_ICO=mMap.addGroundOverlay(options13);
+                        break;
+                    //ロンドン・ヒースロー空港
+                    case "odpt.Airport:LHR":
+                        GroundOverlayOptions options14=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_LHR=mMap.addGroundOverlay(options14);
+                        break;
+                    //北九州空港
+                    case "odpt.Airport:KKJ":
+                        GroundOverlayOptions options15=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_KKJ=mMap.addGroundOverlay(options15);
+                        break;
+                    //鹿児島空港
+                    case "odpt.Airport:KOJ":
+                        GroundOverlayOptions options16=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_KOJ=mMap.addGroundOverlay(options16);
+                        break;
+                    //那覇空港
+                    case "odpt.Airport:OKA":
+                        GroundOverlayOptions options17=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_OKA=mMap.addGroundOverlay(options17);
+                        break;
+                    //伊丹空港
+                    case "odpt.Airport:ITM":
+                        GroundOverlayOptions options18=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_ITM=mMap.addGroundOverlay(options18);
+                        break;
+                    //石垣空港
+                    case "odpt.Airport:ISG":
+                        GroundOverlayOptions options19=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_ISG=mMap.addGroundOverlay(options19);
+                        break;
+                    //宮古空港
+                    case "odpt.Airport:MMY":
+                        GroundOverlayOptions options20=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_MMY=mMap.addGroundOverlay(options20);
+                        break;
+                    //熊本空港
+                    case "odpt.Airport:KMJ":
+                        GroundOverlayOptions options21=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_KMJ=mMap.addGroundOverlay(options21);
+                        break;
+                    //女満別空港
+                    case "odpt.Airport:MMB":
+                        GroundOverlayOptions options22=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_MMB=mMap.addGroundOverlay(options22);
                         break;
                     default:
                         GroundOverlayOptions optionsX=new GroundOverlayOptions()
@@ -368,7 +695,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                                 .bearing(145);
                         GroundOverlay haneda_overlay_A_South_Def=mMap.addGroundOverlay(optionsX);
 
-                        //飛行機画像を羽田B滑走路にオーバーレイ表示
+
                         GroundOverlayOptions optionsY=new GroundOverlayOptions()
                                 .image(plane_descriptor)
                                 .position(HanedaAirport_C_South,500f,600f)
