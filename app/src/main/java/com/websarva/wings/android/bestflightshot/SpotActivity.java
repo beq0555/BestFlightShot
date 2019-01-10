@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,6 +46,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -56,10 +59,12 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
+
     private Intent intent;
     private String aircraftName;
     private String departureTime;
     private String airport;
+    private String destinationAirport;
 
     //保存された画像のURI
     private Uri _imageUri;
@@ -81,7 +86,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         WindInfoReceiver receiver = new WindInfoReceiver();
         receiver.execute();
 
-        Log.i("test","現在の風向き"+sixteenWindDeg);
         //各ListActivity画面からのIntentの受けとり
         intent=getIntent();
         aircraftName=intent.getStringExtra("aircraftName");
@@ -138,7 +142,8 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        Log.i("test","現在の風向き"+sixteenWindDeg);
+        //Log.i("test","現在の風向き"+sixteenWindDeg);
+        //Log.i("test","目的地の空港:"+destinationAirport);
 
         //成田空港の位置情報
         LatLng NaritaAirport=new LatLng(35.771987,140.39285);
@@ -154,14 +159,14 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
         //羽田空港の位置情報
         LatLng HanedaAirport=new LatLng(35.550157,139.779891);
-        //羽田のA滑走路の位置情報
-        LatLng HanedaAirport_A=new LatLng(35.547002,139.778187);
-        //羽田のB滑走路の位置情報
-        LatLng HanedaAirport_B=new LatLng(35.556709,139.767825);
-        //羽田のC滑走路の位置情報
-        LatLng HanedaAirport_C=new LatLng(35.554913,139.794248);
-        //羽田のD滑走路の位置情報
-        LatLng HanedaAirport_D=new LatLng(35.529193,139.810077);
+        //羽田のA滑走路の南風時
+        LatLng HanedaAirport_A_South=new LatLng(35.5424174,139.7816119);
+        //羽田のC滑走路の南風時
+        LatLng HanedaAirport_C_South=new LatLng(35.5436385,139.8025040);
+        //羽田のC滑走路の北風時
+        LatLng HanedaAirport_C_North=new LatLng(35.5638344,139.7879828);
+        //羽田のD滑走路の北風時
+        LatLng HanedaAirport_D_North=new LatLng(35.529193,139.810077);
 
         //成田オススメスポット
         //成田市さくらの山公園（北西側）
@@ -297,34 +302,82 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
             //ここから風向きで画像の表示場所を切り替えてください
             //飛行機画像を羽田A滑走路にオーバーレイ表示
+            //北風がふいているとき
+            if(sixteenWindDeg.equals("東")||sixteenWindDeg.equals("東北東")||sixteenWindDeg.equals("北東")||sixteenWindDeg.equals("北北東")||sixteenWindDeg.equals("北")||sixteenWindDeg.equals("北北西")||sixteenWindDeg.equals("北西")||sixteenWindDeg.equals("西北西")){
+                switch (destinationAirport) {
+                    //シンガポール
+                    case "odpt.Airport:SIN":
+                        //飛行機画像を羽田D滑走路にオーバーレイ表示
+                        GroundOverlayOptions options1=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_SIN=mMap.addGroundOverlay(options1);
+                        break;
+                    //クアラルンプール
+                    case "odpt.Airport:KUL":
+                        //飛行機画像を羽田D滑走路にオーバーレイ表示
+                        GroundOverlayOptions options2=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_KUL=mMap.addGroundOverlay(options2);
+                        break;
+                    default:
+                        //飛行機画像を羽田C滑走路にオーバーレイ表示
+                        GroundOverlayOptions optionsX=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_North,500f,600f)
+                                .bearing(330);
+                        GroundOverlay haneda_overlay_C_North_Def=mMap.addGroundOverlay(optionsX);
 
-            GroundOverlayOptions options1=new GroundOverlayOptions()
-                    .image(plane_descriptor)
-                    //画像の位置と大きさを決める
-                    .position(HanedaAirport_A,500f,600f)
-                    .bearing(330);
-            GroundOverlay haneda_overlay_A=mMap.addGroundOverlay(options1);
+                        //飛行機画像を羽田D滑走路にオーバーレイ表示
+                        GroundOverlayOptions optionsY=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_D_North,500f,600f)
+                                .bearing(45);
+                        GroundOverlay haneda_overlay_D_North_Def=mMap.addGroundOverlay(optionsY);
 
-            //飛行機画像を羽田B滑走路にオーバーレイ表示
-            GroundOverlayOptions options2=new GroundOverlayOptions()
-                    .image(plane_descriptor)
-                    .position(HanedaAirport_B,500f,600f)
-                    .bearing(40);
-            GroundOverlay haneda_overlay_B=mMap.addGroundOverlay(options2);
+                }
+            } else {
+                switch (destinationAirport) {
+                    //シンガポール
+                    case "odpt.Airport:SIN":
+                        //飛行機画像を羽田D滑走路にオーバーレイ表示
+                        GroundOverlayOptions options1=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_SIN=mMap.addGroundOverlay(options1);
+                        break;
+                    //クアラルンプール
+                    case "odpt.Airport:KUL":
+                        //飛行機画像を羽田B滑走路にオーバーレイ表示
+                        GroundOverlayOptions options2=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_KUL=mMap.addGroundOverlay(options2);
+                        break;
+                    default:
+                        GroundOverlayOptions optionsX=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                //画像の位置と大きさを決める
+                                .position(HanedaAirport_A_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_A_South_Def=mMap.addGroundOverlay(optionsX);
 
-            //飛行機画像を羽田C滑走路にオーバーレイ表示
-            GroundOverlayOptions options3=new GroundOverlayOptions()
-                    .image(plane_descriptor)
-                    .position(HanedaAirport_C,500f,600f)
-                    .bearing(150);
-            GroundOverlay haneda_overlay_C=mMap.addGroundOverlay(options3);
+                        //飛行機画像を羽田B滑走路にオーバーレイ表示
+                        GroundOverlayOptions optionsY=new GroundOverlayOptions()
+                                .image(plane_descriptor)
+                                .position(HanedaAirport_C_South,500f,600f)
+                                .bearing(145);
+                        GroundOverlay haneda_overlay_C_South_Def=mMap.addGroundOverlay(optionsY);
 
-            //飛行機画像を羽田D滑走路にオーバーレイ表示
-            GroundOverlayOptions options4=new GroundOverlayOptions()
-                    .image(plane_descriptor)
-                    .position(HanedaAirport_D,500f,600f)
-                    .bearing(45);
-            GroundOverlay haneda_overlay_D=mMap.addGroundOverlay(options4);
+                }
+            }
+
 
 
             //羽田空港おすすめスポット
@@ -399,9 +452,13 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     //風向き情報を取得する非同期クラス
     private class WindInfoReceiver extends AsyncTask<Void,String,String> {
+        private ProgressBar progressBar1;
 
         @Override
         public String doInBackground(Void... params) {
+
+            progressBar1 = (ProgressBar)findViewById(R.id.spotProgressBar1);
+            this.progressBar1.setVisibility(View.VISIBLE);
             //APIキー
             final String API_KEY = "appid=5ee5c307a24bd39c9942999bf17cdfd4";
             final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
@@ -457,55 +514,126 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         }
         public void onPostExecute(String result) {
 
+            if(this.progressBar1 != null) {
+                this.progressBar1.setVisibility(View.GONE);
+            }
+
             try {
                 JSONObject rootJSON = new JSONObject(result);
                 JSONObject windJSON = rootJSON.getJSONObject("wind");
                 strWindDeg = windJSON.getString("deg");
 
                 sixteenWindDeg = to16Orientation(strWindDeg);
-                createMap();
+
 
 
             }catch (JSONException ex) {
                 ex.printStackTrace();
             }
+            DestinationAirportReceiver receiver = new DestinationAirportReceiver();
+            receiver.execute();
 
 
 
         }
     }
-   // private class DestinationAirportReceiver extends AsyncTask<Void,String,String>{
-   //     @Override
-   //     public String doInBackground(Void... params) {
+    private class DestinationAirportReceiver extends AsyncTask<Void,String,String> {
 
-   //         String queryAirport;
-   //         String queryAircraft;
-  //          String queryDepartureTime;
-  //          Intent intent = getIntent();
-  //          airport = intent.getStringExtra("airport");
-  //          aircraftName = intent.getStringExtra("aircraft");
-  //          departureTime = intent.getStringExtra("airline");
-   //     }
+        private ProgressBar progressBar2;
+        @Override
+        public String doInBackground(Void... params) {
 
- //   }
-    private String is2String(InputStream is) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-        StringBuffer sb = new StringBuffer();
-        char[] b = new char[1024];
-        int line;
-        while(0 <= (line = reader.read(b))) {
-            sb.append(b,0,line);
+            progressBar2 = (ProgressBar)findViewById(R.id.spotProgressBar2);
+            this.progressBar2.setVisibility(View.VISIBLE);
+
+            String queryAirport;
+            String queryAircraft;
+            String queryDepartureTime;
+            Intent intent = getIntent();
+            airport = intent.getStringExtra("airport");
+            queryAirport = "&odpt:departureAirport=odpt.Airport:" + airport;
+            aircraftName = intent.getStringExtra("aircraftName");
+            aircraftName = aircraftName.replace("<機種>","");
+            queryAircraft = "&odpt:aircraftType=" + aircraftName;
+            departureTime = intent.getStringExtra("departureTime");
+            departureTime = departureTime.replace("<離陸時間>","");
+            queryDepartureTime = "&odpt:scheduledDepartureTime="+departureTime;
+
+            String urlStr = "https://api-tokyochallenge.odpt.org/api/v4/odpt:FlightInformationDeparture?acl:consumerKey=2af0930edd9f426efa146aa64e7d90d9b41b4fb84b9bef1e1040dce7e6fed3cf" + queryAirport + queryAircraft + queryDepartureTime;
+            String result = "";
+
+            HttpURLConnection con = null;
+            InputStream is = null;
+            try {
+                URL url = new URL(urlStr);
+                con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                con.connect();
+                is = con.getInputStream();
+                result = is2String(is);
+            } catch (MalformedURLException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (con != null) {
+                    con.disconnect();
+                }
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+            return result;
         }
-        return sb.toString();
+
+        public void onPostExecute(String result) {
+
+            if(this.progressBar2 != null) {
+                this.progressBar2.setVisibility(View.GONE);
+            }
+
+            List<String> destinationAirportList = new ArrayList<>();
+            try {
+                JSONArray jArray = new JSONArray(result);
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject rootJson = jArray.getJSONObject(i);
+                    if (rootJson.has("odpt:destinationAirport")) {
+                        destinationAirportList.add(i, rootJson.getString("odpt:destinationAirport"));
+                    } else {
+                        destinationAirportList.add(i, "目的地不明");
+                    }
+                }
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+            //目的地空港を非同期処理で取得して代入している
+            destinationAirport = destinationAirportList.get(0);
+            createMap();
+        }
     }
-    //３６０度方位の風向データを１６度方位の風向データに整形するメソッド。
-    private String to16Orientation(String strWindDeg) {
-        double doubleWindDeg = Double.parseDouble(strWindDeg);
-        int intWindDeg=(int) doubleWindDeg;
-        String[] dname = {"北","北北東","北東", "東北東", "東", "東南東", "南東", "南南東", "南", "南南西", "南西", "西南西", "西", "西北西", "北西", "北北西", "北"};
-        int dindex =  (int)( (intWindDeg + 11.25) / 22.5 );
-        return dname[dindex];
+        private String is2String(InputStream is) throws IOException {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            StringBuffer sb = new StringBuffer();
+            char[] b = new char[1024];
+            int line;
+            while (0 <= (line = reader.read(b))) {
+                sb.append(b, 0, line);
+            }
+            return sb.toString();
+        }
+
+        //３６０度方位の風向データを１６度方位の風向データに整形するメソッド。
+        private String to16Orientation(String strWindDeg) {
+            double doubleWindDeg = Double.parseDouble(strWindDeg);
+            int intWindDeg = (int) doubleWindDeg;
+            String[] dname = {"北", "北北東", "北東", "東北東", "東", "東南東", "南東", "南南東", "南", "南南西", "南西", "西南西", "西", "西北西", "北西", "北北西", "北"};
+            int dindex = (int) ((intWindDeg + 11.25) / 22.5);
+            return dname[dindex];
+        }
     }
-}
 
 
