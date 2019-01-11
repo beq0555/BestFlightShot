@@ -59,7 +59,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
-
     private Intent intent;
     private String aircraftName;
     private String departureTime;
@@ -103,6 +102,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         tvDepartureTelop.setText("予定離陸時間: " + departureTime);
 
     }
+
     //マップ処理をメソッド化して、非同期処理後のonPostExecute()内で呼ばれるようにして、風向きデータをマップ操作で利用できるようにする。
     public void createMap() {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -216,11 +216,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             CameraPosition.Builder builder=new CameraPosition.Builder().target(NaritaAirport).zoom(12.9f).bearing(0).tilt(25.0f);
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
 
-            //成田空港にマーカーを表示させる
-            MarkerOptions maker_narita=new MarkerOptions().position(NaritaAirport).title("成田国際空港");
-            mMap.addMarker(maker_narita);
-
-
 
             //ここから風向きで画像の表示場所を切り替えてください
             //飛行機画像を成田A滑走路北向きにオーバーレイ表示
@@ -288,6 +283,15 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(maker_narita_shibayama);
 
             }
+
+            //成田空港のポリゴン表示
+            PolygonOptions options=new PolygonOptions()
+                    .addAll(create_narita_Poligon())
+                    .strokeColor(Color.RED)
+                    .strokeWidth(4)
+                    .fillColor(Color.argb(50,51,204,255));
+            mMap.addPolygon(options);
+
 
         } else if (airport.equals("HND")){
 
@@ -708,13 +712,20 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
 
             //羽田空港おすすめスポット
-            //南側
+            //滑走路別にオススメスポットを表示させる
+
             MarkerOptions maker_haneda_ukishima=new MarkerOptions().position(spot_Haneda_ukishima).title("浮島公園");
             mMap.addMarker(maker_haneda_ukishima);
 
+            //羽田空港のポリゴン表示
+            PolygonOptions options=new PolygonOptions()
+                    .addAll(create_haneda_Poligon())
+                    .strokeColor(Color.RED)
+                    .strokeWidth(4)
+                    .fillColor(Color.argb(55,51,204,255));
+            mMap.addPolygon(options);
+
         }
-
-
 
         //現在地を表示させる
         if (checkPermission()){
@@ -839,6 +850,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             return result;
 
         }
+
         public void onPostExecute(String result) {
 
             if(this.progressBar1 != null) {
@@ -937,6 +949,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
+
             //目的地空港を非同期処理で取得して代入している
             destinationAirport = destinationAirportList.get(0);
             createMap();
@@ -961,6 +974,318 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             int dindex = (int) ((intWindDeg + 11.25) / 22.5);
             return dname[dindex];
         }
+
+
+    //羽田のポリゴン
+    private List<LatLng> create_haneda_Poligon(){
+        return Arrays.asList(
+                new LatLng(35.5475549643121,139.801632107064),
+                new LatLng(35.5456939643119,139.803986107064),
+                new LatLng(35.5386009643119,139.808950107064),
+                new LatLng(35.5348949643121,139.811463107064),
+                new LatLng(35.54243196431198726,139.82012010706412752),
+                new LatLng(35.54356796431201815,139.82302610706418022),
+                new LatLng(35.54129496431207258,139.82605210706427101),
+                new LatLng(35.52024096431196654,139.80238210706423274),
+                new LatLng(35.52263796431205378,139.7992941070641848),
+                new LatLng(35.52449096431209341,139.80132210706429419),
+                new LatLng(35.52576396431206263,139.79964210706421568),
+                new LatLng(35.53196196431204612,139.79464710706409392),
+                new LatLng(35.53420296431201564,139.78761210706412044),
+                new LatLng(35.53577996431195629,139.78639810706422963),
+                new LatLng(35.53521896431206528,139.78518510706422262),
+                new LatLng(35.53533896431204653,139.78454810706412559),
+                new LatLng(35.53886296431196001,139.78194810706409612),
+                new LatLng(35.53685996431195804,139.77843210706410559),
+                new LatLng(35.5411369643119599,139.76899210706417875),
+                new LatLng(35.54131696431196019,139.76840410706418538),
+                new LatLng(35.54130096431205743,139.76771710706421459),
+                new LatLng(35.54136796431188827,139.76760710706415125),
+                new LatLng(35.54149596431201985,139.76755810706416128),
+                new LatLng(35.54179896431205066,139.76755510706405516),
+                new LatLng(35.54231896431187465,139.76661410706415722),
+                new LatLng(35.54271896431194477,139.76592710706418643),
+                new LatLng(35.54451996431194516,139.76196110706419518),
+                new LatLng(35.54542396431193652,139.75836310706418431),
+                new LatLng(35.5457819643118853,139.75689710706424762),
+                new LatLng(35.54598196431194879,139.75548710706405586),
+                new LatLng(35.54618196431195543,139.75296810706416295),
+                new LatLng(35.54666014275224484,139.75223032119245659),
+                new LatLng(35.54728473922799026,139.75274070171715834),
+                new LatLng(35.54770352436500502,139.7531023797901355),
+                new LatLng(35.54827459500646114,139.75306430841399674),
+                new LatLng(35.54951191472943606,139.75317852254229933),
+                new LatLng(35.55006394968282279,139.75363537905539602),
+                new LatLng(35.55103476977328114,139.75334984373469638),
+                new LatLng(35.55554622784026719,139.75340695079890452),
+                new LatLng(35.55998154315514626,139.75483462740228902),
+                new LatLng(35.56140096431190045,139.75536610706413398),
+                new LatLng(35.56196296431207315,139.75550610706423527),
+                new LatLng(35.5627239643119708,139.75580010706406142),
+                new LatLng(35.56430796431195063,139.75864410706415697),
+                new LatLng(35.56307596431193474,139.76107810706426449),
+                new LatLng(35.56054496431195844,139.76320710706423256),
+                new LatLng(35.56039496431199609,139.76391810706425645),
+                new LatLng(35.56885296431195798,139.77113510706422517),
+                new LatLng(35.57043896431204644,139.78548010706415994),
+                new LatLng(35.54755496431207007,139.80163210706399468)
+        );
     }
+
+    //成田のポリゴン
+    private List<LatLng> create_narita_Poligon(){
+        return Arrays.asList(
+                new LatLng(35.737765,140.393058),
+                new LatLng(35.740523,140.391),
+                new LatLng(35.739424,140.388598),
+                new LatLng(35.739453 ,140.387615),
+                new LatLng(35.740195,140.386778),
+                new LatLng(35.740936,140.386231),
+                new LatLng(35.741589,140.385794),
+                new LatLng(35.742568,140.385248),
+                new LatLng(35.744792,140.384118),
+                new LatLng(35.745208,140.383644),
+                new LatLng(35.746305,140.382406),
+                new LatLng(35.748707,140.380657),
+                new LatLng(35.753171,140.377873),
+                new LatLng(35.757146,140.375067),
+                new LatLng(35.757635,140.374934),
+                new LatLng(35.757962,140.375262),
+                new LatLng(35.758466,140.374497),
+                new LatLng(35.759207,140.373986),
+                new LatLng(35.759534,140.374004),
+                new LatLng(35.760528,140.373785),
+                new LatLng(35.760691,140.373985),
+                new LatLng(35.764047,140.371668),
+                new LatLng(35.766208,140.370019),
+                new LatLng(35.766136,140.369754),
+                new LatLng(35.766736,140.369342),
+                new LatLng(35.767159,140.369483),
+                new LatLng(35.768583,140.368319),
+                new LatLng(35.769948,140.367128),
+                new LatLng(35.770616,140.366946),
+                new LatLng(35.771476,140.366018),
+                new LatLng(35.774933,140.363964),
+                new LatLng(35.775585,140.363823),
+                new LatLng(35.776282,140.365112),
+                new LatLng(35.77701,140.364783),
+                new LatLng(35.777707,140.36443),
+                new LatLng(35.780011,140.362929),
+                new LatLng(35.780395,140.362507),
+                new LatLng(35.781704,140.36192),
+                new LatLng(35.782215,140.361994),
+                new LatLng(35.782904,140.363415),
+                new LatLng(35.782589,140.364216),
+                new LatLng(35.781276,140.365161),
+                new LatLng(35.781024,140.36548),
+                new LatLng(35.778209,140.367466),
+                new LatLng(35.777921,140.367466),
+                new LatLng(35.77773,140.366906),
+                new LatLng(35.777108,140.36697),
+                new LatLng(35.776485,140.367388),
+                new LatLng(35.777166,140.3691),
+                new LatLng(35.777107,140.369537),
+                new LatLng(35.77681,140.369719),
+                new LatLng(35.776676,140.37001),
+                new LatLng(35.77632,140.370465),
+                new LatLng(35.77586,140.370884),
+                new LatLng(35.775252,140.371393),
+                new LatLng(35.775433,140.371659),
+                new LatLng(35.775463,140.371704),
+                new LatLng(35.775409,140.371752),
+                new LatLng(35.774131,140.372876),
+                new LatLng(35.774131,140.373431),
+                new LatLng(35.773716,140.37415),
+                new LatLng(35.77419,140.374533),
+                new LatLng(35.773789,140.374942),
+                new LatLng(35.773404,140.375051),
+                new LatLng(35.772707,140.374868),
+                new LatLng(35.772336,140.37536),
+                new LatLng(35.776018,140.379667),
+                new LatLng(35.778604,140.382865),
+                new LatLng(35.781488,140.386105),
+                new LatLng(35.781701,140.385865),
+                new LatLng(35.781838,140.385442),
+                new LatLng(35.782045,140.385358),
+                new LatLng(35.782252,140.385329),
+                new LatLng(35.782436,140.385146),
+                new LatLng(35.782711,140.385258),
+                new LatLng(35.783177,140.386062),
+                new LatLng(35.783569,140.387235),
+                new LatLng(35.783327,140.387344),
+                new LatLng(35.783097,140.387175),
+                new LatLng(35.782614,140.387599),
+                new LatLng(35.782534,140.387993),
+                new LatLng(35.782987,140.388572),
+                new LatLng(35.782928,140.388827),
+                new LatLng(35.781222,140.388864),
+                new LatLng(35.781207,140.389838),
+                new LatLng(35.783878,140.389482),
+                new LatLng(35.78413,140.389937),
+                new LatLng(35.784353,140.389882),
+                new LatLng(35.784783,140.389445),
+                new LatLng(35.784708,140.389117),
+                new LatLng(35.789522,140.387334),
+                new LatLng(35.789893,140.387124),
+                new LatLng(35.790071,140.386851),
+                new LatLng(35.7901,140.386614),
+                new LatLng(35.790055,140.385594),
+                new LatLng(35.796388,140.3808),
+                new LatLng(35.796625,140.380571),
+                new LatLng(35.7972,140.38036),
+                new LatLng(35.79818,140.379691),
+                new LatLng(35.798215,140.379396),
+                new LatLng(35.798163,140.378742),
+                new LatLng(35.798285,140.378363),
+                new LatLng(35.799208,140.377667),
+                new LatLng(35.80109,140.376381),
+                new LatLng(35.80123,140.375959),
+                new LatLng(35.801896,140.376336),
+                new LatLng(35.802411,140.377053),
+                new LatLng(35.803756,140.375664),
+                new LatLng(35.805211,140.374157),
+                new LatLng(35.805543,140.373904),
+                new LatLng(35.806449,140.375211),
+                new LatLng(35.80685,140.375295),
+                new LatLng(35.807128,140.375422),
+                new LatLng(35.807494,140.375906),
+                new LatLng(35.808209,140.377804),
+                new LatLng(35.807843,140.37831),
+                new LatLng(35.807512,140.378521),
+                new LatLng(35.807808,140.379259),
+                new LatLng(35.807355,140.379575),
+                new LatLng(35.807494,140.380397),
+                new LatLng(35.807895,140.381177),
+                new LatLng(35.806693,140.381999),
+                new LatLng(35.805943,140.382358),
+                new LatLng(35.804532,140.38278),
+                new LatLng(35.804863,140.38474),
+                new LatLng(35.803713,140.384614),
+                new LatLng(35.80204,140.385415),
+                new LatLng(35.803185,140.386979),
+                new LatLng(35.801257,140.388173),
+                new LatLng(35.80053,140.388975),
+                new LatLng(35.800056,140.389339),
+                new LatLng(35.797979,140.390179),
+                new LatLng(35.797141,140.39022),
+                new LatLng(35.797178,140.389947),
+                new LatLng(35.797326,140.389865),
+                new LatLng(35.797208,140.389778),
+                new LatLng(35.796762,140.389523),
+                new LatLng(35.796559,140.390203),
+                new LatLng(35.795368,140.390235),
+                new LatLng(35.794879,140.390735),
+                new LatLng(35.791723,140.395786),
+                new LatLng(35.787537,140.395903),
+                new LatLng(35.786647,140.395867),
+                new LatLng(35.786284,140.395835),
+                new LatLng(35.786076,140.395781),
+                new LatLng(35.785957,140.395308),
+                new LatLng(35.784978,140.395308),
+                new LatLng(35.785022,140.394789),
+                new LatLng(35.7852,140.394862),
+                new LatLng(35.785556,140.394497),
+                new LatLng(35.785215,140.394753),
+                new LatLng(35.785052,140.394698),
+                new LatLng(35.78514,140.39376),
+                new LatLng(35.785066,140.393341),
+                new LatLng(35.784948,140.392724),
+                new LatLng(35.784579,140.39199),
+                new LatLng(35.782647,140.392575),
+                new LatLng(35.782064,140.392105),
+                new LatLng(35.781174,140.392162),
+                new LatLng(35.780752,140.391748),
+                new LatLng(35.780308,140.391805),
+                new LatLng(35.779748,140.391598),
+                new LatLng(35.779089,140.393726),
+                new LatLng(35.779089,140.394535),
+                new LatLng(35.779657,140.395928),
+                new LatLng(35.77968,140.395864),
+                new LatLng(35.782584,140.394743),
+                new LatLng(35.782753,140.395421),
+                new LatLng(35.781576,140.395893),
+                new LatLng(35.781456,140.395421),
+                new LatLng(35.780952,140.39551),
+                new LatLng(35.780761,140.396748),
+                new LatLng(35.783209,140.395538),
+                new LatLng(35.782969,140.394536),
+                new LatLng(35.783497,140.394212),
+                new LatLng(35.783641,140.394654),
+                new LatLng(35.783161,140.39486),
+                new LatLng(35.783425,140.395833),
+                new LatLng(35.780376,140.397161),
+                new LatLng(35.780257,140.39778),
+                new LatLng(35.779753,140.398104),
+                new LatLng(35.77944,140.397309),
+                new LatLng(35.775547,140.400044),
+                new LatLng(35.774732,140.40252),
+                new LatLng(35.770457,140.400282),
+                new LatLng(35.769833,140.4004),
+                new LatLng(35.766022,140.397285),
+                new LatLng(35.765704,140.39727),
+                new LatLng(35.765485,140.397259),
+                new LatLng(35.764743,140.39778),
+                new LatLng(35.762566,140.396459),
+                new LatLng(35.761692,140.393997),
+                new LatLng(35.761737,140.393461),
+                new LatLng(35.76091,140.392644),
+                new LatLng(35.757317,140.394905),
+                new LatLng(35.754802,140.396396),
+                new LatLng(35.753221,140.400608),
+                new LatLng(35.753005,140.400873),
+                new LatLng(35.752369,140.4008),
+                new LatLng(35.751072,140.400447),
+                new LatLng(35.75011,140.400054),
+                new LatLng(35.748948,140.400669),
+                new LatLng(35.746176,140.402731),
+                new LatLng(35.744974,140.403532),
+                new LatLng(35.743197,140.403179),
+                new LatLng(35.742845,140.403822),
+                new LatLng(35.742798,140.403875),
+                new LatLng(35.742657,140.403857),
+                new LatLng(35.742605,140.40378),
+                new LatLng(35.74259,140.403125),
+                new LatLng(35.741884,140.402762),
+                new LatLng(35.74156,140.4026),
+                new LatLng(35.740834,140.401879),
+                new LatLng(35.741626,140.400922),
+                new LatLng(35.74195,140.400539),
+                new LatLng(35.742262,140.399981),
+                new LatLng(35.742337,140.399744),
+                new LatLng(35.742366,140.399344),
+                new LatLng(35.742307,140.399052),
+                new LatLng(35.742188,140.39877),
+                new LatLng(35.741802,140.398143),
+                new LatLng(35.742283,140.397642),
+                new LatLng(35.742024,140.397078),
+                new LatLng(35.742083,140.39675),
+                new LatLng(35.742929,140.396231),
+                new LatLng(35.741325,140.392847),
+                new LatLng(35.738537,140.394823),
+                new LatLng(35.737765,140.393058)
+        );
+    }
+
+}
+   // private class DestinationAirportReceiver extends AsyncTask<Void,String,String>{
+   //     @Override
+   //     public String doInBackground(Void... params) {
+
+   //         String queryAirport;
+   //         String queryAircraft;
+  //          String queryDepartureTime;
+  //          Intent intent = getIntent();
+  //          airport = intent.getStringExtra("airport");
+  //          aircraftName = intent.getStringExtra("aircraft");
+  //          departureTime = intent.getStringExtra("airline");
+   //     }
+
+ //   }
+
+
+
+
+
+
 
 
