@@ -10,6 +10,6 @@
     <string name="select_time_zone">時間帯を選択してください</string>
     <string name="timezone_option">〜</string>
     <string name="select_aircraft">機種を選択してください</string>
-    <string name="condition_select_check">この条件で検索！</string>
+    <string name="condition_select_check">検索</string>
     <string name="title_activity_spot">Map</string>
 </resources>
