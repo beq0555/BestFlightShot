@@ -73,9 +73,11 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     //16度方位での空港の現在の風向を格納する。
     String sixteenWindDeg;
 
+    //成田のオーバーレイ変数
     GroundOverlay narita_overlay_A_North;
     GroundOverlay narita_overlay_A_South;
 
+    //羽田のオーバーレイ変数
     GroundOverlay haneda_overlay_D_North;
     GroundOverlay haneda_overlay_C_North;
     GroundOverlay haneda_overlay_C_South;
@@ -534,7 +536,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                         haneda_overlay_A_South=mMap.addGroundOverlay(options4);
                         break;
                     //
-                    //case "odpt.Airport:":
+                    case "odpt.Airport:":
                     //
                     //case "odpt.Airport:":
                     //
@@ -930,8 +932,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         public String doInBackground(Void... params) {
 
-            progressBar2 = (ProgressBar)findViewById(R.id.spotProgressBar2);
-            this.progressBar2.setVisibility(View.VISIBLE);
+
 
             String queryAirport;
             String queryAircraft;
@@ -979,21 +980,17 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
         public void onPostExecute(String result) {
 
-            if(this.progressBar2 != null) {
-                this.progressBar2.setVisibility(View.GONE);
-            }
 
             List<String> destinationAirportList = new ArrayList<>();
             try {
                 JSONArray jArray = new JSONArray(result);
-                for (int i = 0; i < jArray.length(); i++) {
-                    JSONObject rootJson = jArray.getJSONObject(i);
+                    JSONObject rootJson = jArray.getJSONObject(0);
                     if (rootJson.has("odpt:destinationAirport")) {
-                        destinationAirportList.add(i, rootJson.getString("odpt:destinationAirport"));
+                        destinationAirportList.add(0, rootJson.getString("odpt:destinationAirport"));
                     } else {
-                        destinationAirportList.add(i, "目的地不明");
+                        destinationAirportList.add(0, "目的地不明");
                     }
-                }
+
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
