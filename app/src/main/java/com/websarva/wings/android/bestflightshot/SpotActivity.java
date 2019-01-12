@@ -533,15 +533,103 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                         break;
                     //石見空港
                     case "odpt.Airport:IYJ":
-                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
                         break;
-                    //
-                    case "odpt.Airport:":
-                    //
-                    //case "odpt.Airport:":
-                    //
-                    //case "odpt.Airport:":
+                    //神戸空港
+                    case "odpt.Airport:UKB":
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+                    //鳥取空港
+                    case "odpt.Airport:TTJ":
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+                    //岩国空港
+                    case "odpt.Airport:IWK":
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+                    //庄内空港
+                    case "odpt.Airport:SYO":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //美保飛行場
+                    case "odpt.Airport:YGJ":
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+                    //出雲空港
+                    case "odpt.Airport:IZO":
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+                    //富山空港
+                    case "odpt.Airport:TOY":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //能登空港
+                    case "odpt.Airport:NTQ":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //大館能代空港
+                    case "odpt.Airport:ONJ":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //紋別空港
+                    case "odpt.Airport:MBE":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //稚内空港
+                    case "odpt.Airport:WKJ":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //奄美空港
+                    case "odpt.Airport:ASJ":
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+                    //中標津空港
+                    case "odpt.Airport:SHB":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //三沢飛行場
+                    case "odpt.Airport:MSJ":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //ロサンゼルス国際空港
+                    case "odpt.Airport:LAX":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+                    //仁川国際空港
+                    case "odpt.Airport:ICN":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //上海浦東国際空港
+                    case "odpt.Airport:PVG":
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+                    //天津浜海国際空港
+                    case "odpt.Airport:TSN":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //北京首都国際空港
+                    case "odpt.Airport: PEK":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //金海国際空港
+                    case "odpt.Airport:PUS":
+                        haneda_overlay_C_North=mMap.addGroundOverlay(options1);
+                        break;
+                    //台湾桃園空港
+                    case "odpt.Airport:TPE":
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+                    //上海虹橋国際空港
+                    case "odpt.Airport:SHA":
+                        haneda_overlay_D_North=mMap.addGroundOverlay(options2);
+                        break;
+
+
+
+
                     default:
+                    //case "odpt.Airport:":
                         haneda_overlay_C_North=mMap.addGroundOverlay(options1);
                         haneda_overlay_D_North=mMap.addGroundOverlay(options2);
                         }
@@ -743,21 +831,105 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                         break;
                     //佐賀空港
                     case "odpy:Airport:HSG":
-                    haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
                         break;
                     //石見空港
                     case "odpy:Airport:IWJ":
-                    haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
                         break;
-                    //
-                    //case "odpt.Airport:":
-                    //
-                    //case "odpt.Airport:":
+                    //神戸空港
+                    case "odpt.Airport:UKB":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        break;
+                    //鳥取空港
+                    case "odpt.Airport:TTJ":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        break;
+                    //岩国空港
+                    case "odpt.Airport:IWK":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        break;
+                    //庄内空港
+                    case "odpt.Airport:SYO":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //美保飛行場
+                    case "odpt.Airport:YGJ":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        break;
+                    //出雲空港
+                    case "odpt.Airport:IZO":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        break;
+                    //富山空港
+                    case "odpt.Airport:TOY":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //能登空港
+                    case "odpt.Airport:NTQ":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //大館能代空港
+                    case "odpt.Airport:ONJ":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //紋別空港
+                    case "odpt.Airport:MBE":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //稚内空港
+                    case "odpt.Airport:WKJ":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //奄美空港
+                    case "odpt.Airport:ASJ":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        break;
+                    //中標津空港
+                    case "odpt.Airport:SHB":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //三沢飛行場
+                    case "odpt.Airport:MSJ":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //ロサンゼルス国際空港
+                    case "odpt.Airport:LAX":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //仁川国際空港
+                    case "odpt.Airport:ICN":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //上海浦東国際空港
+                    case "odpt.Airport:PVG":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        break;
+                    //天津浜海国際空港
+                    case "odpt.Airport:TSN":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //北京首都国際空港
+                    case "odpt.Airport: PEK":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //金海国際空港
+                    case "odpt.Airport:PUS":
+                        haneda_overlay_C_South=mMap.addGroundOverlay(options3);
+                        break;
+                    //台湾桃園空港
+                    case "odpt.Airport:TPE":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        break;
+                    //上海虹橋国際空港
+                    case "odpt.Airport:SHA":
+                        haneda_overlay_A_South=mMap.addGroundOverlay(options4);
+                        break;
 
                     default:
+                        //case "odpt.Airport:NTQ":
                         haneda_overlay_A_South=mMap.addGroundOverlay(options4);
-
-
                         haneda_overlay_C_South=mMap.addGroundOverlay(options3);
                 }
             }
@@ -840,13 +1012,10 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     //風向き情報を取得する非同期クラス
     private class WindInfoReceiver extends AsyncTask<Void,String,String> {
-        private ProgressBar progressBar1;
 
         @Override
         public String doInBackground(Void... params) {
 
-            progressBar1 = (ProgressBar)findViewById(R.id.spotProgressBar1);
-            this.progressBar1.setVisibility(View.VISIBLE);
             //APIキー
             final String API_KEY = "appid=5ee5c307a24bd39c9942999bf17cdfd4";
             final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
@@ -903,9 +1072,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
         public void onPostExecute(String result) {
 
-            if(this.progressBar1 != null) {
-                this.progressBar1.setVisibility(View.GONE);
-            }
 
             try {
                 JSONObject rootJSON = new JSONObject(result);
@@ -928,7 +1094,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     }
     private class DestinationAirportReceiver extends AsyncTask<Void,String,String> {
 
-        private ProgressBar progressBar2;
         @Override
         public String doInBackground(Void... params) {
 
