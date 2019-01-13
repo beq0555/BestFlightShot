@@ -50,6 +50,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SpotActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -219,44 +221,49 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         //羽田
         GroundOverlayOptions options1=new GroundOverlayOptions()
                 .image(plane_descriptor)
-                .position(HanedaAirport_C_North,500f,600f)
+                .position(HanedaAirport_C_North,600f,700f)
                 .bearing(330);
 
         GroundOverlayOptions options2=new GroundOverlayOptions()
                 .image(plane_descriptor)
-                .position(HanedaAirport_D_North,500f,600f)
+                .position(HanedaAirport_D_North,600f,700f)
                 .bearing(45);
 
         GroundOverlayOptions options3=new GroundOverlayOptions()
                 .image(plane_descriptor)
-                .position(HanedaAirport_C_South,500f,600f)
+                .position(HanedaAirport_C_South,600f,700f)
                 .bearing(145);
 
         GroundOverlayOptions options4=new GroundOverlayOptions()
                 .image(plane_descriptor)
                 //画像の位置と大きさを決める
-                .position(HanedaAirport_A_South,500f,600f)
+                .position(HanedaAirport_A_South,600f,700f)
                 .bearing(145);
 
         //画面上の画像をデフォルトで見えなくする
         haneda_overlay_D_North=mMap.addGroundOverlay(options2);
         haneda_overlay_D_North.setVisible(false);
+        haneda_overlay_D_North.setZIndex(1);
         haneda_overlay_C_North=mMap.addGroundOverlay(options1);
         haneda_overlay_C_North.setVisible(false);
+        haneda_overlay_C_North.setZIndex(1);
         haneda_overlay_C_South=mMap.addGroundOverlay(options3);
         haneda_overlay_C_South.setVisible(false);
+        haneda_overlay_C_South.setZIndex(1);
         haneda_overlay_A_South=mMap.addGroundOverlay(options4);
         haneda_overlay_A_South.setVisible(false);
+        haneda_overlay_A_South.setZIndex(1);
+
 
         //成田
         GroundOverlayOptions options5 =new GroundOverlayOptions()
                 .image(plane_descriptor)
-                .position(NaritaAirport_A_North, 500f, 600f)
+                .position(NaritaAirport_A_North, 600f, 700f)
                 .bearing(330);
 
         GroundOverlayOptions options6 = new GroundOverlayOptions()
                 .image(plane_descriptor)
-                .position(NaritaAirport_A_South, 500f, 600f)
+                .position(NaritaAirport_A_South, 600f, 700f)
                 .bearing(155);
 
 
@@ -327,9 +334,9 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             //成田空港のポリゴン表示
             PolygonOptions options=new PolygonOptions()
                     .addAll(create_narita_Poligon())
-                    .strokeColor(Color.RED)
-                    .strokeWidth(4)
-                    .fillColor(Color.argb(50,51,204,255));
+                    .strokeColor(Color.rgb(255,204,102))
+                    .strokeWidth(5)
+                    .fillColor(Color.argb(50,255,255,102));
             mMap.addPolygon(options);
 
 
@@ -976,9 +983,9 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             //羽田空港のポリゴン表示
             PolygonOptions options=new PolygonOptions()
                     .addAll(create_haneda_Poligon())
-                    .strokeColor(Color.RED)
-                    .strokeWidth(4)
-                    .fillColor(Color.argb(55,51,204,255));
+                    .strokeColor(Color.rgb(255,204,102))
+                    .strokeWidth(5)
+                    .fillColor(Color.argb(55,255,255,102));
             mMap.addPolygon(options);
 
         }
@@ -1002,6 +1009,31 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
+
+
+    //羽田滑走路Aの飛行機を点滅させる機能
+    private void init_haneda_A_South() {
+        Timer timer = new Timer(true);
+        final android.os.Handler handler = new android.os.Handler();
+        timer.schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        handler.post( new Runnable(){
+                            public void run(){
+                                if (haneda_overlay_A_South.isVisible()){
+                                    haneda_overlay_A_South.setVisible(false);
+                                }else {
+                                    haneda_overlay_A_South.setVisible(true);
+                                }
+                            }
+                        });
+                    }
+                }
+                , 0, 800   //開始遅延(何ミリ秒後に開始するか)と、周期(何ミリ秒ごとに実行するか)
+        );
+    }
+
 
     //permissionを許可しているかの確認メソッド
     private boolean checkPermission(){
