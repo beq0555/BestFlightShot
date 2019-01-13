@@ -17,4 +17,8 @@ public class OpeningActivity extends AppCompatActivity {
         Intent intent=new Intent(OpeningActivity.this,AirportActivity.class);
         startActivity(intent);
     }
+    public void onManualClick() {
+        Intent intent = new Intent(OpeningActivity.this,AirportActivity.class);
+        startActivity(intent);
+    }
 }
