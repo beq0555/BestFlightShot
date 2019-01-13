@@ -67,7 +67,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     private String airport;
     private String destinationAirport;
 
-
     //保存された画像のURI
     private Uri _imageUri;
 
@@ -290,7 +289,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                 tvRunway.setText("発着予報:A滑走路を南方向に離陸");
                 }
 
-            //成田空港の予測滑走路の文字表示
 
             //成田空港オススメスポット
             if (sixteenWindDeg.equals ("西")||sixteenWindDeg.equals("西北西")||sixteenWindDeg.equals("北西")||sixteenWindDeg.equals("北北西")){
@@ -303,7 +301,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                 MarkerOptions maker_narita_shinonome=new MarkerOptions().position(spot_Narita_shinonome).title("十余三東雲の丘");
                 mMap.addMarker(maker_narita_shinonome);
 
-                MarkerOptions maker_narita_touhou=new MarkerOptions().position(spot_Narita_shinonome).title("東峰神社");
+                MarkerOptions maker_narita_touhou=new MarkerOptions().position(spot_Narita_touhou).title("東峰神社");
                 mMap.addMarker(maker_narita_touhou);
             }else if (sixteenWindDeg.equals ("東")||sixteenWindDeg.equals("東南東")||sixteenWindDeg.equals("南東")||sixteenWindDeg.equals("南南東")){
                 //東南エリアに位置するオススメスポット
@@ -326,8 +324,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
 
-
-
             //成田空港のポリゴン表示
             PolygonOptions options=new PolygonOptions()
                     .addAll(create_narita_Poligon())
@@ -340,7 +336,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         } else if (airport.equals("HND")){
 
             // 羽田空港付近をマップに表示させる
-            CameraPosition.Builder builder=new CameraPosition.Builder().target(HanedaAirport).zoom(12.9f).bearing(0).tilt(25.0f);
+            CameraPosition.Builder builder=new CameraPosition.Builder().target(HanedaAirport).zoom(12.2f).bearing(0).tilt(25.0f);
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
 
 
@@ -1011,11 +1007,11 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             //滑走路別にオススメスポットを表示させる
             if(haneda_overlay_C_North.isVisible()&&haneda_overlay_D_North.isVisible()){
                 //目的地空港で判別できないとき（北風時）
-                MarkerOptions maker_haneda_terminal=new MarkerOptions().position(spot_Haneda_terminal).title("羽田空港第1ターミナル　展望デッキ");
+                MarkerOptions maker_haneda_terminal=new MarkerOptions().position(spot_Haneda_terminal1).title("羽田空港第1ターミナル　展望デッキ");
                 mMap.addMarker(maker_haneda_terminal);
             }else if(haneda_overlay_A_South.isVisible()&&haneda_overlay_C_South.isVisible()){
                 //目的地空港で判別できないとき（南風時）
-                MarkerOptions maker_haneda_terminal=new MarkerOptions().position(spot_Haneda_terminal).title("羽田空港第1ターミナル　展望デッキ");
+                MarkerOptions maker_haneda_terminal=new MarkerOptions().position(spot_Haneda_terminal1).title("羽田空港第1ターミナル　展望デッキ");
                 mMap.addMarker(maker_haneda_terminal);
             } else if (haneda_overlay_A_South.isVisible()||haneda_overlay_D_North.isVisible()){
                 //南側オススメスポット
