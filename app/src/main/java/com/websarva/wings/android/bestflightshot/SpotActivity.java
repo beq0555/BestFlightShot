@@ -67,6 +67,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     private String airport;
     private String destinationAirport;
 
+
     //保存された画像のURI
     private Uri _imageUri;
 
@@ -108,10 +109,10 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         departureTime = departureTime.replace("<離陸時間>","");
         //画面下部のテロップに撮影機体情報を表示
         TextView tvAircraftTelop = findViewById(R.id.tvAircraftTelop);
-        tvAircraftTelop.setText("撮影する航空機: " + aircraftName);
+        tvAircraftTelop.setText("撮影機体: " + aircraftName);
 
         TextView tvDepartureTelop = findViewById(R.id.tvDepartureTelop);
-        tvDepartureTelop.setText("予定離陸時間: " + departureTime);
+        tvDepartureTelop.setText("離陸時間: " + departureTime);
 
     }
 
@@ -153,6 +154,8 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        TextView tvRunway = findViewById(R.id.tvRunway);
 
         //成田オススメスポット
         //成田市さくらの山公園（北西側）
@@ -277,25 +280,17 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
             //ここから風向きで画像の表示場所を切り替えてください
             //飛行機画像を成田A滑走路北向きにオーバーレイ表示
+            //成田空港の予測滑走路の文字表示
             if(sixteenWindDeg.equals("東北東")||sixteenWindDeg.equals("北東")||sixteenWindDeg.equals("北北東")||sixteenWindDeg.equals("北")||sixteenWindDeg.equals("北北西")||sixteenWindDeg.equals("北西")||sixteenWindDeg.equals("西北西")||sixteenWindDeg.equals("西")) {
                narita_overlay_A_North = mMap.addGroundOverlay(options5);
+               tvRunway.setText("発着予報:A滑走路を北方向に離陸");
             }else {
                 //飛行機画像を成田A滑走路南向きにオーバーレイ表示
                 narita_overlay_A_South = mMap.addGroundOverlay(options6);
+                tvRunway.setText("発着予報:A滑走路を南方向に離陸");
                 }
-            //飛行機画像を成田B滑走路北向きにオーバーレイ表示
-            //GroundOverlayOptions options3=new GroundOverlayOptions()
-            //        .image(plane_descriptor)
-            //        .position(NaritaAirport_B_North,500f,600f)
-            //        .bearing(330);
-            //GroundOverlay narita_overlay_B_North.setVisible(true);
 
-            //飛行機画像を成田B滑走路北向きにオーバーレイ表示
-            //GroundOverlayOptions options4=new GroundOverlayOptions()
-            //        .image(plane_descriptor)
-            //        .position(NaritaAirport_B_South,500f,600f)
-            //        .bearing(155);
-            //GroundOverlay narita_overlay_B_South.setVisible(true);
+            //成田空港の予測滑走路の文字表示
 
             //成田空港オススメスポット
             if (sixteenWindDeg.equals ("西")||sixteenWindDeg.equals("西北西")||sixteenWindDeg.equals("北西")||sixteenWindDeg.equals("北北西")){
@@ -330,6 +325,8 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(maker_narita_shibayama);
 
             }
+
+
 
             //成田空港のポリゴン表示
             PolygonOptions options=new PolygonOptions()
@@ -1041,6 +1038,16 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
                 MarkerOptions maker_haneda_terminal2=new MarkerOptions().position(spot_Haneda_terminal2).title("羽田空港第２ターミナル　展望デッキ");
                 mMap.addMarker(maker_haneda_terminal2);
+            }
+            //離陸予報を表示する
+            if(haneda_overlay_C_North.isVisible()) {
+                tvRunway.setText("発着予報:C滑走路を北方向に離陸");
+            } else if (haneda_overlay_D_North.isVisible()){
+                tvRunway.setText("発着予報:D滑走路を南方向に離陸");
+            } else if (haneda_overlay_A_South.isVisible()) {
+                tvRunway.setText("発着予報:A滑走路を南方向に離陸");
+            } else if (haneda_overlay_C_South.isVisible()) {
+                tvRunway.setText("発着予報:C滑走路を北方向に離陸");
             }
 
 
