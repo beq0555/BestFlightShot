@@ -611,7 +611,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                     //ロサンゼルス国際空港
                     case "odpt.Airport:LAX":
                         haneda_overlay_C_North.setVisible(true);
-                        haneda_overlay_D_North.setVisible(true);
                         break;
                     //仁川国際空港
                     case "odpt.Airport:ICN":
@@ -641,8 +640,39 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                     case "odpt.Airport:SHA":
                         haneda_overlay_D_North.setVisible(true);
                         break;
-
-
+                    //ジョン・F・ケネディー空港
+                    case "odpt.Airport:JFK":
+                        haneda_overlay_C_North.setVisible(true);
+                        break;
+                    //ミュンヘン空港
+                    case "odpt.Airport:MUC":
+                        haneda_overlay_C_North.setVisible(true);
+                        break;
+                    //トロント空港
+                    case "odpt.Airport:YYZ":
+                        haneda_overlay_C_North.setVisible(true);
+                        break;
+                    //サンフランシスコ国際空港
+                    case "odpt.Airport:SFO":
+                        haneda_overlay_C_North.setVisible(true);
+                        break;
+                    //シドニー国際空港
+                    case "odpt.Airport:SYD":
+                        haneda_overlay_D_North.setVisible(true);
+                        break;
+                    //ドーハ空港
+                    case "odpt.Airport:DOH":
+                        haneda_overlay_D_North.setVisible(true);
+                        break;
+                    //シカゴ空港
+                    case "odpt.Airport:ORD":
+                        haneda_overlay_C_North.setVisible(true);
+                        break;
+                    //バングーバー
+                    case "odpt.Airport:YVR":
+                        haneda_overlay_C_North.setVisible(true);
+                        break;
+                    case "odpt.Airport:":
 
 
                     default:
@@ -912,7 +942,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                         break;
                     //ロサンゼルス国際空港
                     case "odpt.Airport:LAX":
-                        haneda_overlay_A_South.setVisible(true);
                         haneda_overlay_C_South.setVisible(true);
                         break;
                     //仁川国際空港
@@ -943,7 +972,38 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                     case "odpt.Airport:SHA":
                         haneda_overlay_A_South.setVisible(true);
                         break;
-
+                    //ジョン・F・ケネディー空港
+                    case "odpt.Airport:":
+                        haneda_overlay_C_South.setVisible(true);
+                        break;
+                    //ミュンヘン空港
+                    case "odpt.Airport:MUC":
+                        haneda_overlay_C_South.setVisible(true);
+                        break;
+                    //トロント空港
+                    case "odpt.Airport:YYZ":
+                        haneda_overlay_C_South.setVisible(true);
+                        break;
+                    //サンフランシスコ国際空港
+                    case "odpt.Airport:SFO":
+                        haneda_overlay_C_South.setVisible(true);
+                        break;
+                    //シドニー国際空港
+                    case "odpt.Airport:SYD":
+                        haneda_overlay_A_South.setVisible(true);
+                        break;
+                    //ドーハ空港
+                    case "odpt.Airport:DOH":
+                        haneda_overlay_A_South.setVisible(true);
+                        break;
+                    //シカゴ空港
+                    case "odpt.Airport:ORD":
+                        haneda_overlay_C_South.setVisible(true);
+                        break;
+                    //バングーバー
+                    case "odpt.Airport:YVR":
+                        haneda_overlay_C_South.setVisible(true);
+                        break;
                     default:
                         //case "odpt.Airport:NTQ":
                         haneda_overlay_A_South.setVisible(true);
@@ -952,7 +1012,15 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             }
             //羽田空港おすすめスポット
             //滑走路別にオススメスポットを表示させる
-            if (haneda_overlay_A_South.isVisible()||haneda_overlay_D_North.isVisible()){
+            if(haneda_overlay_C_North.isVisible()&&haneda_overlay_D_North.isVisible()){
+                //目的地空港で判別できないとき（北風時）
+                MarkerOptions maker_haneda_terminal=new MarkerOptions().position(spot_Haneda_terminal).title("羽田空港第1ターミナル　展望デッキ");
+                mMap.addMarker(maker_haneda_terminal);
+            }else if(haneda_overlay_A_South.isVisible()&&haneda_overlay_C_South.isVisible()){
+                //目的地空港で判別できないとき（南風時）
+                MarkerOptions maker_haneda_terminal=new MarkerOptions().position(spot_Haneda_terminal).title("羽田空港第1ターミナル　展望デッキ");
+                mMap.addMarker(maker_haneda_terminal);
+            } else if (haneda_overlay_A_South.isVisible()||haneda_overlay_D_North.isVisible()){
                 //南側オススメスポット
                 MarkerOptions maker_haneda_ukishima=new MarkerOptions().position(spot_Haneda_ukishima).title("浮島公園");
                 mMap.addMarker(maker_haneda_ukishima);
@@ -973,12 +1041,8 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
                 MarkerOptions maker_haneda_terminal2=new MarkerOptions().position(spot_Haneda_terminal2).title("羽田空港第２ターミナル　展望デッキ");
                 mMap.addMarker(maker_haneda_terminal2);
-            } else {
-                //例外
-                MarkerOptions maker_haneda_terminal=new MarkerOptions().position(spot_Haneda_terminal).title("羽田空港第1ターミナル　展望デッキ");
-                mMap.addMarker(maker_haneda_terminal);
-
             }
+
 
             //羽田空港のポリゴン表示
             PolygonOptions options=new PolygonOptions()
@@ -1078,13 +1142,10 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
     //風向き情報を取得する非同期クラス
     private class WindInfoReceiver extends AsyncTask<Void,String,String> {
-        private ProgressBar progressBar1;
 
         @Override
         public String doInBackground(Void... params) {
 
-            progressBar1 = (ProgressBar)findViewById(R.id.spotProgressBar1);
-            this.progressBar1.setVisibility(View.VISIBLE);
             //APIキー
             final String API_KEY = "appid=5ee5c307a24bd39c9942999bf17cdfd4";
             final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
@@ -1141,9 +1202,8 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
         public void onPostExecute(String result) {
 
-            if(this.progressBar1 != null) {
-                this.progressBar1.setVisibility(View.GONE);
-            }
+
+
 
             try {
                 JSONObject rootJSON = new JSONObject(result);
@@ -1166,11 +1226,9 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     }
     private class DestinationAirportReceiver extends AsyncTask<Void,String,String> {
 
-        private ProgressBar progressBar2;
+
         @Override
         public String doInBackground(Void... params) {
-
-
 
             String queryAirport;
             String queryAircraft;
@@ -1214,6 +1272,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
             return result;
+
         }
 
         public void onPostExecute(String result) {

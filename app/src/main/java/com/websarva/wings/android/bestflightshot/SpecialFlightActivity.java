@@ -194,7 +194,7 @@ public class SpecialFlightActivity extends AppCompatActivity {
                     SpecialListItem item = new SpecialListItem();
                     item.setCraftType("<機種>" + sortedTypeList.get(i));
                     item.setAirline("<航空会社>"+ sortedAirlineList.get(i));
-                    item.setDepartureTime("<離陸時間>  " + sortedTimeList.get(i));
+                    item.setDepartureTime("<離陸時間>" + sortedTimeList.get(i));
                     item.setSpecialInfo(sortedInfoList.get(i));
                     switch (sortedTypeList.get(i)) {
                         //ボーイング系
