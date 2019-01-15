@@ -93,8 +93,8 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_spot);
 
 
-        //風向き情報取得の非同期処理開始
-        WindInfoReceiver receiver = new WindInfoReceiver();
+        //目的地空港情報取得の非同期処理開始
+        DestinationAirportReceiver receiver = new DestinationAirportReceiver();
         receiver.execute();
 
         //各ListActivity画面からのIntentの受けとり
@@ -1146,8 +1146,10 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     //風向き情報を取得する非同期クラス
     private class WindInfoReceiver extends AsyncTask<Void,String,String> {
 
+
         @Override
         public String doInBackground(Void... params) {
+
 
             //APIキー
             final String API_KEY = "appid=5ee5c307a24bd39c9942999bf17cdfd4";
@@ -1206,8 +1208,6 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         public void onPostExecute(String result) {
 
 
-
-
             try {
                 JSONObject rootJSON = new JSONObject(result);
                 JSONObject windJSON = rootJSON.getJSONObject("wind");
@@ -1220,18 +1220,22 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
             }catch (JSONException ex) {
                 ex.printStackTrace();
             }
-            DestinationAirportReceiver receiver = new DestinationAirportReceiver();
-            receiver.execute();
 
-
+            createMap();
 
         }
     }
     private class DestinationAirportReceiver extends AsyncTask<Void,String,String> {
 
+        ProgressBar progressBar;
+
 
         @Override
         public String doInBackground(Void... params) {
+
+            progressBar = findViewById(R.id.spotProgressBar1);
+            this.progressBar.setVisibility(View.VISIBLE);
+
 
             String queryAirport;
             String queryAircraft;
@@ -1280,6 +1284,9 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
         public void onPostExecute(String result) {
 
+            if(this.progressBar != null) {
+                this.progressBar.setVisibility(View.GONE);
+            }
 
             List<String> destinationAirportList = new ArrayList<>();
             try {
@@ -1297,7 +1304,9 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
 
             //目的地空港を非同期処理で取得して代入している
             destinationAirport = destinationAirportList.get(0);
-            createMap();
+
+            WindInfoReceiver receiver = new WindInfoReceiver();
+            receiver.execute();
         }
     }
         private String is2String(InputStream is) throws IOException {
