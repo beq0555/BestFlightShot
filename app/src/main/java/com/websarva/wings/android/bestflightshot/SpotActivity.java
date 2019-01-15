@@ -1146,10 +1146,8 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
     //風向き情報を取得する非同期クラス
     private class WindInfoReceiver extends AsyncTask<Void,String,String> {
 
-
         @Override
         public String doInBackground(Void... params) {
-
 
             //APIキー
             final String API_KEY = "appid=5ee5c307a24bd39c9942999bf17cdfd4";

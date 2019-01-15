@@ -1,7 +1,6 @@
 package com.websarva.wings.android.bestflightshot;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,12 +19,14 @@ public class ManualActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual);
+        setTitle("Manual");
 
         webView=findViewById(R.id.web_view);
         webSettings=webView.getSettings();
 
+
         //URLの読み込み
-        webView.loadUrl("https://tokyo:challenge@miyazaki-seminar.securesite.jp/classof2020/private/groupE/BestFlightShot/web_manual/index.html");
+        webView.loadUrl("file:///android_asset/manual/index.html");
         //javascriptの有効化
         webView.getSettings().setJavaScriptEnabled(true);
         //ピンチ操作による拡大・縮小の有効化
