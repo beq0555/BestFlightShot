@@ -24,6 +24,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".OpeningActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,12 +32,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecentFlightActivity" />
-        <activity android:name=".SelectListActivity" />
-        <activity android:name=".SpecialFlightActivity" />
-        <activity android:name=".AirportActivity" />
-        <activity android:name=".ConditionSelectActivity" />
-        <activity android:name=".ConditionFlightActivity" />
+        <activity
+            android:name=".RecentFlightActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SelectListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SpecialFlightActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AirportActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ConditionSelectActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ConditionFlightActivity"
+            android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -49,13 +62,17 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".SpotActivity" />
+        <activity
+            android:name=".SpotActivity"
+            android:screenOrientation="portrait"/>
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".ManualActivity"></activity>
+        <activity
+            android:name=".ManualActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

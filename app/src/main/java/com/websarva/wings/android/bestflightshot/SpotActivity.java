@@ -336,7 +336,7 @@ public class SpotActivity extends FragmentActivity implements OnMapReadyCallback
         } else if (airport.equals("HND")){
 
             // 羽田空港付近をマップに表示させる
-            CameraPosition.Builder builder=new CameraPosition.Builder().target(HanedaAirport).zoom(12.2f).bearing(0).tilt(25.0f);
+            CameraPosition.Builder builder=new CameraPosition.Builder().target(HanedaAirport).zoom(12.5f).bearing(0).tilt(25.0f);
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
 
 
